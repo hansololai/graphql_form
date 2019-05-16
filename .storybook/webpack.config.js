@@ -36,7 +36,24 @@ module.exports = (baseConfig, env, config) => {
             },
             { loader: require.resolve('react-docgen-typescript-loader') }
           ]
-        }
+        },
+        {
+          test: /\.less$/,
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
+            {
+              loader: 'less-loader',
+              options: {
+                javascriptEnabled: true
+              }
+            },
+          ],
+        },
+        {
+          test: /\.scss$/,
+          use: ['style-loader', 'css-loader', 'sass-loader'],
+        },
       ]
     },
     resolve: {

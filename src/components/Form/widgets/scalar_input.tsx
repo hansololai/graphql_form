@@ -6,6 +6,10 @@ import { InputNumberProps } from 'antd/lib/input-number';
 import { SelectProps } from 'antd/lib/select';
 import { TimePickerProps } from 'antd/lib/time-picker';
 import { DatePickerProps } from 'antd/lib/date-picker/interface';
+import 'antd/lib/input/style'
+import 'antd/lib/checkbox/style'
+import 'antd/lib/input-number/style'
+import 'antd/lib/select/style'
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -48,4 +52,4 @@ export const TextSelectInput: React.FC<TextSelectInputProps> = (props) => {
 
 export const TimeInput: React.FC<TimeInputProps> = (props) => <TimePicker {...props} />;
 export const DateInput: React.FC<DateInputProps> = (props) => <DatePicker {...props} />;
-export const TextAreaInput: React.FC<TextAreaInputProps> = (props) => <TextAreaInput {...props} />;
+export const TextAreaInput: React.FC<TextAreaInputProps> = (props) => <TextArea {...props} />;

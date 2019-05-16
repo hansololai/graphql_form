@@ -33,6 +33,19 @@ module.exports = {
 				}
 			},
 			{
+				test: /\.less$/,
+				use: [
+					{ loader: 'style-loader' },
+					{ loader: 'css-loader' },
+					{
+						loader: 'less-loader',
+						options: {
+							javascriptEnabled: true
+						}
+					},
+				],
+			},
+			{
 				// I haven't used SCSS in the base example, but it's here for you if you
 				// want! If you want to use CSS, you can change this next like's regex to
 				// /\.(css|scss)$/ or even just /\.css$/

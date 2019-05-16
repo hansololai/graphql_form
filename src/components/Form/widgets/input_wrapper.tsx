@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Form, Input } from 'antd';
 import * as changeCase from 'change-case';
 import { isFunction } from '../utils';
-import { FormComponentProps, GetFieldDecoratorOptions, ValidationRule, ValidateCallback, WrappedFormUtils } from 'antd/lib/form/Form';
+import { FormComponentProps, GetFieldDecoratorOptions, ValidationRule, WrappedFormUtils } from 'antd/lib/form/Form';
 
 export type kindType = "SCALAR" | "OBJECT" | "INTERFACE" | "UNION" | "ENUM" | "INPUT_OBJECT" | "LIST" | "NON_NULL";
 
@@ -56,12 +56,12 @@ export const InputWrapper = (props: InputWrapperProps) => {
     // Unless this field can be auto generated, like "id", otherwise they are required
     // For now don't know how to know if this field has "default value" yet, at least not from graphql introspection
     // have to hard set it
-    if (!['id', 'createdAt', 'updatedAt'].includes(name)) {
+    if (!['id', 'createdAt', 'updatedAt'].includes(name) && decorator.rules) {
       decorator.rules.push({ required: true });
     }
   }
   // If there's a validator for this field, put it in rules, but also modify it to pass in the form object
-  if (isFunction(validator)) {
+  if (isFunction(validator) && decorator.rules) {
     const validate = (ruleV, valueV, cbV, sourceV, optionsV) => {
       validator(ruleV, valueV, cbV, sourceV, optionsV, form);
     };
@@ -69,16 +69,20 @@ export const InputWrapper = (props: InputWrapperProps) => {
   }
   const fieldName = changeCase.titleCase(name);
 
+
   // Hide this field or not, by defeault we hide "id" field, and also other fields that's marked hidden
   if (name === 'id' || hidden) {
     // ID field is special, it should be hidden, it is NOT NULL, but it could be NULL (for create)
+    if(getFieldDecorator){
     return getFieldDecorator(name, decorator)(
       <Input disabled type="hidden" />,
     );
+    }
+    return <Input disabled type="hidden"/>;
   }
 
   // If no decorator, then just the input
-  if (!isFunction(getFieldDecorator)) {
+  if (!getFieldDecorator || !isFunction(getFieldDecorator)) {
     return <Item {...formItemLayout} label={fieldName}>{props.children}</Item>;
   }
 
