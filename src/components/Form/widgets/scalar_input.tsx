@@ -14,7 +14,9 @@ import 'antd/lib/select/style'
 const { Option } = Select;
 const { TextArea } = Input;
 
-export interface BooleanInputProps extends CheckboxProps { }
+export interface BooleanInputProps extends CheckboxProps {
+  value:boolean;
+ }
 export interface TextInputProps extends InputProps { }
 export interface NumberInputProps extends InputNumberProps { }
 export interface HiddenInputProps extends InputProps { }
@@ -31,7 +33,10 @@ export interface TextAreaInputProps extends TextAreaProps { }
  * The export components handles most scalar values such as boolean, string, number, date, time 
  */
 
-export const BooleanInput: React.FC<BooleanInputProps> = (props) => <Checkbox {...props} />;
+export const BooleanInput: React.FC<BooleanInputProps> = (props) => {
+  const { value } =props;
+  return <Checkbox {...props} checked={value} />
+};
 
 export const TextInput: React.FC<TextInputProps> = (props) => <Input {...props} />;
 

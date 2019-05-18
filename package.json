@@ -8,7 +8,8 @@
     "build": "webpack --mode production",
     "storybook": "start-storybook -p 9001",
     "docz:dev": "docz dev",
-    "docz:build": "docz build"
+    "docz:build": "docz build",
+    "apollo:codegen": "apollo client:codegen --target=typescript --passthroughCustomScalars --customScalarsPrefix GraphQL"
   },
   "repository": {
     "type": "git",
@@ -56,6 +57,7 @@
   "dependencies": {
     "antd": "^3.18.1",
     "graphql": "^14.3.0",
+    "graphql-tag": "^2.10.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "react": "^16.7.0",
