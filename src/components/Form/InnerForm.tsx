@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Form } from 'antd';
 import { FormComponentProps, } from 'antd/lib/form'
+import
 
 
 
@@ -18,7 +19,7 @@ export interface InnerFormProps extends GraphqlFormProps {
 const InnerForm: React.FC<FormComponentProps<InnerFormProps>> = (props) => {
   const { inputFields, form, instanceData } = props;
 
-  const allFields = 
+  const allFields =createFormFields()
 
   return <Form>
 
