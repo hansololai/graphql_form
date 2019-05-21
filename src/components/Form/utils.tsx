@@ -2,7 +2,7 @@ import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuer
 import { WrappedFormInternalProps } from 'antd/lib/form/Form'
 import { InnerFormProps } from './InnerForm';
 import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput } from './widgets/index';
-import moment = require('moment');
+import * as moment from 'moment';
 import { InputWrapper, InputWrapperProps } from './InputWrapper';
 import * as React from 'react';
 export const isFunction = (funcToCheck) => {
@@ -35,7 +35,7 @@ interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>
   options: any;
 }
 export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {
-  const { fields, instanceData, form, options } = props;
+  const { fields, instanceData, form } = props;
   return fields.map(field => {
     const { name: fieldName, type } = field;
     // Sometimes it's not null,  then have to go one level deeper
@@ -82,5 +82,5 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       {toReturn}
     </InputWrapper>;
 
-  })
+  });
 }

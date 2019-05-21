@@ -11,10 +11,10 @@ import { patchTypeQuery } from './__generated__/patchTypeQuery'
 
 export interface GraphqlFormProps {
   modelName: string;
-  instanceData?: object;
+  instanceData?: any;
   instanceId?: number;
 }
-const updateInputQuery = gql`
+export const updateInputQuery = gql`
   query patchTypeQuery($name: String!){
     __type(name: $name){
       inputFields{

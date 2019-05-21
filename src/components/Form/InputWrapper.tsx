@@ -61,6 +61,12 @@ export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
   if (name === 'id' || hidden) {
     // ID field is special, it should be hidden, it is NOT NULL, but it could be NULL (for create)
     content = <Input disabled type="hidden" />;
+    return <div>
+      {getFieldDecorator(name, decorator)(
+        content
+      )}
+    </div>
+
   } else {
     // Set disable if necessary
     const children = React.Children.map(props.children, (child) => {

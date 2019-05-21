@@ -3,7 +3,6 @@ const SRC_PATH = path.join(__dirname, '../src');
 const STORIES_PATH = path.join(__dirname, '../stories');
 //dont need stories path if you have your stories inside your //components folder
 module.exports = (baseConfig, env, config) => {
-  console.log(config);
   return {
     ...config,
     module: {
@@ -30,6 +29,7 @@ module.exports = (baseConfig, env, config) => {
             {
               loader: require.resolve('awesome-typescript-loader'),
               options: {
+                transpileOnly: true,
                 // This is not the relative path from here, but from root directory
                 configFileName: './tsconfig.json'
               }

@@ -3,8 +3,9 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 // import { action } from '@storybook/addon-actions';
 // Import our component from this folder
-// import { GraphqlForm } from './GraphqlForm';
+import { updateInputQuery, GraphqlForm } from './GraphqlForm';
 import { TextInput, BooleanInput } from './widgets';
+import { MockedProvider } from 'react-apollo/test-utils';
 
 // Here we describe the stories we want to see of the Button. The component is
 // pretty simple so we will just make two, one with text and one with emojis
@@ -26,4 +27,87 @@ storiesOf('Text Widget', module)
   ))
   .add('Without Text', () => (
     <TextInput value="" />
+  ));
+const mockTypeQueryData = {
+  data: {
+    __type: {
+      __typename: "__Type",
+      inputFields: [
+        {
+          "name": "id",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "Int",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "firstName",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "email",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "salary",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "Int",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
+          "name": "isAdmin",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "Boolean",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+      ]
+    }
+  }
+}
+
+const mockData = [
+  {
+    request: {
+      query: updateInputQuery,
+      variables: { name: 'UserPatch' },
+    },
+    result: mockTypeQueryData
+  }
+]
+
+storiesOf('GraphqlForm', module)
+  .add('To Update User Model in 400px frame', () => (
+    <MockedProvider mocks={mockData}>
+      <div style={{ width: 400 }}>
+        <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: "test", email: "test@test.com" }} />
+      </div>
+    </MockedProvider>
   ));
