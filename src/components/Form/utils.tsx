@@ -35,7 +35,7 @@ interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>
   options: any;
 }
 export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {
-  const { fields, instanceData, form } = props;
+  const { fields, instanceData = {}, form } = props;
   return fields.map(field => {
     const { name: fieldName, type } = field;
     // Sometimes it's not null,  then have to go one level deeper
@@ -78,7 +78,7 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
     } else {
       toReturn = null;
     }
-    return <InputWrapper {...fieldProps}>
+    return <InputWrapper {...fieldProps} key={fieldName}>
       {toReturn}
     </InputWrapper>;
 
