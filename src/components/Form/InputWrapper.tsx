@@ -4,17 +4,9 @@ import { ValidationRule } from 'antd/lib/form'
 import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
 import * as  changeCase from 'change-case';
 import { patchTypeQuery___type_inputFields_type } from './__generated__/patchTypeQuery';
+import { formItemLayout } from './InnerForm'
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
+
 const { Item } = Form;
 
 export interface InputWrapperProps {
