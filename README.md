@@ -51,7 +51,7 @@ The components are developed with typescript
 
 ### Uses Storybook for Demo
 
-[Demo](demo.png)
+![Demo](demo.png)
 
 ## Get Started
 
