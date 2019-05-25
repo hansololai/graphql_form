@@ -194,6 +194,7 @@ storiesOf('GraphqlForm', module)
       </div>
     </MockedProvider>
   )).add('To Create User Model with not null first name and email', () => {
+    action('Input UserInput')({ textFormat: JSON.stringify(mockCreateInputData, undefined, 4) });
     return <MockedProvider mocks={mockData}>
       <div style={{ width: 400 }}>
         <GraphqlForm modelName="User" onSubmit={(form) => {

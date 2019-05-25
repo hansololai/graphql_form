@@ -1,8 +1,3 @@
-<p align="center">
-	<img src="https://user-images.githubusercontent.com/10063864/45442352-c961ab80-b68f-11e8-84a3-e920f05a313c.png" width={400} alt="Rinse" />
-</p>
-
-> Rinse, React, repeat. A boilerplate to build a React component library.
 # GraphqlForm
 
 ## Motivation
@@ -56,9 +51,13 @@ The components are developed with typescript
 
 ### Uses Storybook for Demo
 
+[Demo](demo.png)
 
 ## Get Started
 
+Not ready for publish to NPM yet, working on doc and refactoring.
+
 Simply import the GraphqlForm object and pass in modelName and onSumit to generate a form. 
+
 
 ## MIT License
