@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 // import { action } from '@storybook/addon-actions';
 // Import our component from this folder
 import { updateInputQuery, GraphqlForm } from './GraphqlForm';
-import { TextInput, BooleanInput, TextSelectInput } from './widgets';
+import { TextInput, BooleanInput, TextSelectInput, enumQuery } from './widgets';
 import { MockedProvider } from 'react-apollo/test-utils';
 
 // Here we describe the stories we want to see of the Button. The component is
@@ -163,7 +163,38 @@ const mockCreateInputData = {
             "ofType": null
           }
         },
+        {
+          "name": "role",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "UserRoleTypeEnum",
+            "kind": "ENUM",
+            "ofType": null
+          }
+        },
       ]
+    }
+  }
+}
+
+const userRoleTypeEnumData = {
+  "data": {
+    "__type": {
+      "name": "UserRoleTypeEnum",
+      "__typename": "__Type",
+      "kind": "ENUM",
+      "enumValues": [
+        {
+          "name": "CEO",
+          "__typename": "__EnumValue",
+        },
+        {
+          "name": "CTO",
+          "__typename": "__EnumValue",
+        }
+      ],
     }
   }
 }
@@ -182,6 +213,13 @@ const mockData = [
       variables: { name: 'UserInput' },
     },
     result: mockCreateInputData
+  },
+  {
+    request: {
+      query: enumQuery,
+      variables: { name: 'UserRoleTypeEnum' },
+    },
+    result: userRoleTypeEnumData
   }
 
 ]
@@ -256,6 +294,15 @@ storiesOf('GraphqlForm', module)
           customValidators={{
             salary: customValidator
           }}
+        />
+      </div>
+    </MockedProvider>
+  }).add('A Enum type for role (CEO and CTO)', () => {
+    return <MockedProvider mocks={mockData}>
+      <div style={{ width: 400 }}>
+        <GraphqlForm modelName="User" onSubmit={(form) => {
+          action('Submit Clicked')(form);
+        }}
         />
       </div>
     </MockedProvider>

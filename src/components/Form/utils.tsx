@@ -1,7 +1,7 @@
 import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery'
 import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
 import { InnerFormProps } from './InnerForm';
-import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput } from './widgets/index';
+import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput } from './widgets/index';
 import * as moment from 'moment';
 import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
 import * as React from 'react';
@@ -92,6 +92,11 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       } else {
         // If it's not known, but still a scalar, then use a text input
         toReturn = <TextInput />;
+      }
+    } else if (kind === 'ENUM') {
+      if (typeName) {
+        // @ts-ignore
+        toReturn = <EnumInput enumType={typeName} />
       }
     }
     return <InputWrapper {...fieldProps} key={fieldName}>
