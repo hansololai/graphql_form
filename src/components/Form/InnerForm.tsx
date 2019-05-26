@@ -28,9 +28,11 @@ export interface InnerFormProps extends GraphqlFormProps, FormComponentProps {
   inputFields: patchTypeQuery___type_inputFields[];
 }
 const InnerForm: React.FC<InnerFormProps> = (props) => {
-  const { inputFields, form, instanceData, onSubmit } = props;
+  const { inputFields, form, instanceData, onSubmit,
+    ...options
+  } = props;
 
-  const allFields = createFormFields({ instanceData, fields: inputFields, options: {}, form });
+  const allFields = createFormFields({ ...options, instanceData, fields: inputFields, form });
 
   return <Form onSubmit={(e) => {
     e.preventDefault();

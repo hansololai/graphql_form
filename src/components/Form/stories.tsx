@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 // import { action } from '@storybook/addon-actions';
 // Import our component from this folder
 import { updateInputQuery, GraphqlForm } from './GraphqlForm';
-import { TextInput, BooleanInput } from './widgets';
+import { TextInput, BooleanInput, TextSelectInput } from './widgets';
 import { MockedProvider } from 'react-apollo/test-utils';
 
 // Here we describe the stories we want to see of the Button. The component is
@@ -202,6 +202,61 @@ storiesOf('GraphqlForm', module)
           const data = form.getFieldsValue();
           action('Data to process form.getFieldsValue()')(data);
         }} />
+      </div>
+    </MockedProvider>
+  }).add('Use Custom widget (select text) for a field', () => {
+    const customWidgets = {
+      firstName: ({ value, onChange }) => <TextSelectInput value={value} onChange={onChange} inputOptions={[
+        { name: 'John(Manager)', value: 'John' },
+        { name: 'Robin(CEO)', value: 'Robin' },
+        { name: 'Evan(Intern)', value: 'Evan' },
+      ]} />
+    };
+    action('Input customWidgets Object')(customWidgets);
+    return <MockedProvider mocks={mockData}>
+      <div style={{ width: 400 }}>
+        <GraphqlForm modelName="User" onSubmit={(form) => {
+          action('Submit Clicked')(form);
+        }}
+          customWidgets={customWidgets}
+        />
+      </div>
+    </MockedProvider>
+  }).add('Use Custom rules for email regex pattern', () => {
+    const customRule = {
+      pattern: /@/
+    }
+    action('Input CustomRule for email')(customRule);
+    return <MockedProvider mocks={mockData}>
+      <div style={{ width: 400 }}>
+        <GraphqlForm modelName="User" onSubmit={(form) => {
+          action('Submit Clicked')(form);
+        }}
+          customRules={{
+            email: [customRule]
+          }}
+        />
+      </div>
+    </MockedProvider>
+  }).add('Use Custom validator for salary (in range 10000-50000)', () => {
+    const customValidator = (rule, value, cb, source, options, form) => {
+      // call cb() means no error
+      // call cb("error message") means there is error
+      if (Number(value) >= 10000 && Number(value) <= 50000) {
+        cb();
+      }
+      cb("not within 10000 - 50000");
+    }
+    action('Input custom validator for salary')(customValidator);
+    return <MockedProvider mocks={mockData}>
+      <div style={{ width: 400 }}>
+        <GraphqlForm modelName="User" onSubmit={(form) => {
+          action('Submit Clicked')(form);
+        }}
+          customValidators={{
+            salary: customValidator
+          }}
+        />
       </div>
     </MockedProvider>
   })

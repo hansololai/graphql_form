@@ -8,13 +8,14 @@ import { WrappedInnerForm } from './InnerForm';
 // Generated Types
 import { patchTypeQuery } from './__generated__/patchTypeQuery'
 import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { FormFieldOptionProps } from './utils';
 
 
-export interface GraphqlFormProps {
+export interface GraphqlFormProps extends FormFieldOptionProps {
   modelName: string;
   instanceData?: any;
   instanceId?: number;
-  onSubmit?:(form: WrappedFormUtils)=>void;
+  onSubmit?: (form: WrappedFormUtils) => void;
 }
 export const updateInputQuery = gql`
   query patchTypeQuery($name: String!){

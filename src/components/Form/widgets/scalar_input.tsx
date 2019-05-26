@@ -15,13 +15,13 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 export interface BooleanInputProps extends CheckboxProps {
-  value:boolean;
- }
+  value: boolean;
+}
 export interface TextInputProps extends InputProps { }
 export interface NumberInputProps extends InputNumberProps { }
 export interface HiddenInputProps extends InputProps { }
 export interface TextSelectInputProps extends SelectProps {
-  inputOptions: { key: string, value: string }[];
+  inputOptions: { name: string, value: string }[];
 }
 export interface TimeInputProps extends TimePickerProps { }
 export interface DateInputProps extends DatePickerProps { }
@@ -34,7 +34,7 @@ export interface TextAreaInputProps extends TextAreaProps { }
  */
 
 export const BooleanInput: React.FC<BooleanInputProps> = (props) => {
-  const { value } =props;
+  const { value } = props;
   return <Checkbox {...props} checked={value} />
 };
 
@@ -47,8 +47,8 @@ export const HiddenInput: React.FC<HiddenInputProps> = (props) => < Input {...pr
 export const TextSelectInput: React.FC<TextSelectInputProps> = (props) => {
   const { value, onChange, inputOptions = [] } = props;
   const selectOptions = inputOptions.map((o) => {
-    const { key, value: optionValue } = o;
-    return <Option key={key} value={key}>{optionValue}</Option>;
+    const { name, value } = o;
+    return <Option key={value} value={value}>{name}</Option>;
   });
   return (<Select value={value} onChange={onChange} >
     {selectOptions}

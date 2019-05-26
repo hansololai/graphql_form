@@ -8,7 +8,7 @@ import { formItemLayout } from './InnerForm'
 
 
 const { Item } = Form;
-
+export type validatorFunc = (rule: any, value: any, callback: any, source?: any, options?: any, form?: WrappedFormUtils) => any;
 export interface InputWrapperProps {
   form: WrappedFormUtils;
   name: string;
@@ -18,7 +18,7 @@ export interface InputWrapperProps {
   hidden: boolean;
   options?: GetFieldDecoratorOptions;
   customRules?: ValidationRule[];
-  validator?: (rule: any, value: any, callback: any, source?: any, options?: any, form?: WrappedFormUtils) => any;
+  validator?: validatorFunc;
 }
 export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
   const {
