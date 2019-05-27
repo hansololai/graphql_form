@@ -1,10 +1,12 @@
 import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery'
 import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
 import { InnerFormProps } from './InnerForm';
-import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput } from './widgets/index';
+import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput, HasOneInput } from './widgets/index';
 import * as moment from 'moment';
 import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
 import * as React from 'react';
+import { SelectFragmentProp } from './ModelFragments';
+
 export const isFunction = (funcToCheck) => {
   if (!funcToCheck) return false;
   return {}.toString.call(funcToCheck) === '[object Function]';
@@ -36,10 +38,14 @@ export interface FormFieldOptionProps {
 }
 export interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>, FormFieldOptionProps {
   fields: patchTypeQuery___type_inputFields[];
+  mapping: { [x: string]: SelectFragmentProp }
   instanceData: object;
 }
 export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {
-  const { fields, instanceData = {}, form, customDecorators = {}, customRules = {}, customValidators = {}, customWidgets = {} } = props;
+  const { fields, instanceData = {}, form, customDecorators = {},
+    customRules = {}, customValidators = {}, customWidgets = {},
+    mapping = {},
+  } = props;
   return fields.map(field => {
     const { name: fieldName, type } = field;
     // Sometimes it's not null,  then have to go one level deeper
@@ -77,6 +83,12 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       toReturn = <C />;
     } else if (kind === 'SCALAR') {
       if (handlableTypeName(typeName)) {
+        // It could be a foreign Key, so we do some guess here
+        if (mapping[fieldName]) {
+          // @ts-ignore
+          toReturn = <HasOneInput {...mapping[fieldName]} />
+        }
+
         const C = nameToFormFieldMapping[typeName];
         switch (typeName) {
           case 'Date':

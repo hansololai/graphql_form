@@ -2,23 +2,22 @@ import * as React from 'react';
 import { Query } from 'react-apollo';
 import { useDebounce } from 'use-debounce'
 import { Select, Spin } from 'antd';
+import { SelectFragmentProp } from '../ModelFragments';
 
-type nameFunction = (p: any) => string;
-export interface HasOneInputProps<TData> {
+export type NameFunction = (p: any) => string;
+export interface HasOneInputProps<TData> extends SelectFragmentProp {
   value: any;
   onChange: (value: any) => void;
-  searchQuery: any;
-  nameField: string | nameFunction;
-  valueField: string | nameFunction;
 }
 
 export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.ReactElement<HasOneInputProps<TData>> = (props) => {
   const [searchInput, setSearchInput] = React.useState('');
   const [filterText] = useDebounce(searchInput, 500);
-  const { searchQuery, value, onChange, nameField, valueField } = props;
+  const { selectQuery, value, onChange, nameField, valueField, filterField } = props;
+  const filter = typeof filterField === "string" ? { [filterField]: { includesInsensitive: filterText } } : filterField(filterText);
 
-  return <Query query={searchQuery} variables={{ first: 50, filter: { name: { equalTo: filterText } } }}>
-    {({ data, loading, error }) => {
+  return <Query query={selectQuery} variables={{ first: 50, filter }}>
+    {({ data, loading }) => {
       // Don't know what model it is, but it should have only 1 key
       let optionData: any[] = [];
       if (Object.values(data).length > 0) {

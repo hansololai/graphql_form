@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Spin } from 'antd';
 import { WrappedInnerForm } from './InnerForm';
+import * as SelectFragmentMapping from './ModelFragments';
 
 
 // Generated Types
@@ -15,6 +16,7 @@ export interface GraphqlFormProps extends FormFieldOptionProps {
   modelName: string;
   instanceData?: any;
   instanceId?: number;
+  mapping?: { [x: string]: SelectFragmentMapping.SelectFragmentProp }
   onSubmit?: (form: WrappedFormUtils) => void;
 }
 export const updateInputQuery = gql`
