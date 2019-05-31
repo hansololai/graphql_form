@@ -1,12 +1,12 @@
 module.exports = {
   client: {
-    name: 'Coyote',
+    name: 'Graphql',
     service: {
-      name: 'Gemini',
+      name: 'Server',
       url: 'http://localhost:5000/graphql',
     },
-    watch:true,
-    includes:[
+    watch: true,
+    includes: [
       "src/**/*.{ts,tsx}"
     ]
   },
