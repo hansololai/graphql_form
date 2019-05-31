@@ -38,7 +38,7 @@ export interface FormFieldOptionProps {
 }
 export interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>, FormFieldOptionProps {
   fields: patchTypeQuery___type_inputFields[];
-  mapping: { [x: string]: SelectFragmentProp }
+  mapping?: { [x: string]: SelectFragmentProp }
   instanceData: object;
 }
 export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {

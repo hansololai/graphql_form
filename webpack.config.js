@@ -71,6 +71,21 @@ module.exports = {
 			},
 		],
 	},
+	devtool: "source-map",
+	externals: {
+		react: {
+			root: 'React',
+			commonjs2: 'react',
+			commonjs: 'react',
+			amd: 'react'
+		},
+		'react-dom': {
+			root: 'ReactDOM',
+			commonjs2: 'react-dom',
+			commonjs: 'react-dom',
+			amd: 'react-dom',
+		}
+	},
 	// Here we define explicitly the file types we intend to deal with
 	resolve: {
 		extensions: ['.scss', '.js', '.json', '.png', '.gif', '.jpg', '.svg', '.ts', '.tsx'],
@@ -84,11 +99,13 @@ module.exports = {
 		// You can do fun things here like use the [hash] keyword to generate unique
 		// filenames, but for this purpose rinse.js is fine. This file and path will
 		// be what you put in package.json's "main" field
-		filename: 'rinse.js',
+		filename: 'index.js',
 		// This field determines how things are importable when installed from other
 		// sources. UMD may not be correct now and there is an open issue to fix this,
 		// but until then, more reading can be found here:
 		// https://webpack.js.org/configuration/output/#output-librarytarget
+		library: 'GraphqlForm',
 		libraryTarget: 'umd',
+		umdNamedDefine: true
 	},
 };

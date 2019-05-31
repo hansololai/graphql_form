@@ -2,10 +2,10 @@
   "name": "graphql-form-react",
   "version": "1.0.0",
   "description": "A Graphql Form.",
-  "main": "dist/rinse.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "storybook": "start-storybook -p 9001",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cwlsn/rinse-react.git"
+    "url": "git+https://github.com/hansololai/graphql_form"
   },
   "keywords": [
     "boilerplate",
@@ -25,9 +25,9 @@
   "author": "Han Lai",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cwlsn/rinse-react/issues"
+    "url": "https://github.com/hansololai/graphql_form/issues"
   },
-  "homepage": "https://github.com/cwlsn/rinse-react#readme",
+  "homepage": "https://github.com/hansololai/graphql_form",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
