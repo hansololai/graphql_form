@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { updateInputQuery, modelFieldsQuery } from './queries';
 import { Spin } from 'antd';
 import { WrappedInnerForm } from './InnerForm';
 import * as SelectFragmentMapping from './ModelFragments';
 
 
 // Generated Types
-import { patchTypeQuery } from './__generated__/patchTypeQuery'
+import { patchTypeQuery } from './__generated__/patchTypeQuery';
+import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { FormFieldOptionProps } from './utils';
 
@@ -19,25 +20,6 @@ export interface GraphqlFormProps extends FormFieldOptionProps {
   mapping?: { [x: string]: SelectFragmentMapping.SelectFragmentProp }
   onSubmit?: (form: WrappedFormUtils) => void;
 }
-export const updateInputQuery = gql`
-  query patchTypeQuery($name: String!){
-    __type(name: $name){
-      inputFields{
-        name
-        defaultValue
-        type{
-          name
-          kind
-          ofType{
-            name
-            kind
-          }
-        }
-      } 
-    }
-  } 
-`;
-
 
 
 export const GraphqlForm: React.FC<GraphqlFormProps> = (props) => {
@@ -45,14 +27,20 @@ export const GraphqlForm: React.FC<GraphqlFormProps> = (props) => {
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;
   return <Query<patchTypeQuery> query={updateInputQuery} variables={{ name: typeName }}>
-    {({ data, loading, error }) => {
-      if (loading) return <Spin />;
-      if (!data) return null;
-      const { __type } = data as patchTypeQuery;
-      if (!__type) return null;
-      const { inputFields } = __type;
-      if (!inputFields) return null;
-      return <WrappedInnerForm {...props} inputFields={inputFields} />;
+    {({ data: inputData, loading: inputLoading, error: inputError }) => {
+      return <Query<fieldTypeQuery> query={modelFieldsQuery} variables={{ name: modelName }}>
+        {({ data, loading, error }) => {
+          if (loading || inputLoading) return <Spin />;
+          if (error || inputError) return null;
+          if (!data || !inputData) return null;
+          const { __type: inputType } = inputData;
+          const { __type: fieldType } = data;
+          if (!inputType || !fieldType) return null;
+          const { inputFields } = inputType;
+          const { fields } = fieldType;
+          return <WrappedInnerForm {...props} inputFields={inputFields || []} fields={fields || []} />;
+        }}
+      </Query>;
     }}
   </Query>;
 }

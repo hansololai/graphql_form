@@ -10,6 +10,7 @@ import 'antd/lib/button/style';
 
 // Generated Types
 import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery'
+import { fieldTypeQuery___type_fields } from './__generated__/fieldTypeQuery'
 import { GraphqlFormProps } from './GraphqlForm';
 
 export const formItemLayout = {
@@ -23,16 +24,16 @@ export const formItemLayout = {
   },
 }
 
-
-export interface InnerFormProps extends GraphqlFormProps, FormComponentProps {
+export interface InnerFormTypeProps {
   inputFields: patchTypeQuery___type_inputFields[];
+  fields: fieldTypeQuery___type_fields[];
 }
-const InnerForm: React.FC<InnerFormProps> = (props) => {
-  const { inputFields, form, instanceData, onSubmit,
-    ...options
-  } = props;
+export interface InnerFormProps extends GraphqlFormProps, FormComponentProps, InnerFormTypeProps { };
 
-  const allFields = createFormFields({ ...options, instanceData, fields: inputFields, form });
+const InnerForm: React.FC<InnerFormProps> = (props) => {
+  const { onSubmit, form, instanceData = {}, ...options } = props;
+
+  const allFields = createFormFields({ ...options, form, instanceData });
 
   return <Form onSubmit={(e) => {
     e.preventDefault();

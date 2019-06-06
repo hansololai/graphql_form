@@ -1,6 +1,5 @@
-import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery'
 import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
-import { InnerFormProps } from './InnerForm';
+import { InnerFormProps, InnerFormTypeProps } from './InnerForm';
 import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput, HasOneInput } from './widgets/index';
 import * as moment from 'moment';
 import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
@@ -36,17 +35,27 @@ export interface FormFieldOptionProps {
   customDecorators?: { [x: string]: GetFieldDecoratorOptions };
   customWidgets?: { [x: string]: React.FC<{ value: any, onChange: (p: any) => void }> };
 }
-export interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>, FormFieldOptionProps {
-  fields: patchTypeQuery___type_inputFields[];
-  mapping?: { [x: string]: SelectFragmentProp }
+export interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>, FormFieldOptionProps, InnerFormTypeProps {
+  mapping?: { [x: string]: SelectFragmentProp };
   instanceData: object;
 }
 export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {
-  const { fields, instanceData = {}, form, customDecorators = {},
+  const { fields, inputFields, instanceData = {}, form, customDecorators = {},
     customRules = {}, customValidators = {}, customWidgets = {},
     mapping = {},
   } = props;
-  return fields.map(field => {
+  // fields are going to be used as reference to check if it's a foreign key, let's process it once first
+  // it is a keyName => modelName mapping
+  const foreignKeys: { [x: string]: string } = {};
+  fields.forEach(f => {
+    const { name: fieldName, type: { name: typeName, kind } } = f;
+    if (kind === 'OBJECT' && fieldName.includes('By') && typeName) {
+      // It is a foreign key
+      const keyName = fieldName.substring(fieldName.indexOf('By'));
+      if (keyName) foreignKeys[keyName] = typeName;
+    }
+  })
+  return inputFields.map(field => {
     const { name: fieldName, type } = field;
     // Sometimes it's not null,  then have to go one level deeper
     const info = type.kind === 'NON_NULL' ? type.ofType : type;
@@ -87,20 +96,23 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
         if (mapping[fieldName]) {
           // @ts-ignore
           toReturn = <HasOneInput {...mapping[fieldName]} />
-        }
-
-        const C = nameToFormFieldMapping[typeName];
-        switch (typeName) {
-          case 'Date':
-          case 'Datetime': {
-            value = value ? moment(value) : null;
+        } else if (foreignKeys[fieldName]) {
+          // It is a foreign key by the fooByBarId pattern. 
+          toReturn = <NumberInput />
+        } else {
+          const C = nameToFormFieldMapping[typeName];
+          switch (typeName) {
+            case 'Date':
+            case 'Datetime': {
+              value = value ? moment(value) : null;
+            }
           }
+          // @ts-ignore
+          // The component here should not pass in any parameters
+          // Even though they require a non null value, onChange
+          // Because the getFieldDecorator() in form will provide it
+          toReturn = <C />;
         }
-        // @ts-ignore
-        // The component here should not pass in any parameters
-        // Even though they require a non null value, onChange
-        // Because the getFieldDecorator() in form will provide it
-        toReturn = <C />;
       } else {
         // If it's not known, but still a scalar, then use a text input
         toReturn = <TextInput />;

@@ -4,9 +4,11 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions'
 // import { action } from '@storybook/addon-actions';
 // Import our component from this folder
-import { updateInputQuery, GraphqlForm } from './GraphqlForm';
-import { TextInput, BooleanInput, TextSelectInput, enumQuery } from './widgets';
+import { GraphqlForm } from './GraphqlForm';
+import { updateInputQuery } from './queries';
+import { TextInput, BooleanInput, TextSelectInput, enumQuery, HasOneInput } from './widgets';
 import { MockedProvider } from 'react-apollo/test-utils';
+import gql from 'graphql-tag';
 
 // Here we describe the stories we want to see of the Button. The component is
 // pretty simple so we will just make two, one with text and one with emojis
@@ -14,6 +16,16 @@ import { MockedProvider } from 'react-apollo/test-utils';
 //
 // .add() takes a name and then a function that should return what you want
 // rendered in the rendering area
+const sampleSelectQuery = gql`
+  query selectUser($first:Int, $filter:UserFilter){
+    allUsers(first:$first, filter: $filter){
+      nodes{
+        id
+        name
+      }
+    }
+  }
+`;
 storiesOf('Boolean Widget', module)
   .add('Checked', () => (
     <BooleanInput value={true} />
@@ -198,8 +210,45 @@ const userRoleTypeEnumData = {
     }
   }
 }
+const mockUserSelectData = {
+  "data": {
+    "allUsers": {
+      "nodes": [
+        { id: 1, name: "Kyle", __typename: "User" },
+        { id: 2, name: "John", __typename: "User" },
+        { id: 3, name: "George", __typename: "User" },
+      ],
+      __typename: "UserConnection"
+    }
+  }
+}
+const mockUserSelectDataOnlyJ = {
+  "data": {
+    "allUsers": {
+      "nodes": [
+        { id: 2, name: "John", __typename: "User" },
+      ],
+      __typename: "UserConnection"
+    }
+  }
+}
+
 
 const mockData = [
+  {
+    request: {
+      query: sampleSelectQuery,
+      variables: { first: 50, filter: { name: { includesInsensitive: "" } } }
+    },
+    result: mockUserSelectData,
+  },
+  {
+    request: {
+      query: sampleSelectQuery,
+      variables: { first: 50, filter: { name: { includesInsensitive: "J" } } }
+    },
+    result: mockUserSelectDataOnlyJ,
+  },
   {
     request: {
       query: updateInputQuery,
@@ -223,6 +272,18 @@ const mockData = [
   }
 
 ]
+
+storiesOf('SelectWidget', module)
+  .add('User model', () => {
+    return <MockedProvider mocks={mockData}>
+      <HasOneInput selectQuery={sampleSelectQuery} nameField="name" valueField="id" filterField="name" value={null} onChange={(e) => {
+        action("selected user with id ")(e);
+      }} />
+
+    </MockedProvider>
+
+
+  })
 
 storiesOf('GraphqlForm', module)
   .add('To Update User Model in 400px frame', () => (

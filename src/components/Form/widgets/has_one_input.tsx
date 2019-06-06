@@ -13,7 +13,7 @@ export interface HasOneInputProps<TData> extends SelectFragmentProp {
 export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.ReactElement<HasOneInputProps<TData>> = (props) => {
   const [searchInput, setSearchInput] = React.useState('');
   const [filterText] = useDebounce(searchInput, 500);
-  const { selectQuery, value, onChange, nameField, valueField, filterField } = props;
+  const { selectQuery, value, onChange, nameField, valueField = "id", filterField } = props;
   const filter = typeof filterField === "string" ? { [filterField]: { includesInsensitive: filterText } } : filterField(filterText);
 
   return <Query query={selectQuery} variables={{ first: 50, filter }}>
@@ -28,6 +28,7 @@ export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.React
         }
       }
       return <Select
+        showSearch={!!filterField}
         value={value}
         placeholder="type in to search"
         notFoundContent={loading ? <Spin size="small" /> : null}
