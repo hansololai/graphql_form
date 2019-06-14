@@ -7,6 +7,7 @@ import * as pluralize from 'pluralize';
 import { Query, Subscription } from 'react-apollo';
 import { ColumnProps, TableProps } from 'antd/lib/table'
 import { fieldTypeQuery___type_fields } from 'components/Form/__generated__/fieldTypeQuery';
+import { isScalar, buildGetCollectionQuery } from './utils'
 
 const { Option } = Select;
 const { Item: FormItem } = Form;
@@ -103,12 +104,14 @@ const { Item: FormItem } = Form;
  */
 export interface GraphqlTableColumProps<T> extends ColumnProps<T> {
   fragment: Document;
+  key:string;
 }
 
 export interface InnerTableProps<T> extends TableProps<T> {
   columns: GraphqlTableColumProps<T>[];
   modelName: string;
   fields: fieldTypeQuery___type_fields[];
+  hiddenColumns: string[];
 }
 
 
@@ -136,8 +139,6 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
     this.calculateNewVariable = this.calculateNewVariable.bind(this);
     this.generateOneColumn = this.generateOneColumn.bind(this);
     this.generateColumnFromQL = this.generateColumnFromQL.bind(this);
-    this.exportCsv = this.exportCsv.bind(this);
-    this.selectAll = this.selectAll.bind(this);
   }
   debounceSearch = debounce(() => {
     this.onSearch();
@@ -592,30 +593,17 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
       enableExport,
       live,
       exportable,
+      columns,
       rowSelection,
     } = this.props;
 
-    const {
-      downloading = false,
-      columnsToHide,
-      selectAllLoading = false,
-    } = this.state;
+    // First get all Scalar Fields, 
+    const scalarFields = fields.filter(f => isScalar(f));
+    const fragments = columns.filter(c=>!hiddenColumns.includes(c.key)).map(c=>c.fragment).filter(f=>!!f);
+    // Unless there are hidden fields, these fields will be used for construction graphql query
+    //
+    const collectionQuery = buildGetCollectionQuery({model:modelName, fields: scalarFields, fragments});
 
-    const originalVariables = this.baseVariable();
-    const { first: pageSize } = originalVariables;
-    let collectionQuery = null;
-    let filteredFields = [];
-    // Handle conditions based on different input props
-    // If there's a list of fields to be displayed, then use that instead of default filtered fields
-    if (displayFields) {
-      filteredFields = displayFields.map((f) => {
-        const toReturn = fields.find(field => field.name === f);
-        if (!toReturn) throw Error(`A field ${f} is not found in the model!`);
-        return toReturn;
-      });
-    } else {
-      filteredFields = fields.filter(f => defaultFilterHiddenField(f));
-    }
 
     // If there's a custom query, then don't build the collection query, use that instead
     const columnsToFetch = getAllColumns(filteredFields, { hasOne: true });
