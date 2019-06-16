@@ -68,3 +68,15 @@ export const isScalar: (f: fieldTypeQuery___type_fields) => boolean = (f) => {
   }
   return false;
 }
+export const getFieldType: (f: fieldTypeQuery___type_fields) => string = (f) => {
+  const { type: { kind, ofType, name } } = f;
+  if (kind === 'SCALAR') {
+    return name || 'String';
+  }
+  if (kind === 'NON_NULL') {
+    if (ofType && ofType.kind === 'SCALAR') {
+      return ofType.name || 'String';
+    }
+  }
+  return 'String';
+}

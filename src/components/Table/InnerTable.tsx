@@ -7,10 +7,14 @@ import * as pluralize from 'pluralize';
 import { Query, Subscription } from 'react-apollo';
 import { ColumnProps, TableProps } from 'antd/lib/table'
 import { fieldTypeQuery___type_fields } from 'components/Form/__generated__/fieldTypeQuery';
-import { isScalar, buildGetCollectionQuery } from './utils'
+import { isScalar, buildGetCollectionQuery, getFieldType } from './utils'
 
 const { Option } = Select;
 const { Item: FormItem } = Form;
+
+function notNull<T>(value: T | null | undefined): value is T {
+  return !!value;
+}
 
 /**
  * @class InnerTable creates a table from given schema
@@ -102,12 +106,13 @@ const { Item: FormItem } = Form;
  * which user can select the columns to be hidden, and/or unhidden
  *
  */
-export interface GraphqlTableColumProps<T> extends ColumnProps<T> {
+export interface GraphqlTableColumProps<T> extends Omit<ColumnProps<T>, 'render'> {
   fragment: Document;
-  key:string;
+  key: string;
+  render?: (text: any, record: T, index: number, extra: { variables: any, fetchMore: any, refetch: () => void }) => React.ReactNode;
 }
 
-export interface InnerTableProps<T> extends TableProps<T> {
+export interface InnerTableProps<T> extends Omit<TableProps<T>, 'columns'> {
   columns: GraphqlTableColumProps<T>[];
   modelName: string;
   fields: fieldTypeQuery___type_fields[];
@@ -137,9 +142,9 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
     this.onHideColumns = this.onHideColumns.bind(this);
     this.onFilterDropdownVisibleChange = this.onFilterDropdownVisibleChange.bind(this);
     this.calculateNewVariable = this.calculateNewVariable.bind(this);
-    this.generateOneColumn = this.generateOneColumn.bind(this);
-    this.generateColumnFromQL = this.generateColumnFromQL.bind(this);
+    this.generateColumnsFromFields = this.generateColumnsFromFields.bind(this);
   }
+  exposed: any = null;
   debounceSearch = debounce(() => {
     this.onSearch();
   }, 500);
@@ -349,339 +354,125 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
     return newVariables;
   }
 
-  generateOneColumn({ name, displayName, sortable, filterable, searchType = 'text' }) {
-    const {
-      searchText,
-      filterDropdownVisible,
-      filterOptions: {
-        [name]: checkBoxes = [],
-      } = {},
-    } = this.state;
-
-    const dropdownProps = {
-      name: displayName,
-      field: name,
-      searchText: searchText[name],
-      onInputChange: this.onInputChange,
-      onCloseSearch: this.onCloseSearch,
-    };
-
+  generateScalarColumn = (field: fieldTypeQuery___type_fields) => {
+    const typeName = getFieldType(field);
+    const { name } = field;
     const preColumn = {
       key: name,
-      title: displayName,
+      title: name,
       dataIndex: name,
-      sorter: sortable,
+      sorter: true,
+      render: (value: any, record: any, index: any) => {
+        return value;
+      }
     };
+    switch (typeName) {
+      case 'Boolean': {
+        preColumn.render = (value) => {
+          if (value === true) {
+            return <Icon type="check-circle" style={{ color: 'green' }} />;
+          } else if (value === false) {
+            return <Icon type="close-circle" style={{ color: 'red' }} />;
+          }
+          return null;
+        };
+        break;
+      }
+      case 'ID':
+      case 'Int':
+      case 'Float':
+      case 'BigInt':
+      case 'BigFloat':
+      case 'String': {
+        preColumn.render = (value) => {
+          return value;
+        }
+        break;
+      }
+      case 'Datetime':
+      case 'Date': {
+        preColumn.render = value => (value ? moment(value).format('YYYY-MM-DD') : '');
+        break;
+      }
+      default: {
 
-    let hasFilter = false;
-    if (checkBoxes.length > 0) {
-      // Uses the native filter,
-      preColumn.filters = checkBoxes;
-      hasFilter = true;
-    } else if (filterable) {
-      preColumn.filterIcon = (
-        <Icon
-          type="search"
-          style={{ color: searchText[name] ? '#108ee9' : '#aaa' }}
-        />
-      );
-
-      preColumn.filterDropdown = (
-        <SearchDropdown
-          ref={(input) => { this.searchDropdown = input; }}
-          {...dropdownProps}
-          searchType={searchType}
-          searchOnType={searchType !== 'text'}
-        />
-      );
-
-      preColumn.filterDropdownVisible = !!filterDropdownVisible[name];
-
-      preColumn.onFilterDropdownVisibleChange = visible =>
-        this.onFilterDropdownVisibleChange(name, visible);
-
-      hasFilter = true;
-    }
-
-    if (hasFilter) {
-      if (Array.isArray(searchText[name]) && searchText[name].length === 0) {
-        // If empty column, no filteredValue
-        preColumn.filteredValue = null;
-      } else if (searchText[name] !== '') {
-        // If there's text, then there is filtered value
-        preColumn.filteredValue = searchText[name];
-      } else {
-        preColumn.filteredValue = null;
       }
     }
-
-    return { ...preColumn };
+    return preColumn;
   }
 
-  generateColumnFromQL(fields) {
-    const { registry = {} } = this.props;
+  generateColumnsFromFields = (fields: fieldTypeQuery___type_fields[]) => {
     return fields.map((field) => {
-      const { name } = field;
-      const info = getFieldType(field);
-      const { kind, name: typeName } = info;
-      const displayName = getFieldDisplayName(field);
-
-      if (kind === 'SCALAR') {
-        switch (typeName) {
-          case 'Boolean': {
-            const preColumn = this.generateOneColumn({
-              name,
-              displayName,
-              sortable: true,
-              filterable: false,
-            });
-            preColumn.render = (value) => {
-              if (value === true) {
-                return <Icon type="check-circle" style={{ color: 'green' }} />;
-              } else if (value === false) {
-                return <Icon type="close-circle" style={{ color: 'red' }} />;
-              }
-              return null;
-            };
-            return preColumn;
-          }
-          case 'ID':
-          case 'Int':
-          case 'Float':
-          case 'BigInt':
-          case 'BigFloat':
-          case 'String': {
-            return this.generateOneColumn({
-              name,
-              displayName,
-              sortable: true,
-              filterable: true,
-            });
-          }
-          case 'Datetime':
-          case 'Date': {
-            const preColumn = this.generateOneColumn({
-              name,
-              displayName,
-              sortable: true,
-              filterable: true,
-              searchType: 'date',
-            });
-            preColumn.render = value => (value ? moment(value).format('YYYY-MM-DD') : '');
-            return preColumn;
-          }
-          default: {
-            return this.generateOneColumn({
-              name,
-              displayName,
-              sortable: false,
-              filterable: false,
-            });
-          }
-        }
-      } else {
-        // If it is not scalar, then it should be objects,
-        // we don't know how to handle it, so look at the registry.
-        const { [typeName]: handler } = registry;
-
-        const modelName = changeCase.titleCase(
-          pluralize.singular(typeName.replace('Connection', '')),
-        ).replace(/ /, '');
-
-        if (handler) {
-          // If there is a search handler
-          const preColumn = this.generateOneColumn({
-            name,
-            displayName: handler.title || displayName,
-            sortable: false,
-            filterable: isFunction(handler.filter),
-          });
-          if (handler.filter) {
-            if (handler.filters) { // Use the native checkbox filter for this column
-              preColumn.filters = handler.filters;
-              preColumn.filterDropdown = null;
-              preColumn.filterIcon = null;
-            }
-          }
-          if (isFunction(handler.render)) {
-            // there's a render function for this type, use it!
-            preColumn.render = handler.render;
-          } else {
-            preColumn.render = value => <GraphqlModelDisplay data={value} inline />;
-          }
-          if (isFunction(handler.toText)) {
-            preColumn.toText = handler.toText;
-          } else if (MODEL_HASH[modelName]) {
-            preColumn.toText = value => (value || {})[MODEL_HASH[modelName].searchfield];
-          }
-          return preColumn;
-        }
-        // If not provided then use the GraphqlModelDisplay
-        const preColumn = this.generateOneColumn({
-          name,
-          displayName,
-          sortable: false,
-          filterable: false,
-        });
-        preColumn.render = value => <GraphqlModelDisplay data={value} inline />;
-        if (MODEL_HASH[modelName]) {
-          preColumn.toText = value => (value || {})[MODEL_HASH[modelName].searchfield];
-        }
-        return preColumn;
+      if (!isScalar(field)) {
+        // Handle non scalar column, TODO
+        return null;
       }
-    });
-  }
+      return this.generateScalarColumn(field);
+    }).filter(notNull)
 
-  baseVariable() {
-    const {
-      condition: baseCondition,
-      filter,
-      variables = {},
-      orderBy,
-      mode,
-      pagination,
-    } = this.props;
-
-    const {
-      variables: {
-        condition: currentCondition = {},
-        filter: currentFilter = {},
-        customFilter: currentCustomFilter = {},
-        ...otherVariables
-      },
-    } = this.state;
-
-    const { customFilter: baseCustomFilter = {}, filter: baseFilterFromV } = variables;
-    const baseFilter = { ...baseFilterFromV, ...filter };
-    // If it's client side, then default pagesize is a large number
-    let pageSize = mode === 'client' ? 999999 : 20;
-    pageSize = pagination.pageSize || pageSize;
-
-    // Smart merge the filter and condition
-    // Current setup is base filter cannot be overwritten
-    const newCond = { ...currentCondition, ...baseCondition };
-    const newFilter = { ...currentFilter, ...baseFilter };
-    const newCustomFilter = { ...currentCustomFilter, ...baseCustomFilter };
-
-    return {
-      ...variables,
-      orderBy,
-      offset: 0,
-      first: pageSize,
-      ...otherVariables,
-      condition: newCond,
-      filter: newFilter,
-      customFilter: newCustomFilter,
-    };
   }
 
   render() {
     const {
       modelName,
       fields,
-      mode,
-      customQuery,
-      displayFields,
-      antConfig,
-      extendedColumns = [],
       hiddenColumns,
-      hideRefresh,
-      pagination,
-      extendedFields,
-      columnOrder,
-      allowSelectColumns,
-      enableExport,
-      live,
-      exportable,
       columns,
-      rowSelection,
+      pagination = false,
     } = this.props;
+    const pageSize = 50;
+    const { offset, orderBy } = this.state;
 
     // First get all Scalar Fields, 
-    const scalarFields = fields.filter(f => isScalar(f));
-    const fragments = columns.filter(c=>!hiddenColumns.includes(c.key)).map(c=>c.fragment).filter(f=>!!f);
-    // Unless there are hidden fields, these fields will be used for construction graphql query
-    //
-    const collectionQuery = buildGetCollectionQuery({model:modelName, fields: scalarFields, fragments});
+    // Unless there are hidden fields, 
+    // these fields will be used for construction graphql query
+    const scalarFields = fields.filter(f => isScalar(f) && !hiddenColumns.includes(f.name));
+    const fragments = columns.filter(c => !hiddenColumns.includes(c.key)).map(c => c.fragment).filter(f => !!f);
 
 
-    // If there's a custom query, then don't build the collection query, use that instead
-    const columnsToFetch = getAllColumns(filteredFields, { hasOne: true });
-    if (!customQuery) {
-      const pluralModelName = pluralize.plural(modelName);
-      const queryField = `all${pluralModelName}`;
-      // Get fragments
-      // but first filter out the hidden columns
-      const fragments = extendedColumns.filter(c => !!c.fragment && !columnsToHide.includes(c.key)).map(c => c.fragment);
-      collectionQuery = buildGetCollectionQuery({
-        model: modelName,
-        fields: columnsToFetch,
-        queryName: queryField,
-        pageSize,
-        extraFields: extendedFields,
-        fragments,
-        hideFields: columnsToHide,
-      });
-    } else {
-      collectionQuery = customQuery;
-    }
 
+    const collectionQuery = buildGetCollectionQuery({ model: modelName, fields: scalarFields, fragments });
+
+    // Base Variable
+    const variable = { first: pageSize };
     return (
-      <Query
+      <Query<any>
         query={collectionQuery}
-        variables={originalVariables}
+        variables={variable}
       >
         {({ loading: tableLoading, data: tableData, error: tableError, variables, ...env }) => {
-          const { refetch, fetchMore } = env;
           if (tableError) {
             notification.error({
               message: 'Error while fetching data',
               description: tableError.message,
             });
+            return null;
           }
           // Handle conditions based on different input props
-          // If it's client side, then default pagesize is a large number
-          // If there's a list of fields to be displayed,
-          // then use that instead of default filtered fields
 
           this.exposed = env;
-          let autoColumns = [];
-          if (!displayFields) {
-            autoColumns = this.generateColumnFromQL(
-              getAllColumns(filteredFields, { hasOne: true }),
-            );
-          } else {
-            autoColumns = this.generateColumnFromQL(filteredFields);
-          }
+          // Now generate columns for each fields
 
-          // There is extended columns, but they are not exposed to our enviroment,
+          let autoColumns = this.generateColumnsFromFields(scalarFields);
+
+          // These extra columns, but they are not exposed to our enviroment,
           // cannot access to fetchMore, refetching, loading, etc.
           // So manually call the render function with these extra stuff
           // Also the extended column may also want to be filterable etc...
-          const correctedExtendedColumns = extendedColumns.map((c) => {
-            const newC = { ...c };
-            if (isFunction(c.render)) {
-              const oldFunction = c.render;
-              newC.render = (value, record, index) =>
-                oldFunction(value, record, index, { ...env, variables });
-            }
+          const correctedExtendedColumns = columns.map((c) => {
+            const newC: ColumnProps<T> = {
+              ...c, render: (value, record, index) => {
+                return c.render ? c.render(value, record, index, { ...env, variables }) : value;
+              }
+            };
             // If the column have a filter function, means it can be searched.
             // But if there's a filters, which means it's a drop down checkbox select,
             // then leave it be, antd will handle it
-            if (isFunction(c.filter) && !c.filters) {
-              const preColumn = this.generateOneColumn({
-                name: c.key,
-                displayName: c.title,
-                sortable: false,
-                filterable: true,
-              });
-              return { ...preColumn, ...newC };
-            }
             return newC;
           });
 
           // Some extended column have the same key, we'll merge these columns
-          const columns = autoColumns
+          const antdColumns = autoColumns
             .map((c) => {
               const extend = correctedExtendedColumns.find(ec => ec.key === c.key);
               return extend ? { ...c, ...extend } : c;
@@ -690,12 +481,12 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
           // Then some columns only exist in extendedColumns, add them
           correctedExtendedColumns.forEach((c) => {
             const exist = autoColumns.find(ac => ac.key === c.key);
-            if (!exist) columns.push(c);
+            if (!exist) antdColumns.push(c as any);
           });
 
           // Table data must have only one key, one value, example allLocations: { ...}
           const [, fieldData = {}] = ((Object.entries(tableData) || [])[0] || []);
-          const { nodes = [], totalCount = 0 } = fieldData;
+          const { nodes = [], totalCount = 0 } = fieldData as any;
 
 
           const { offset, orderBy: vorderBy } = variables;
@@ -705,170 +496,40 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
           // for these, the orderBy will be changed to [], so we have no
           // information on what order the table is listed.
           // so set all auto-generated column to false
-          const { field, order } = toTableOrder(vorderBy);
-          let columnsWithSort = vorderBy ? (columns.map((column) => {
-            if (column.key === field) {
-              return { ...column, sortOrder: order };
-            }
-            if (column.sortOrder) {
-              return { ...column, sortOrder: false };
-            }
-            if (column.setSortOrder) {
-              const o = column.setSortOrder(variables);
-              if (o) {
-                return { ...column, sortOrder: o === 'asc' ? 'ascend' : 'descend' };
-              }
-              return { ...column, sortOrder: false };
-            }
-            return column;
-          })) : columns;
+          // const { field, order } = toTableOrder(vorderBy);
+          const columnsWithSort = antdColumns;
+          // let columnsWithSort = vorderBy ? (antdColumns.map((column) => {
+          //   if (column.key === field) {
+          //     return { ...column, sortOrder: order };
+          //   }
+          //   if (column.sortOrder) {
+          //     return { ...column, sortOrder: false };
+          //   }
+          //   return column;
+          // })) : antdColumns;
 
-          const columnKeys = columnsWithSort.map(c => c.key);
-          columnOrder.slice().reverse().forEach((co) => {
-            const columnIndex = columnKeys.indexOf(co);
-            if (columnIndex > 0) {
-              const currentKey = columnKeys[columnIndex];
-              const currentColumn = columnsWithSort[columnIndex];
 
-              delete columnsWithSort[columnIndex];
-              delete columnKeys[columnIndex];
 
-              columnsWithSort.unshift(currentColumn);
-              columnKeys.unshift(currentKey);
-            }
-          });
+          const antdPagination = (pagination || {});
 
-          columnsWithSort = columnsWithSort.filter(c => !!c);
-          // The option of all available columns
-          const options = columnsWithSort
-            .map(c => <Option key={c.key} value={c.key}>{c.title}</Option>);
-          // Now filter these columns, only show the ones user wants to see
-          columnsWithSort = columnsWithSort.filter(c => !columnsToHide.includes(c.key));
-
-          if (mode === 'client') {
-            return (<AntTable
-              {...antConfig}
-              columns={columnsWithSort}
-              elements={nodes}
-            />);
-          }
           return (
             <div>
-              {allowSelectColumns && (
-                <Row>
-                  <FormItem label="Hide Columns">
-                    <Select
-                      style={{ width: '100%' }}
-                      onChange={this.onHideColumns}
-                      defaultValue={hiddenColumns}
-                      mode="multiple"
-                      value={columnsToHide}
-                    >
-                      {options}
-                    </Select>
-                  </FormItem>
-                </Row>
-              )}
 
-              {!hideRefresh && (
-                <Button
-                  onClick={refetch}
-                >
-                  Refresh Data
-                </Button>
-              )}
-
-              {live && (
-                <Row>
-                  <Subscription
-                    subscription={buildSubscribeOneQuery({ model: modelName, fields: ['id'], action: 'add' })}
-                    variables={{}}
-                  >
-                    {({ data, loading }) => {
-                      if (!data || loading) return null;
-                      const camelModelName = changeCase.camelCase(modelName);
-                      const { [`${camelModelName}Added`]: addedData = {} } = data;
-                      notification.info({
-                        message: `${modelName} Created`,
-                        description: `A ${modelName} with id ${addedData.id} was just created. You might want to refresh this table if it affects you`,
-                      });
-                      return null;
-                    }}
-                  </Subscription>
-                  <Subscription
-                    subscription={buildSubscribeOneQuery({ model: modelName, fields: ['id'], action: 'remove' })}
-                    variables={{}}
-                  >
-                    {({ data, loading }) => {
-                      if (!data || loading) return null;
-                      const camelModelName = changeCase.camelCase(modelName);
-                      const { [`${camelModelName}Removed`]: removedData = {} } = data;
-                      notification.info({
-                        message: `${modelName} Removed`,
-                        description: `A ${modelName} with id ${removedData.id} was just removed. You might want to refresh this table if it affects you`,
-                      });
-                      return null;
-                    }}
-                  </Subscription>
-                </Row>
-              )}
-
-              {exportable && <Button
-                style={{ zIndex: 1, marginTop: 15, float: 'right' }}
-                loading={downloading}
-                onClick={() => this.exportCsv({
-                  refetch,
-                  fetchMore,
-                  variables,
-                  columns: columnsWithSort,
-                })}
-              >
-                Export
-              </Button>}
-
-              <AntTable
-                {...antConfig}
-                elements={nodes}
+              <Table
+                dataSource={nodes}
                 columns={columnsWithSort}
                 onChange={this.onChangeTable}
                 pagination={{
-                  position: pagination.position || 'both',
+                  position: antdPagination.position || 'both',
                   total: totalCount,
                   pageSize,
                   current,
-                  showTotal: pagination.showTotal ?
-                    pagination.showTotal :
+                  showTotal: antdPagination.showTotal ?
+                    antdPagination.showTotal :
                     total => `Total ${total} items`,
-                  size: pagination.size,
+                  size: antdPagination.size,
                 }}
-                loading={tableLoading || selectAllLoading}
-                rowSelection={(rowSelection === null) ? null : {
-                  selectedRowKeys: this.state.selectedRowKeys,
-                  onChange: (selectedRowKeys) => {
-                    if (rowSelection.onChange) {
-                      rowSelection.onChange(selectedRowKeys);
-                    }
-                    this.setState({ selectedRowKeys });
-                  },
-                  hideDefaultSelections: rowSelection.hideDefaultSelections || true,
-                  selections: rowSelection.selections || [{
-                    key: 'select-all',
-                    text: 'Select All',
-                    onSelect: () => this.selectAll({
-                      rowKeyName: rowSelection.rowKeyName || 'id',
-                      variables,
-                    }),
-                  }, {
-                    key: 'unselect-all',
-                    text: 'Unselect All',
-                    onSelect: () => {
-                      if (rowSelection.onChange) {
-                        rowSelection.onChange([]);
-                      }
-                      this.setState({ selectedRowKeys: [] });
-                    },
-                  }],
-                }}
+                loading={tableLoading}
               />
             </div>
           );
@@ -877,59 +538,5 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
     );
   }
 }
-InnerTable.propTypes = {
-  searchText: PropTypes.object,
-  modelName: PropTypes.string.isRequired,
-  condition: PropTypes.object,
-  filter: PropTypes.object,
-  fields: PropTypes.array,
-  customQuery: PropTypes.object,
-  mode: PropTypes.string,
-  displayFields: PropTypes.array,
-  registry: PropTypes.object,
-  antConfig: PropTypes.object,
-  extendedColumns: PropTypes.array,
-  hiddenColumns: PropTypes.arrayOf(PropTypes.string),
-  pagination: PropTypes.object,
-  hideRefresh: PropTypes.bool,
-  orderBy: PropTypes.string,
-  checkboxFilterColumns: PropTypes.array,
-  client: PropTypes.object.isRequired,
-  extendedFields: PropTypes.object,
-  columnOrder: PropTypes.array,
-  variables: PropTypes.object,
-  allowSelectColumns: PropTypes.bool,
-  enableExport: PropTypes.bool,
-  live: PropTypes.bool,
-  exportable: PropTypes.bool,
-  rowSelection: PropTypes.object,
-};
-InnerTable.defaultProps = {
-  searchText: {},
-  condition: {},
-  filter: {},
-  fields: [],
-  customQuery: null,
-  mode: 'server',
-  displayFields: null,
-  registry: {},
-  antConfig: {
-    size: 'small',
-  },
-  orderBy: undefined,
-  extendedColumns: [],
-  hiddenColumns: [],
-  columnOrder: [],
-  hideRefresh: true,
-  pagination: {},
-  checkboxFilterColumns: [],
-  extendedFields: {},
-  variables: {},
-  allowSelectColumns: false,
-  enableExport: undefined,
-  live: false,
-  exportable: true,
-  rowSelection: null,
-};
 
 export default InnerTable;
