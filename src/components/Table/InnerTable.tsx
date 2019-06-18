@@ -119,8 +119,14 @@ export interface InnerTableProps<T> extends Omit<TableProps<T>, 'columns'> {
   hiddenColumns: string[];
 }
 
+interface InnerTableState {
+  searchText: { [s: string]: string };
+  offset: number;
+  orderBy: string | [];
+  filterDropdownVisible: { [s: string]: boolean };
+}
 
-export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
+export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTableState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -144,6 +150,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
     this.calculateNewVariable = this.calculateNewVariable.bind(this);
     this.generateColumnsFromFields = this.generateColumnsFromFields.bind(this);
   }
+  searchDropdown: any = null;
   exposed: any = null;
   debounceSearch = debounce(() => {
     this.onSearch();
@@ -174,77 +181,55 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
   }
 
   onChangeTable(pagination, filters, sorter) {
-    const { searchText } = this.state;
     const variables = this.baseVariable();
     // Generate variable for pagination
     const { current, pageSize } = pagination;
     const { offset: oldOffset, orderBy: oldOrder } = variables;
     const newOffset = (current - 1) * pageSize;
     if (oldOffset !== newOffset) {
-      // User clicked pagination. You should only be able to do one action at a time
-      const newVariable = { ...variables, offset: newOffset };
-      this.setState({ variables: newVariable });
+      this.setState({ offset: newOffset });
       return;
     }
     // Generate variable for sort
     const { field, order, column = {} } = sorter;
-    if (column.sortFunction) {
-      // This means it's a extended column, with a defined sort function,
-      // so use that instead, do not auto-define orderBy
-      const { changed, variables: newVariables } = column.sortFunction(order, variables) || {};
-      if (changed) {
-        this.setState({ variables: newVariables });
-        return;
+    const newOrder = toGraphQLOrder(field, order);
+    if (newOrder !== oldOrder && (newOrder || oldOrder)) { // Canot be both are null/undefined
+      if (!newOrder) {
+        this.setState({ orderBy: [] })
       }
-    } else {
-      const newOrder = toGraphQLOrder(field, order);
-      if (newOrder !== oldOrder && (newOrder || oldOrder)) { // Canot be both are null/undefined
-        const newVariable = { ...variables, orderBy: newOrder };
-        if (!newOrder) {
-          delete newVariable.orderBy;
-        }
-        this.setState({ variables: newVariable });
-        return;
-      }
+      this.setState({ orderBy: newOrder });
+      return;
     }
     // Generate variable for filter
-    const newSearchText = { ...searchText };
     let newSearch = false;
-    let delaySearch = false;
-    Object.entries(filters).forEach(([columnKey, selectedValues]) => {
-      // Usually this is an array, in which the column should be included in the array.
+
+    if (Object.entries(filters).length > 0) {
       newSearch = true;
-      newSearchText[columnKey] = selectedValues;
-      if (typeof (selectedValues) === 'string') {
-        delaySearch = true;
-      }
-    });
+    }
     if (newSearch) {
-      const callback = delaySearch ? this.debounceSearch : this.onSearch;
-      this.setState({ searchText: newSearchText, resetOffset: true }, callback);
+      this.setState({ searchText: filters, offset: 0 });
     } else {
-      this.setState({ searchText: newSearchText });
+      this.setState({ searchText: filters });
     }
   }
 
   onFilterDropdownVisibleChange(key, visible) {
     const { filterDropdownVisible } = this.state;
-    if (visible) {
-      this.setState({ filterDropdownVisible: { ...filterDropdownVisible, [key]: visible } }, () => {
-        if (this.searchDropdown) {
-          this.searchDropdown.getInput().focus();
-        }
-      });
-    } else {
-      this.setState({ filterDropdownVisible: { ...filterDropdownVisible, [key]: visible } });
+    this.setState({ filterDropdownVisible: { ...filterDropdownVisible, [key]: visible } }, () => {
+      if (visible) {
+        // if (this.searchDropdown) {
+        //   this.searchDropdown.getInput().focus();
+        // }
+      }
     }
   }
 
   calculateNewVariable() {
     const { fields, registry, extendedColumns } = this.props;
-    const { searchText, variables, resetOffset = false } = this.state;
-    const { filter: f } = variables;
-    let customVariables = { filter: { ...f } }; // Make a copy of current filters
+    const { searchText } = this.state;
+    const variables = this.baseVariable();
+    const { filter = {} } = variables;
+
     Object.entries(searchText).forEach(([name, value]) => {
       // Find if there's a field with this name
       const field = fields.find(f => f.name === name);
@@ -355,14 +340,15 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
   }
 
   generateScalarColumn = (field: fieldTypeQuery___type_fields) => {
+    const { searchText } = this.state;
     const typeName = getFieldType(field);
     const { name } = field;
-    const preColumn = {
+    const preColumn: ColumnProps<T> = {
       key: name,
       title: name,
       dataIndex: name,
       sorter: true,
-      render: (value: any, record: any, index: any) => {
+      render: (value: any, record: T, index: any) => {
         return value;
       }
     };
@@ -376,6 +362,26 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
           }
           return null;
         };
+        preColumn.filterIcon = (
+          <Icon
+            type="search"
+            style={{ color: searchText[name] ? '#108ee9' : '#aaa' }}
+          />
+        );
+
+        preColumn.filterDropdown = (
+          <SearchDropdown
+            ref={(input) => { this.searchDropdown = input; }}
+            {...dropdownProps}
+            searchType={searchType}
+            searchOnType={searchType !== 'text'}
+          />
+        );
+
+        preColumn.filterDropdownVisible = !!filterDropdownVisible[name];
+
+        preColumn.onFilterDropdownVisibleChange = visible =>
+          this.onFilterDropdownVisibleChange(name, visible);
         break;
       }
       case 'ID':
@@ -410,6 +416,16 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
       return this.generateScalarColumn(field);
     }).filter(notNull)
 
+
+  }
+  baseVariable = () => {
+    const pageSize = 50;
+    const { offset, orderBy } = this.state
+    return {
+      first: pageSize,
+      offset,
+      orderBy
+    }
   }
 
   render() {
@@ -421,7 +437,6 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
       pagination = false,
     } = this.props;
     const pageSize = 50;
-    const { offset, orderBy } = this.state;
 
     // First get all Scalar Fields, 
     // Unless there are hidden fields, 
@@ -434,7 +449,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
     const collectionQuery = buildGetCollectionQuery({ model: modelName, fields: scalarFields, fragments });
 
     // Base Variable
-    const variable = { first: pageSize };
+    const variable = this.baseVariable();
     return (
       <Query<any>
         query={collectionQuery}
@@ -531,10 +546,11 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>> {
                 }}
                 loading={tableLoading}
               />
-            </div>
+            </div >
           );
-        }}
-      </Query>
+        }
+        }
+      </Query >
     );
   }
 }
