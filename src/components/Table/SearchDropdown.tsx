@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DatePicker, Input, Form, Button } from 'antd';
+import { Moment } from 'moment';
 
 const { RangePicker } = DatePicker;
 
@@ -8,12 +9,11 @@ const { Item: FormItem } = Form;
 export interface SearchDropdownProps {
   name: string;
   field: string;
-  error: string;
-  searchText: string;
-  onInputChange: (v: any, f: string, onType: boolean) => void;
+  error?: string;
+  searchText: string | [Moment];
+  onInputChange: (v: any, f: string) => void;
   onCloseSearch: (f: string) => void;
   searchType: string;
-  searchOnType: boolean;
 }
 export class SearchDropdown extends React.Component<SearchDropdownProps> {
   constructor(props) {
@@ -32,23 +32,29 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
       searchText,
       onInputChange,
       onCloseSearch,
-      searchType = 'text',
-      searchOnType = false,
+      searchType = 'String',
     } = this.props;
-    const inputField = searchType === 'text' ? (<Input
-      ref={(input) => { this.searchInput = input; }}
-      autoFocus
-      placeholder={`Search ${name}`}
-      value={searchText}
-      onChange={e => onInputChange(e.target.value, field, searchOnType)}
-      onPressEnter={() => onCloseSearch(field)}
-    />) : (<RangePicker
-      ref={(input) => { this.searchInput = input; }}
-      onChange={dates => onInputChange(dates, field, searchOnType)}
-      // onPressEnter={() => onCloseSearch(field)}
-      value={searchText}
-    />
-      );
+    let inputField: React.ReactNode = null;
+    switch (searchType) {
+      case 'String':
+        if (typeof searchText === 'string')
+          inputField = (<Input
+            ref={(input) => { this.searchInput = input; }}
+            autoFocus
+            placeholder={`Search ${name}`}
+            value={searchText}
+            onChange={e => onInputChange(e.target.value, field)}
+            onPressEnter={() => onCloseSearch(field)}
+          />);
+      case 'Date':
+        inputField = (<RangePicker
+          ref={(input) => { this.searchInput = input; }}
+          onChange={dates => onInputChange(dates, field)}
+          // onPressEnter={() => onCloseSearch(field)}
+          value={searchText as [Moment]}
+        />);
+    }
+
     return (
       <div className="custom-filter-dropdown">
         <FormItem
@@ -58,7 +64,7 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
         >
           {inputField}
         </FormItem>
-        {!searchOnType && <Button type="primary" onClick={() => onCloseSearch(field)} style={{ marginTop: 3 }}>Close</Button>}
+        {searchText === 'String' && <Button type="primary" onClick={() => onCloseSearch(field)} style={{ marginTop: 3 }}>Close</Button>}
       </div>);
   }
 }

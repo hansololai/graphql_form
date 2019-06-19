@@ -1,16 +1,12 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import * as debounce from 'lodash.debounce';
-import { notification, Icon, Button, Row, Col, Select, Form, message, Table } from 'antd';
-import * as changeCase from 'change-case';
-import * as pluralize from 'pluralize';
-import { Query, Subscription } from 'react-apollo';
+import { notification, Icon, Table } from 'antd';
+import { Query } from 'react-apollo';
 import { ColumnProps, TableProps } from 'antd/lib/table'
 import { fieldTypeQuery___type_fields } from 'components/Form/__generated__/fieldTypeQuery';
 import { isScalar, buildGetCollectionQuery, getFieldType } from './utils'
-
-const { Option } = Select;
-const { Item: FormItem } = Form;
+import { SearchDropdown } from './SearchDropdown';
 
 function notNull<T>(value: T | null | undefined): value is T {
   return !!value;
@@ -123,6 +119,7 @@ interface InnerTableState {
   searchText: { [s: string]: string };
   offset: number;
   orderBy: string | [];
+  filter: { [s: string]: any };
   filterDropdownVisible: { [s: string]: boolean };
 }
 
@@ -130,24 +127,17 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
   constructor(props) {
     super(props);
     this.state = {
-      searchText: props.searchText || {},
+      searchText: {},
+      offset: 0,
+      orderBy: [],
+      filter: {},
       filterDropdownVisible: {},
-      downloading: false,
-      variables: {
-        filter: {},
-        offset: 0,
-      },
-      columnsToHide: props.hiddenColumns,
-      selectedRowKeys: [],
-      selectAllLoading: false,
     };
     this.onCloseSearch = this.onCloseSearch.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onChangeTable = this.onChangeTable.bind(this);
-    this.onHideColumns = this.onHideColumns.bind(this);
     this.onFilterDropdownVisibleChange = this.onFilterDropdownVisibleChange.bind(this);
-    this.calculateNewVariable = this.calculateNewVariable.bind(this);
     this.generateColumnsFromFields = this.generateColumnsFromFields.bind(this);
   }
   searchDropdown: any = null;
@@ -155,11 +145,6 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
   debounceSearch = debounce(() => {
     this.onSearch();
   }, 500);
-
-
-  onHideColumns(value) {
-    this.setState({ columnsToHide: value });
-  }
 
   onCloseSearch(key) {
     this.onFilterDropdownVisibleChange(key, false);
@@ -172,12 +157,17 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
     // This callback is usually debouceSearch(), for user typing in search box
     // But in case some other fields that are not text input, such as date range select,
     // pass in onSearch directly, so it searches right after setState
-    this.setState({ searchText: newSearchText, resetOffset: true }, callback);
+    this.setState({ searchText: newSearchText }, callback);
   }
 
+  // This function is to convert the searchText to variable
   onSearch() {
-    const newVariables = this.calculateNewVariable();
-    this.setState({ variables: newVariables });
+    const { searchText } = this.state;
+    const filter: object = Object.entries(searchText).reduce((memo, [key, value]) => {
+      const filterValue = { includesInsensitive: value };
+      return { ...memo, [key]: filterValue };
+    }, {})
+    this.setState({ filter });
   }
 
   onChangeTable(pagination, filters, sorter) {
@@ -213,134 +203,20 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
     }
   }
 
-  onFilterDropdownVisibleChange(key, visible) {
+  onFilterDropdownVisibleChange = (key, visible) => {
     const { filterDropdownVisible } = this.state;
     this.setState({ filterDropdownVisible: { ...filterDropdownVisible, [key]: visible } }, () => {
       if (visible) {
-        // if (this.searchDropdown) {
-        //   this.searchDropdown.getInput().focus();
-        // }
-      }
-    }
-  }
-
-  calculateNewVariable() {
-    const { fields, registry, extendedColumns } = this.props;
-    const { searchText } = this.state;
-    const variables = this.baseVariable();
-    const { filter = {} } = variables;
-
-    Object.entries(searchText).forEach(([name, value]) => {
-      // Find if there's a field with this name
-      const field = fields.find(f => f.name === name);
-      const { filter } = customVariables;
-      // Priority:
-      // 1. If customer defined filter, use that first
-      // 2. If it's field type is known, use generated filter
-      const col = extendedColumns.find(c => c.key === name);
-      if (isFunction((col || {}).filter)) {
-        customVariables = col.filter(value, customVariables);
-      } else if (field) {
-        const info = getFieldType(field);
-        const { name: typeName, kind } = info;
-        if (kind === 'SCALAR') {
-          switch (typeName) {
-            case 'String':
-              if (Array.isArray(value)) {
-                if (value.length > 0) {
-                  filter[name] = { in: value };
-                } else {
-                  delete filter[name];
-                }
-              } else if (value) {
-                filter[name] = { includesInsensitive: value };
-              } else {
-                delete filter[name];
-              }
-              break;
-            case 'ID':
-            case 'Int':
-            case 'BigInt':
-              if (Array.isArray(value)) {
-                if (value.length > 0) {
-                  filter[name] = { in: value };
-                } else {
-                  delete filter[name];
-                }
-              } else if (value) {
-                filter[name] = { equalTo: value };
-              } else {
-                delete filter[name];
-              }
-              break;
-            case 'BigFloat':
-            case 'Float':
-              if (Array.isArray(value) && value.length === 2) {
-                filter[name] = {
-                  greaterThanOrEqualTo: value[0],
-                  lessThanOrEqualTo: value[1],
-                };
-              } else if (value) {
-                filter[name] = {
-                  greaterThanOrEqualTo: Number(value) - 1,
-                  lessThanOrEqualTo: Number(value) + 1,
-                };
-              } else {
-                delete filter[name];
-              }
-              break;
-            case 'Datetime':
-            case 'Date':
-              // This is a range
-              if (Array.isArray(value) && value.length === 2) {
-                filter[name] = {
-                  greaterThanOrEqualTo: value[0].format('YYYY-MM-DD'),
-                  lessThanOrEqualTo: value[1].format('YYYY-MM-DD'),
-                };
-              } else {
-                delete filter[name];
-              }
-              break;
-            default:
-          }
-        } else if (kind === 'OBJECT' && !typeName.includes('Connection')) {
-          // It's a has_one relationship
-          const filterFunc = dig([typeName, 'filter'], registry);
-          if (isFunction(filterFunc)) {
-            customVariables = registry[typeName].filter(value, customVariables, name);
-          } else if (name.includes('By')) {
-            // It is a number, and the field is a regular auto-generated field
-            const [, keyname] = name.split('By');
-            const camelKeyName = changeCase.camelCase(keyname);
-            if (Array.isArray(value)) {
-              if (value.length > 0) {
-                filter[camelKeyName] = { in: value };
-              } else {
-                delete filter[camelKeyName];
-              }
-            } else if (value) {
-              filter[camelKeyName] = { equalTo: value };
-            } else {
-              delete filter[camelKeyName];
-            }
-          }
+        // If visible, auto focus to the search dropdown
+        if (this.searchDropdown) {
+          this.searchDropdown.getInput().focus();
         }
       }
     });
-    //
-
-    const newVariables = {
-      ...variables,
-      ...customVariables,
-    };
-    if (resetOffset) {
-      newVariables.offset = 0;
-    }
-    return newVariables;
   }
 
   generateScalarColumn = (field: fieldTypeQuery___type_fields) => {
-    const { searchText } = this.state;
+    const { searchText, filterDropdownVisible } = this.state;
     const typeName = getFieldType(field);
     const { name } = field;
     const preColumn: ColumnProps<T> = {
@@ -351,6 +227,13 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
       render: (value: any, record: T, index: any) => {
         return value;
       }
+    };
+    const dropdownProps = {
+      name: name,
+      field: name,
+      searchText: searchText[name],
+      onInputChange: this.onInputChange,
+      onCloseSearch: this.onCloseSearch,
     };
     switch (typeName) {
       case 'Boolean': {
@@ -373,8 +256,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
           <SearchDropdown
             ref={(input) => { this.searchDropdown = input; }}
             {...dropdownProps}
-            searchType={searchType}
-            searchOnType={searchType !== 'text'}
+            searchType={typeName}
           />
         );
 
