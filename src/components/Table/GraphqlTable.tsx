@@ -4,6 +4,8 @@ import { Query } from 'react-apollo';
 import { modelFieldsQuery } from '../Form/queries'
 import { fieldTypeQuery } from '../Form/__generated__/fieldTypeQuery';
 import { InnerTable, InnerTableProps } from './InnerTable';
+import 'antd/lib/notification/style'
+import 'antd/lib/spin/style'
 
 
 export class GraphqlTable<T> extends React.Component<Omit<InnerTableProps<T>, "fields">>{

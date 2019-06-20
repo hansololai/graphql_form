@@ -5,8 +5,11 @@ import { notification, Icon, Table } from 'antd';
 import { Query } from 'react-apollo';
 import { ColumnProps, TableProps } from 'antd/lib/table'
 import { fieldTypeQuery___type_fields } from 'components/Form/__generated__/fieldTypeQuery';
-import { isScalar, buildGetCollectionQuery, getFieldType } from './utils'
+import { isScalar, buildGetCollectionQuery, getFieldType, toGraphQLOrder } from './utils'
 import { SearchDropdown } from './SearchDropdown';
+import 'antd/lib/notification/style'
+import 'antd/lib/icon/style'
+import 'antd/lib/table/style'
 
 function notNull<T>(value: T | null | undefined): value is T {
   return !!value;
@@ -184,10 +187,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
     const { field, order, column = {} } = sorter;
     const newOrder = toGraphQLOrder(field, order);
     if (newOrder !== oldOrder && (newOrder || oldOrder)) { // Canot be both are null/undefined
-      if (!newOrder) {
-        this.setState({ orderBy: [] })
-      }
-      this.setState({ orderBy: newOrder });
+      this.setState({ orderBy: newOrder || [] })
       return;
     }
     // Generate variable for filter
@@ -245,6 +245,19 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
           }
           return null;
         };
+
+        break;
+      }
+      case 'ID':
+      case 'Int':
+      case 'Float':
+      case 'BigInt':
+      case 'BigFloat':
+        break;
+      case 'String': {
+        preColumn.render = (value) => {
+          return value;
+        }
         preColumn.filterIcon = (
           <Icon
             type="search"
@@ -264,17 +277,6 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
 
         preColumn.onFilterDropdownVisibleChange = visible =>
           this.onFilterDropdownVisibleChange(name, visible);
-        break;
-      }
-      case 'ID':
-      case 'Int':
-      case 'Float':
-      case 'BigInt':
-      case 'BigFloat':
-      case 'String': {
-        preColumn.render = (value) => {
-          return value;
-        }
         break;
       }
       case 'Datetime':
@@ -302,11 +304,12 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
   }
   baseVariable = () => {
     const pageSize = 50;
-    const { offset, orderBy } = this.state
+    const { offset, orderBy, filter } = this.state
     return {
       first: pageSize,
       offset,
-      orderBy
+      orderBy,
+      filter
     }
   }
 
@@ -318,12 +321,12 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
       columns,
       pagination = false,
     } = this.props;
-    const pageSize = 50;
 
     // First get all Scalar Fields, 
     // Unless there are hidden fields, 
     // these fields will be used for construction graphql query
-    const scalarFields = fields.filter(f => isScalar(f) && !hiddenColumns.includes(f.name));
+    // Manually force to hide nodeId column, it is not in the standard columns
+    const scalarFields = fields.filter(f => isScalar(f) && !hiddenColumns.includes(f.name) && f.name != 'nodeId');
     const fragments = columns.filter(c => !hiddenColumns.includes(c.key)).map(c => c.fragment).filter(f => !!f);
 
 
@@ -332,6 +335,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
 
     // Base Variable
     const variable = this.baseVariable();
+    const { first: pageSize = 50 } = variable;
     return (
       <Query<any>
         query={collectionQuery}

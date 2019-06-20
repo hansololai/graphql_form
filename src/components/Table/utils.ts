@@ -1,4 +1,5 @@
 import * as pluralize from 'pluralize';
+import * as changeCase from 'change-case';
 import gql from 'graphql-tag';
 import { fieldTypeQuery___type_fields } from 'components/Form/__generated__/fieldTypeQuery';
 
@@ -80,3 +81,41 @@ export const getFieldType: (f: fieldTypeQuery___type_fields) => string = (f) => 
   }
   return 'String';
 }
+
+/**
+ * @description Convert a field name and order ('ascend'|'descend') to the orderBy parameter defined by postGraphile.
+ * @example field: name, order: ascend => NAME_ASC
+ * @param {*} field the field name
+ * @param {*} order the order
+ */
+export const toGraphQLOrder = (field: string, order: 'ascend' | 'descend') => {
+  if (order === 'ascend') {
+    return `${changeCase.constantCase(field)}_ASC`;
+  } else if (order === 'descend') {
+    return `${changeCase.constantCase(field)}_DESC`;
+  }
+  return null;
+};
+/**
+ * @description Convert a orderBy parameter defined by postGraphile to the field name and order ('ascend'|'descend')
+ * @example NAME_ASC => field: name, order: ascend
+ * @param {*} graphQLOrder graphQL order
+ */
+
+export const toTableOrder = (graphQLOrder: string) => {
+  if (!graphQLOrder) return {};
+  if (Array.isArray(graphQLOrder)) { // If it's an array, don't convert it
+    return {};
+  }
+  const toReturn: { field?: string, order?: 'ascend' | 'descend' } = {};
+  if (graphQLOrder.endsWith('_ASC')) {
+    toReturn.order = 'ascend';
+    const column = graphQLOrder.substring(0, graphQLOrder.length - 4);
+    toReturn.field = changeCase.camelCase(column);
+  } else if (graphQLOrder.endsWith('_DESC')) {
+    toReturn.order = 'descend';
+    const column = graphQLOrder.substring(0, graphQLOrder.length - 5);
+    toReturn.field = changeCase.camelCase(column);
+  }
+  return toReturn;
+};

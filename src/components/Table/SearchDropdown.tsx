@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { DatePicker, Input, Form, Button } from 'antd';
 import { Moment } from 'moment';
+import 'antd/lib/date-picker/style'
+import 'antd/lib/input/style'
+import 'antd/lib/form/style'
+import 'antd/lib/button/style'
 
 const { RangePicker } = DatePicker;
 
@@ -37,7 +41,7 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
     let inputField: React.ReactNode = null;
     switch (searchType) {
       case 'String':
-        if (typeof searchText === 'string')
+        if (typeof searchText === 'string' || !searchText)
           inputField = (<Input
             ref={(input) => { this.searchInput = input; }}
             autoFocus
@@ -46,6 +50,7 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
             onChange={e => onInputChange(e.target.value, field)}
             onPressEnter={() => onCloseSearch(field)}
           />);
+        break;
       case 'Date':
         inputField = (<RangePicker
           ref={(input) => { this.searchInput = input; }}
@@ -53,6 +58,9 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
           // onPressEnter={() => onCloseSearch(field)}
           value={searchText as [Moment]}
         />);
+        break;
+      case 'Boolean':
+
     }
 
     return (
