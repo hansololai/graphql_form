@@ -151,24 +151,47 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
 
   onCloseSearch(key) {
     this.onFilterDropdownVisibleChange(key, false);
+    this.onSearch();
   }
 
-  onInputChange(value, key, searchOnType = false) {
+  onInputChange(value, key, searchOnClose = false) {
     const { searchText } = this.state;
     const newSearchText = { ...searchText, [key]: value };
-    const callback = searchOnType ? this.onSearch : this.debounceSearch;
     // This callback is usually debouceSearch(), for user typing in search box
     // But in case some other fields that are not text input, such as date range select,
-    // pass in onSearch directly, so it searches right after setState
-    this.setState({ searchText: newSearchText }, callback);
+    // So do not execute search until hit close
+    if (!searchOnClose) {
+      this.setState({ searchText: newSearchText }, this.debounceSearch);
+    } else {
+      this.setState({ searchText: newSearchText });
+    }
+
   }
 
   // This function is to convert the searchText to variable
   onSearch() {
+    const { fields } = this.props;
     const { searchText } = this.state;
     const filter: object = Object.entries(searchText).reduce((memo, [key, value]) => {
-      const filterValue = { includesInsensitive: value };
-      return { ...memo, [key]: filterValue };
+      const field = fields.find(f => f.name === key);
+      if (!field) return memo;
+      switch (getFieldType(field)) {
+        case 'Date':
+        case 'Datetime':
+          if (Array.isArray(value) && value.length === 2) {
+            return {
+              ...memo, [key]: {
+                greaterThanOrEqualTo: value[0].format('YYYY-MM-DD'),
+                lessThanOrEqualTo: value[1].format('YYYY-MM-DD'),
+              }
+            }
+          }
+          break;
+        case 'String':
+          return { ...memo, [key]: { includesInsensitive: value } };
+
+      }
+      return memo;
     }, {})
     this.setState({ filter });
   }
@@ -253,40 +276,46 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
       case 'Float':
       case 'BigInt':
       case 'BigFloat':
+        preColumn.render = (value) => {
+          return value;
+        }
         break;
       case 'String': {
         preColumn.render = (value) => {
           return value;
         }
-        preColumn.filterIcon = (
-          <Icon
-            type="search"
-            style={{ color: searchText[name] ? '#108ee9' : '#aaa' }}
-          />
-        );
 
-        preColumn.filterDropdown = (
-          <SearchDropdown
-            ref={(input) => { this.searchDropdown = input; }}
-            {...dropdownProps}
-            searchType={typeName}
-          />
-        );
-
-        preColumn.filterDropdownVisible = !!filterDropdownVisible[name];
-
-        preColumn.onFilterDropdownVisibleChange = visible =>
-          this.onFilterDropdownVisibleChange(name, visible);
         break;
       }
       case 'Datetime':
+        preColumn.render = value => (value ? moment(value).format('YYYY-MM-DD HH:mm') : '');
+        break;
       case 'Date': {
         preColumn.render = value => (value ? moment(value).format('YYYY-MM-DD') : '');
         break;
       }
-      default: {
+    }
+    // Add filter
+    if (['String', 'Datetime', 'Date'].includes(typeName)) {
+      preColumn.filterIcon = (
+        <Icon
+          type="search"
+          style={{ color: searchText[name] ? '#108ee9' : '#aaa' }}
+        />
+      );
 
-      }
+      preColumn.filterDropdown = (
+        <SearchDropdown
+          ref={(input) => { this.searchDropdown = input; }}
+          {...dropdownProps}
+          searchType={typeName}
+        />
+      );
+
+      preColumn.filterDropdownVisible = !!filterDropdownVisible[name];
+
+      preColumn.onFilterDropdownVisibleChange = visible =>
+        this.onFilterDropdownVisibleChange(name, visible);
     }
     return preColumn;
   }

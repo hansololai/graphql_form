@@ -15,7 +15,7 @@ export interface SearchDropdownProps {
   field: string;
   error?: string;
   searchText: string | [Moment];
-  onInputChange: (v: any, f: string) => void;
+  onInputChange: (v: any, f: string, searchOnClose?: boolean) => void;
   onCloseSearch: (f: string) => void;
   searchType: string;
 }
@@ -52,19 +52,19 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
           />);
         break;
       case 'Date':
+      case 'Datetime':
         inputField = (<RangePicker
+          showTime={searchType === 'Datetime'}
           ref={(input) => { this.searchInput = input; }}
-          onChange={dates => onInputChange(dates, field)}
+          onChange={dates => onInputChange(dates, field, true)}
           // onPressEnter={() => onCloseSearch(field)}
           value={searchText as [Moment]}
+          onOk={() => onCloseSearch(field)}
         />);
-        break;
-      case 'Boolean':
-
     }
 
     return (
-      <div className="custom-filter-dropdown">
+      <div style={{ padding: 8, borderRadius: 6, background: '#fff', boxShadow: '0 1 6' }}>
         <FormItem
           style={{ display: 'inline-block' }}
           validateStatus={error ? 'error' : undefined}
@@ -72,7 +72,7 @@ export class SearchDropdown extends React.Component<SearchDropdownProps> {
         >
           {inputField}
         </FormItem>
-        {searchText === 'String' && <Button type="primary" onClick={() => onCloseSearch(field)} style={{ marginTop: 3 }}>Close</Button>}
+        {searchType === 'String' && <Button type="primary" onClick={() => onCloseSearch(field)} style={{ marginTop: 3 }}>Close</Button>}
       </div>);
   }
 }
