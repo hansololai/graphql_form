@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 // import { action } from '@storybook/addon-actions';
 // Import our component from this folder
 import { GraphqlForm } from './GraphqlForm';
-import { updateInputQuery } from './queries';
+import { updateInputQuery, modelFieldsQuery } from './queries';
 import { TextInput, BooleanInput, TextSelectInput, enumQuery, HasOneInput } from './widgets';
 import { MockedProvider } from 'react-apollo/test-utils';
 import gql from 'graphql-tag';
@@ -233,8 +233,39 @@ const mockUserSelectDataOnlyJ = {
   }
 }
 
+const mockUserModelFieldData = {
+  "data": {
+    "__type": {
+      "__typename": "__Type",
+      "fields": [
+        {
+          "__typename": "__Field",
+          "name": "nodeId",
+          "type": {
+            "__typename": "__Type",
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "__typename": "__Type",
+              "name": "ID",
+              "kind": "SCALAR"
+            }
+          }
+        },
+      ],
+    },
+  }
+}
+
 
 const mockData = [
+  {
+    request: {
+      query: modelFieldsQuery,
+      variables: { name: "User" },
+    },
+    result: mockUserModelFieldData
+  },
   {
     request: {
       query: sampleSelectQuery,
