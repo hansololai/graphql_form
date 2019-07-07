@@ -1,5 +1,8 @@
 # GraphqlForm
 
+## Demo
+For a quick demo, visit: [graphql_form](https://hansololai.github.io/graphql_form/)
+
 ## Motivation
 
 This project was set out to create form for submitting data with a graphql server. The setup was specifically dealing the GraphQL Input Object in mutations, like in the following form: (Result of a __type query):

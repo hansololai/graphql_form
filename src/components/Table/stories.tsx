@@ -1,9 +1,7 @@
 import * as React from 'react';
 // Import the storybook libraries
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions'
 import { GraphqlTable } from './GraphqlTable';
-import gql from 'graphql-tag';
 import ApolloClient from 'apollo-client';
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -21,9 +19,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-storiesOf('Graphql Table', module)
-  .add('User', () => (
-    <ApolloProvider client={client}>
-      <GraphqlTable<any> modelName="User" columns={[]} hiddenColumns={[]} />
-    </ApolloProvider>
-  ))
+if (process.env.NODE_ENV === 'development') {
+  storiesOf('Graphql Table', module)
+    .add('User', () => (
+      <ApolloProvider client={client}>
+        <GraphqlTable<any> modelName="User" columns={[]} hiddenColumns={[]} />
+      </ApolloProvider>
+    ))
+}
+

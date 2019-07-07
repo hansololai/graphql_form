@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Query } from 'react-apollo';
 import { updateInputQuery, modelFieldsQuery } from './queries';
-import { Spin } from 'antd';
+import { Spin, notification } from 'antd';
 import { WrappedInnerForm } from './InnerForm';
 import * as SelectFragmentMapping from './ModelFragments';
+import 'antd/lib/notification/style';
 
 
 // Generated Types
@@ -31,7 +32,14 @@ export const GraphqlForm: React.FC<GraphqlFormProps> = (props) => {
       return <Query<fieldTypeQuery> query={modelFieldsQuery} variables={{ name: modelName }}>
         {({ data, loading, error }) => {
           if (loading || inputLoading) return <Spin />;
-          if (error || inputError) return null;
+          const hasError = error || inputError;
+          if (hasError) {
+            notification.error({
+              message: "Error When getting the Field Info",
+              description: hasError.message,
+            })
+            return null;
+          }
           if (!data || !inputData) return null;
           const { __type: inputType } = inputData;
           const { __type: fieldType } = data;
