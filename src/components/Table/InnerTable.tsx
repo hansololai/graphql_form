@@ -207,7 +207,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
       return;
     }
     // Generate variable for sort
-    const { field, order, column = {} } = sorter;
+    const { field, order } = sorter;
     const newOrder = toGraphQLOrder(field, order);
     if (newOrder !== oldOrder && (newOrder || oldOrder)) { // Canot be both are null/undefined
       this.setState({ orderBy: newOrder || [] })
@@ -419,7 +419,7 @@ export class InnerTable<T> extends React.Component<InnerTableProps<T>, InnerTabl
           const { nodes = [], totalCount = 0 } = fieldData as any;
 
 
-          const { offset, orderBy: vorderBy } = variables;
+          const { offset } = variables;
           const current = Math.round(offset / pageSize) + 1;
 
           // To handler some column has custom defined sortFunction
