@@ -1,0 +1,57 @@
+defaults: &defaults
+  working_directory: ~/graphql-form # directory where steps will run
+  docker: # run the steps with Docker
+    - image: circleci/node:11-stretch # ...with this image as the primary container; this is where all `steps` will run
+
+version: 2.1 # use CircleCI 2.0
+jobs: # a collection of steps
+  build: # runs not using Workflows must have a `build` job as entry point
+    <<: *defaults
+    steps: # a collection of executable commands 
+      - checkout # special step to check out source code to working directory
+      - restore_cache: # special step to restore the dependency cache 
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Yarn Install
+          command: yarn install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      # - run: # run tests
+      #     name: test
+      #     command: npm test
+      - persist_to_workspace:
+          root: ~/graphql-form
+          paths: .
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/graphql-form
+      - run:
+          name: Build Repo
+          command: yarn build
+      - run:
+          name: Publish Package
+          command: npm publish
+  
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters: # this is necessary here, because it is by default no run on any tags, then the deploy won't run on tags
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build 
+          filters:
+            # Only deploy when there's tags pushed
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+

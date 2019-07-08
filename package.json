@@ -1,7 +1,7 @@
 {
-  "name": "graphql-form-react",
+  "name": "postgraphile-form",
   "version": "1.0.0",
-  "description": "A Graphql Form.",
+  "description": "A Graphql Form for PostGraphile",
   "main": "dist/index.js",
   "engines": {
     "node": "10.x"
@@ -15,7 +15,8 @@
     "storybook": "start-storybook -p 9001",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "apollo:codegen": "apollo client:codegen --target=typescript --passthroughCustomScalars --customScalarsPrefix GraphQL"
+    "apollo:codegen": "apollo client:codegen --target=typescript --passthroughCustomScalars --customScalarsPrefix GraphQL",
+    "release-it": "yarn version --patch && git push --follow-tags"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,6 @@
     "boilerplate",
     "react",
     "shared",
-    "components",
     "components"
   ],
   "author": "Han Lai",
