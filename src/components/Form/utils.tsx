@@ -1,10 +1,11 @@
-import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
+import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 import { InnerFormProps, InnerFormTypeProps } from './InnerForm';
 import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput, HasOneInput } from './widgets/index';
 import * as moment from 'moment';
 import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
 import * as React from 'react';
 import { SelectFragmentProp } from './ModelFragments';
+import { patchTypeQuery___type_inputFields, patchTypeQuery___type_inputFields_type_ofType } from './__generated__/patchTypeQuery';
 
 export const isFunction = (funcToCheck) => {
   if (!funcToCheck) return false;
@@ -54,11 +55,12 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       const keyName = fieldName.substring(fieldName.indexOf('By'));
       if (keyName) foreignKeys[keyName] = typeName;
     }
-  })
+  });
+
   return inputFields.map(field => {
     const { name: fieldName, type } = field;
     // Sometimes it's not null,  then have to go one level deeper
-    const info = type.kind === 'NON_NULL' ? type.ofType : type;
+    const info = inputFieldKind(field);
     if (!info) return null;
 
     const { kind, name: typeName } = info;
@@ -91,32 +93,8 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       //@ts-ignore
       toReturn = <C />;
     } else if (kind === 'SCALAR') {
-      if (handlableTypeName(typeName)) {
-        // It could be a foreign Key, so we do some guess here
-        if (mapping[fieldName]) {
-          // @ts-ignore
-          toReturn = <HasOneInput {...mapping[fieldName]} />
-        } else if (foreignKeys[fieldName]) {
-          // It is a foreign key by the fooByBarId pattern. 
-          toReturn = <NumberInput />
-        } else {
-          const C = nameToFormFieldMapping[typeName];
-          switch (typeName) {
-            case 'Date':
-            case 'Datetime': {
-              value = value ? moment(value) : null;
-            }
-          }
-          // @ts-ignore
-          // The component here should not pass in any parameters
-          // Even though they require a non null value, onChange
-          // Because the getFieldDecorator() in form will provide it
-          toReturn = <C />;
-        }
-      } else {
-        // If it's not known, but still a scalar, then use a text input
-        toReturn = <TextInput />;
-      }
+      toReturn = scalarFieldToInput(field, mapping, foreignKeys, value);
+
     } else if (kind === 'ENUM') {
       if (typeName) {
         // @ts-ignore
@@ -128,4 +106,44 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
     </InputWrapper>;
 
   });
+}
+
+export const inputFieldKind = (
+  field: patchTypeQuery___type_inputFields
+): patchTypeQuery___type_inputFields_type_ofType | null => {
+  const { type } = field;
+  const info = type.kind === 'NON_NULL' ? type.ofType : type;
+  return info;
+}
+const scalarFieldToInput = (f: patchTypeQuery___type_inputFields, mapping: any, foreignKeys: { [x: string]: string } = {}, value: any): React.ReactNode => {
+  const { name: fieldName } = f;
+  const info = inputFieldKind(f);
+  if (!info) return null;
+  const { name: typeName } = info;
+  if (handlableTypeName(typeName)) {
+    // It could be a foreign Key, so we do some guess here
+    if (mapping[fieldName]) {
+      // @ts-ignore
+      return <HasOneInput {...mapping[fieldName]} />
+    } else if (foreignKeys[fieldName]) {
+      // It is a foreign key by the fooByBarId pattern. 
+      return <NumberInput />
+    } else {
+      const C = nameToFormFieldMapping[typeName];
+      switch (typeName) {
+        case 'Date':
+        case 'Datetime': {
+          value = value ? moment(value) : null;
+        }
+      }
+      // @ts-ignore
+      // The component here should not pass in any parameters
+      // Even though they require a non null value, onChange
+      // Because the getFieldDecorator() in form will provide it
+      return <C />;
+    }
+  } else {
+    // If it's not known, but still a scalar, then use a text input
+    return <TextInput />;
+  }
 }

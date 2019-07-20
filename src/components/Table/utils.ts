@@ -101,21 +101,23 @@ export const toGraphQLOrder = (field: string, order: 'ascend' | 'descend') => {
  * @example NAME_ASC => field: name, order: ascend
  * @param {*} graphQLOrder graphQL order
  */
-
+type Order = "ascend" | "descend";
+const orderMap: { [x: string]: Order } = {
+  "_ASC": "ascend",
+  "_DESC": "descend"
+}
 export const toTableOrder = (graphQLOrder: string) => {
   if (!graphQLOrder) return {};
   if (Array.isArray(graphQLOrder)) { // If it's an array, don't convert it
     return {};
   }
-  const toReturn: { field?: string, order?: 'ascend' | 'descend' } = {};
-  if (graphQLOrder.endsWith('_ASC')) {
-    toReturn.order = 'ascend';
-    const column = graphQLOrder.substring(0, graphQLOrder.length - 4);
-    toReturn.field = changeCase.camelCase(column);
-  } else if (graphQLOrder.endsWith('_DESC')) {
-    toReturn.order = 'descend';
-    const column = graphQLOrder.substring(0, graphQLOrder.length - 5);
-    toReturn.field = changeCase.camelCase(column);
-  }
+  const toReturn: { field?: string, order?: Order } = {};
+  Object.entries(orderMap).forEach(([k, v]) => {
+    if (graphQLOrder.endsWith(k)) {
+      toReturn.order = v;
+      const column = graphQLOrder.substring(0, graphQLOrder.length - k.length);
+      toReturn.field = changeCase.camelCase(column);
+    }
+  })
   return toReturn;
 };
