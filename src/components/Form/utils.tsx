@@ -128,22 +128,20 @@ const scalarFieldToInput = (f: patchTypeQuery___type_inputFields, mapping: any, 
     } else if (foreignKeys[fieldName]) {
       // It is a foreign key by the fooByBarId pattern. 
       return <NumberInput />
-    } else {
-      const C = nameToFormFieldMapping[typeName];
-      switch (typeName) {
-        case 'Date':
-        case 'Datetime': {
-          value = value ? moment(value) : null;
-        }
-      }
-      // @ts-ignore
-      // The component here should not pass in any parameters
-      // Even though they require a non null value, onChange
-      // Because the getFieldDecorator() in form will provide it
-      return <C />;
     }
-  } else {
-    // If it's not known, but still a scalar, then use a text input
-    return <TextInput />;
+    const C = nameToFormFieldMapping[typeName];
+    switch (typeName) {
+      case 'Date':
+      case 'Datetime': {
+        value = value ? moment(value) : null;
+      }
+    }
+    // @ts-ignore
+    // The component here should not pass in any parameters
+    // Even though they require a non null value, onChange
+    // Because the getFieldDecorator() in form will provide it
+    return <C />;
   }
+  // If it's not known, but still a scalar, then use a text input
+  return <TextInput />;
 }

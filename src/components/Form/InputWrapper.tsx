@@ -20,18 +20,15 @@ export interface InputWrapperProps {
   customRules?: ValidationRule[];
   validator?: validatorFunc;
 }
-export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
+const setupDecorator = (props: InputWrapperProps): any => {
   const {
     form,
     name,
     type: { kind },
     value,
-    disabled,
-    hidden,
     options = {},
     customRules = [],
     validator } = props;
-  const { getFieldDecorator } = form;
   const decorator = { ...options, rules: [...customRules], initialValue: value };
   if (kind === 'NON_NULL') {
     // Unless this field can be auto generated, like "id"
@@ -46,30 +43,40 @@ export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
     };
     decorator.rules.push({ validator: validate });
   }
+  return decorator;
+}
+
+export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
+  const {
+    form,
+    name,
+    disabled,
+    hidden,
+  } = props;
+  const { getFieldDecorator } = form;
+  const decorator = setupDecorator(props);
+
   const fieldName = changeCase.titleCase(name);
   // If it should not show
 
-  let content: React.ReactNode = null;
   if (name === 'id' || hidden) {
     // ID field is special, it should be hidden, it is NOT NULL, but it could be NULL (for create)
-    content = <Input disabled type="hidden" />;
     return <div>
       {getFieldDecorator(name, decorator)(
-        content
+        <Input disabled type="hidden" />
       )}
     </div>
 
-  } else {
-    // Set disable if necessary
-    const children = React.Children.map(props.children, (child) => {
-      const childProp = { disabled };
-      return React.cloneElement(child as React.ReactElement<any>, childProp);
-    });
-    content = children[0];
   }
+  // Set disable if necessary
+  const children = React.Children.map(props.children, (child) => {
+    const childProp = { disabled };
+    return React.cloneElement(child as React.ReactElement<any>, childProp);
+  });
+
   return (<Item {...formItemLayout} label={fieldName}>
     {getFieldDecorator(name, decorator)(
-      content
+      children[0]
     )}
   </Item>);
 };

@@ -38,7 +38,6 @@ export const GraphqlForm: React.FC<GraphqlFormProps> = (props) => {
               message: "Error When getting the Field Info",
               description: hasError.message,
             })
-            return null;
           }
           if (!data || !inputData) return null;
           const { __type: inputType } = inputData;
