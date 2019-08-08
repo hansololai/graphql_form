@@ -231,7 +231,6 @@ export const mockUserModelFieldData = {
   }
 }
 
-
 export const mockData = [
   {
     request: {
