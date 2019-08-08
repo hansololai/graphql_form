@@ -30,7 +30,7 @@ jobs: # a collection of steps
           command: |
             ./cc-test-reporter before-build
             yarn coverage
-            ./cc-test-reporter after-build 
+            ./cc-test-reporter after-build --exit-code $?
       - persist_to_workspace:
           root: ~/graphql-form
           paths: .
