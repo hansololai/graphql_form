@@ -1,4 +1,7 @@
 # GraphqlForm
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/hansololai/graphql_form.svg)](https://greenkeeper.io/)
+
 <a href="https://codeclimate.com/github/hansololai/graphql_form/maintainability"><img src="https://api.codeclimate.com/v1/badges/c0b71129d0511cc58309/maintainability" /></a>
 <a href="https://codeclimate.com/github/hansololai/graphql_form/test_coverage"><img src="https://api.codeclimate.com/v1/badges/c0b71129d0511cc58309/test_coverage" /></a>
 ## Demo
