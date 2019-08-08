@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Basic Graphql Form 1`] = `
+exports[`Graphql Form Basic Form 1`] = `
 <div>
   <div
     style="width: 400px;"
@@ -23,6 +23,1471 @@ exports[`Basic Graphql Form 1`] = `
         <i
           class="ant-spin-dot-item"
         />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form Basic Form 2`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div>
+        <input
+          class="ant-input ant-input-disabled"
+          data-__field="[object Object]"
+          data-__meta="[object Object]"
+          disabled=""
+          id="id"
+          type="hidden"
+          value="1"
+        />
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="firstName"
+            title="First Name"
+          >
+            First Name
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control has-success"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="firstName"
+                type="text"
+                value="test"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="email"
+            title="Email"
+          >
+            Email
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control has-success"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="email"
+                type="text"
+                value="test@test.com"
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="salary"
+            title="Salary"
+          >
+            Salary
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-input-number"
+              >
+                <div
+                  class="ant-input-number-handler-wrap"
+                >
+                  <span
+                    aria-disabled="false"
+                    aria-label="Increase Value"
+                    class="ant-input-number-handler ant-input-number-handler-up "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: up"
+                      class="anticon anticon-up ant-input-number-handler-up-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="up"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <span
+                    aria-disabled="false"
+                    aria-label="Decrease Value"
+                    class="ant-input-number-handler ant-input-number-handler-down "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: down"
+                      class="anticon anticon-down ant-input-number-handler-down-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                </div>
+                <div
+                  aria-valuemin="-9007199254740991"
+                  class="ant-input-number-input-wrap"
+                  role="spinbutton"
+                >
+                  <input
+                    autocomplete="off"
+                    class="ant-input-number-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="salary"
+                    min="-9007199254740991"
+                    step="1"
+                    value=""
+                  />
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="isAdmin"
+            title="Is Admin"
+          >
+            Is Admin
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <label
+                class="ant-checkbox-wrapper"
+              >
+                <span
+                  class="ant-checkbox"
+                >
+                  <input
+                    class="ant-checkbox-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="isAdmin"
+                    type="checkbox"
+                    value=""
+                  />
+                  <span
+                    class="ant-checkbox-inner"
+                  />
+                </span>
+              </label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form With Custom Widget and Rule 1`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <div
+      class="ant-spin ant-spin-spinning"
+    >
+      <span
+        class="ant-spin-dot ant-spin-dot-spin"
+      >
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form With Custom Widget and Rule 2`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div>
+        <input
+          class="ant-input ant-input-disabled"
+          data-__field="[object Object]"
+          data-__meta="[object Object]"
+          disabled=""
+          id="id"
+          type="hidden"
+          value=""
+        />
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class="ant-form-item-required"
+            for="firstName"
+            title="First Name"
+          >
+            First Name
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-select ant-select-enabled"
+              >
+                <div
+                  aria-autocomplete="list"
+                  aria-controls="test-uuid"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="ant-select-selection
+            ant-select-selection--single"
+                  role="combobox"
+                  tabindex="0"
+                >
+                  <div
+                    class="ant-select-selection__rendered"
+                  />
+                  <span
+                    class="ant-select-arrow"
+                    style="user-select: none;"
+                    unselectable="on"
+                  >
+                    <i
+                      aria-label="icon: down"
+                      class="anticon anticon-down ant-select-arrow-icon"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class="ant-form-item-required"
+            for="email"
+            title="Email"
+          >
+            Email
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="email"
+                type="text"
+                value=""
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="salary"
+            title="Salary"
+          >
+            Salary
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-input-number"
+              >
+                <div
+                  class="ant-input-number-handler-wrap"
+                >
+                  <span
+                    aria-disabled="false"
+                    aria-label="Increase Value"
+                    class="ant-input-number-handler ant-input-number-handler-up "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: up"
+                      class="anticon anticon-up ant-input-number-handler-up-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="up"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <span
+                    aria-disabled="false"
+                    aria-label="Decrease Value"
+                    class="ant-input-number-handler ant-input-number-handler-down "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: down"
+                      class="anticon anticon-down ant-input-number-handler-down-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                </div>
+                <div
+                  aria-valuemin="-9007199254740991"
+                  class="ant-input-number-input-wrap"
+                  role="spinbutton"
+                >
+                  <input
+                    autocomplete="off"
+                    class="ant-input-number-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="salary"
+                    min="-9007199254740991"
+                    step="1"
+                    value=""
+                  />
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="isAdmin"
+            title="Is Admin"
+          >
+            Is Admin
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <label
+                class="ant-checkbox-wrapper"
+              >
+                <span
+                  class="ant-checkbox"
+                >
+                  <input
+                    class="ant-checkbox-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="isAdmin"
+                    type="checkbox"
+                    value=""
+                  />
+                  <span
+                    class="ant-checkbox-inner"
+                  />
+                </span>
+              </label>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="role"
+            title="Role"
+          >
+            Role
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-spin ant-spin-spinning"
+              >
+                <span
+                  class="ant-spin-dot ant-spin-dot-spin"
+                >
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <button
+                class="ant-btn ant-btn-primary"
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form With Enum type 1`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <div
+      class="ant-spin ant-spin-spinning"
+    >
+      <span
+        class="ant-spin-dot ant-spin-dot-spin"
+      >
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form With Enum type 2`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div>
+        <input
+          class="ant-input ant-input-disabled"
+          data-__field="[object Object]"
+          data-__meta="[object Object]"
+          disabled=""
+          id="id"
+          type="hidden"
+          value=""
+        />
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class="ant-form-item-required"
+            for="firstName"
+            title="First Name"
+          >
+            First Name
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="firstName"
+                type="text"
+                value=""
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class="ant-form-item-required"
+            for="email"
+            title="Email"
+          >
+            Email
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="email"
+                type="text"
+                value=""
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="salary"
+            title="Salary"
+          >
+            Salary
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-input-number"
+              >
+                <div
+                  class="ant-input-number-handler-wrap"
+                >
+                  <span
+                    aria-disabled="false"
+                    aria-label="Increase Value"
+                    class="ant-input-number-handler ant-input-number-handler-up "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: up"
+                      class="anticon anticon-up ant-input-number-handler-up-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="up"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <span
+                    aria-disabled="false"
+                    aria-label="Decrease Value"
+                    class="ant-input-number-handler ant-input-number-handler-down "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: down"
+                      class="anticon anticon-down ant-input-number-handler-down-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                </div>
+                <div
+                  aria-valuemin="-9007199254740991"
+                  class="ant-input-number-input-wrap"
+                  role="spinbutton"
+                >
+                  <input
+                    autocomplete="off"
+                    class="ant-input-number-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="salary"
+                    min="-9007199254740991"
+                    step="1"
+                    value=""
+                  />
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="isAdmin"
+            title="Is Admin"
+          >
+            Is Admin
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <label
+                class="ant-checkbox-wrapper"
+              >
+                <span
+                  class="ant-checkbox"
+                >
+                  <input
+                    class="ant-checkbox-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="isAdmin"
+                    type="checkbox"
+                    value=""
+                  />
+                  <span
+                    class="ant-checkbox-inner"
+                  />
+                </span>
+              </label>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="role"
+            title="Role"
+          >
+            Role
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-spin ant-spin-spinning"
+              >
+                <span
+                  class="ant-spin-dot ant-spin-dot-spin"
+                >
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <button
+                class="ant-btn ant-btn-primary"
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form With new model data 1`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <div
+      class="ant-spin ant-spin-spinning"
+    >
+      <span
+        class="ant-spin-dot ant-spin-dot-spin"
+      >
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+        <i
+          class="ant-spin-dot-item"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Graphql Form With new model data 2`] = `
+<div>
+  <div
+    style="width: 400px;"
+  >
+    <form
+      class="ant-form ant-form-horizontal"
+    >
+      <div>
+        <input
+          class="ant-input ant-input-disabled"
+          data-__field="[object Object]"
+          data-__meta="[object Object]"
+          disabled=""
+          id="id"
+          type="hidden"
+          value=""
+        />
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class="ant-form-item-required"
+            for="firstName"
+            title="First Name"
+          >
+            First Name
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="firstName"
+                type="text"
+                value=""
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class="ant-form-item-required"
+            for="email"
+            title="Email"
+          >
+            Email
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <input
+                class="ant-input"
+                data-__field="[object Object]"
+                data-__meta="[object Object]"
+                id="email"
+                type="text"
+                value=""
+              />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="salary"
+            title="Salary"
+          >
+            Salary
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-input-number"
+              >
+                <div
+                  class="ant-input-number-handler-wrap"
+                >
+                  <span
+                    aria-disabled="false"
+                    aria-label="Increase Value"
+                    class="ant-input-number-handler ant-input-number-handler-up "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: up"
+                      class="anticon anticon-up ant-input-number-handler-up-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="up"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                  <span
+                    aria-disabled="false"
+                    aria-label="Decrease Value"
+                    class="ant-input-number-handler ant-input-number-handler-down "
+                    role="button"
+                    unselectable="unselectable"
+                  >
+                    <i
+                      aria-label="icon: down"
+                      class="anticon anticon-down ant-input-number-handler-down-inner"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </i>
+                  </span>
+                </div>
+                <div
+                  aria-valuemin="-9007199254740991"
+                  class="ant-input-number-input-wrap"
+                  role="spinbutton"
+                >
+                  <input
+                    autocomplete="off"
+                    class="ant-input-number-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="salary"
+                    min="-9007199254740991"
+                    step="1"
+                    value=""
+                  />
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="isAdmin"
+            title="Is Admin"
+          >
+            Is Admin
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <label
+                class="ant-checkbox-wrapper"
+              >
+                <span
+                  class="ant-checkbox"
+                >
+                  <input
+                    class="ant-checkbox-input"
+                    data-__field="[object Object]"
+                    data-__meta="[object Object]"
+                    id="isAdmin"
+                    type="checkbox"
+                    value=""
+                  />
+                  <span
+                    class="ant-checkbox-inner"
+                  />
+                </span>
+              </label>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+        >
+          <label
+            class=""
+            for="role"
+            title="Role"
+          >
+            Role
+          </label>
+        </div>
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <div
+                class="ant-spin ant-spin-spinning"
+              >
+                <span
+                  class="ant-spin-dot ant-spin-dot-spin"
+                >
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                  <i
+                    class="ant-spin-dot-item"
+                  />
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-row ant-form-item"
+      >
+        <div
+          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+        >
+          <div
+            class="ant-form-item-control"
+          >
+            <span
+              class="ant-form-item-children"
+            >
+              <button
+                class="ant-btn ant-btn-primary"
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`SelectWidget of user 1`] = `
+<div>
+  <div
+    class="ant-select ant-select-enabled"
+    style="width: 100%;"
+  >
+    <div
+      aria-autocomplete="list"
+      aria-controls="test-uuid"
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="ant-select-selection
+            ant-select-selection--single"
+      role="combobox"
+      tabindex="0"
+    >
+      <div
+        class="ant-select-selection__rendered"
+      >
+        <div
+          class="ant-select-selection-selected-value"
+          style="display: block; opacity: 1;"
+          title=""
+        />
+        <div
+          class="ant-select-search ant-select-search--inline"
+          style="display: none;"
+        >
+          <div
+            class="ant-select-search__field__wrap"
+          >
+            <input
+              autocomplete="off"
+              class="ant-select-search__field"
+              value=""
+            />
+            <span
+              class="ant-select-search__field__mirror"
+            >
+              
+               
+            </span>
+          </div>
+        </div>
+      </div>
+      <span
+        class="ant-select-arrow"
+        style="user-select: none;"
+        unselectable="on"
+      >
+        <i
+          aria-label="icon: down"
+          class="anticon anticon-down ant-select-arrow-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class=""
+            data-icon="down"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+            />
+          </svg>
+        </i>
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SelectWidget of user 2`] = `
+<div>
+  <div
+    class="ant-select ant-select-enabled"
+    style="width: 100%;"
+  >
+    <div
+      aria-autocomplete="list"
+      aria-controls="test-uuid"
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="ant-select-selection
+            ant-select-selection--single"
+      role="combobox"
+      tabindex="0"
+    >
+      <div
+        class="ant-select-selection__rendered"
+      >
+        <div
+          class="ant-select-selection-selected-value"
+          style="display: block; opacity: 1;"
+          title=""
+        />
+        <div
+          class="ant-select-search ant-select-search--inline"
+          style="display: none;"
+        >
+          <div
+            class="ant-select-search__field__wrap"
+          >
+            <input
+              autocomplete="off"
+              class="ant-select-search__field"
+              value=""
+            />
+            <span
+              class="ant-select-search__field__mirror"
+            >
+              
+               
+            </span>
+          </div>
+        </div>
+      </div>
+      <span
+        class="ant-select-arrow"
+        style="user-select: none;"
+        unselectable="on"
+      >
+        <i
+          aria-label="icon: down"
+          class="anticon anticon-down ant-select-arrow-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class=""
+            data-icon="down"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+            />
+          </svg>
+        </i>
       </span>
     </div>
   </div>
