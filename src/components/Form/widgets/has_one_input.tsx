@@ -30,9 +30,7 @@ export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.React
       return <Select
         showSearch={!!filterField}
         value={value}
-        placeholder="type in to search"
         notFoundContent={loading ? <Spin size="small" /> : null}
-        filterOption={false}
         onSearch={setSearchInput}
         onChange={onChange}
         style={{ width: '100%' }}
