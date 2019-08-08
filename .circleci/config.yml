@@ -1,4 +1,6 @@
 defaults: &defaults
+  environment:
+    CC_TEST_REPORTER_ID: 7ead496ff5eed9e9ff5aa88225cffbf27da06df5113941419cbeee68d37f155b
   working_directory: ~/graphql-form # directory where steps will run
   docker: # run the steps with Docker
     - image: circleci/node:11-stretch # ...with this image as the primary container; this is where all `steps` will run
@@ -18,9 +20,17 @@ jobs: # a collection of steps
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      # - run: # run tests
-      #     name: test
-      #     command: npm test
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run: # run tests
+          name: test
+          command: |
+            ./cc-test-reporter before-build
+            yarn coverage
+            ./cc-test-reporter after-build --exit-code $?
       - persist_to_workspace:
           root: ~/graphql-form
           paths: .

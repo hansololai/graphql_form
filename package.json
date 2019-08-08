@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest src",
+    "coverage": "jest src --coverage",
     "build": "webpack --mode development",
     "build-storybook": "build-storybook -c .storybook -o .out",
     "deploy-storybook": "storybook-to-ghpages",
@@ -17,9 +18,10 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
+      "src/**/*.{ts,tsx}",
       "!src/**/(index|stories).{js,jsx,ts,tsx}",
-      "!src/**/(__generated__|__tests__)/*.{js,jsx,ts,tsx}"
+      "!src/components/Table/**/*",
+      "!src/**/(__generated__|__tests__|__mock__|__test__)/*.{js,jsx,ts,tsx}"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/*.{tsx}"
