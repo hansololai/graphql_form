@@ -1,25 +1,34 @@
 import * as React from 'react';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { render } from '@testing-library/react';
+import { render, wait, fireEvent } from '@testing-library/react';
 import { GraphqlForm } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
 import { mockData, sampleSelectQuery } from '../__mock__/dataMock'
-import * as waait from 'waait';
 
-
+const waitUntilNoSpin = (container: any) => wait(() => {
+  const isLoading = container.querySelector('.ant-spin') !== null;
+  expect(isLoading).toBe(false);
+});
 describe('Graphql Form', async () => {
   it('Basic Form', async () => {
+    const onSubmit = jest.fn();
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: "test", email: "test@test.com" }} />
+          <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: "test", email: "test@test.com" }} onSubmit={onSubmit} />
         </div>
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    // @ts-ignore
-    await waait(1);
+    await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
+    // Try submit
+    const form = container.querySelector('form');
+    expect(form).not.toBeNull();
+    if (form) {
+      fireEvent.submit(form);
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    }
   });
   it('With new model data', async () => {
     const { container } = render(
@@ -30,8 +39,8 @@ describe('Graphql Form', async () => {
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    // @ts-ignore
-    await waait(1);
+    await waitUntilNoSpin(container);
+
     expect(container).toMatchSnapshot();
   });
   it('With Custom Widget and Rule', async () => {
@@ -70,8 +79,7 @@ describe('Graphql Form', async () => {
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    // @ts-ignore
-    await waait(1);
+    await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
   });
   it('With Enum type', async () => {
@@ -83,8 +91,8 @@ describe('Graphql Form', async () => {
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    // @ts-ignore
-    await waait(1);
+
+    await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
   });
 })
@@ -96,7 +104,7 @@ it('SelectWidget of user', async () => {
     </MockedProvider>
   )
   expect(container).toMatchSnapshot();
-  // @ts-ignore
-  await waait(1);
+
+  await waitUntilNoSpin(container);
   expect(container).toMatchSnapshot();
 })
