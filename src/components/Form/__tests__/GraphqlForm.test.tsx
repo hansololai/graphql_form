@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MockedProvider } from 'react-apollo/test-utils';
-import { render, wait } from '@testing-library/react';
+import { render, wait, fireEvent } from '@testing-library/react';
 import { GraphqlForm } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
 import { mockData, sampleSelectQuery } from '../__mock__/dataMock'
@@ -11,17 +11,24 @@ const waitUntilNoSpin = (container: any) => wait(() => {
 });
 describe('Graphql Form', async () => {
   it('Basic Form', async () => {
+    const onSubmit = jest.fn();
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: "test", email: "test@test.com" }} />
+          <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: "test", email: "test@test.com" }} onSubmit={onSubmit} />
         </div>
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    // @ts-ignore
     await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
+    // Try submit
+    const form = container.querySelector('form');
+    expect(form).not.toBeNull();
+    if (form) {
+      fireEvent.submit(form);
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    }
   });
   it('With new model data', async () => {
     const { container } = render(
