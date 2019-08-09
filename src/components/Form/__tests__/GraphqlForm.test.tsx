@@ -4,11 +4,11 @@ import { render, wait } from '@testing-library/react';
 import { GraphqlForm } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
 import { mockData, sampleSelectQuery } from '../__mock__/dataMock'
-const waitUntilLoadingIsFinished = (queryByText: any) => wait(() => {
-  const isLoading = queryByText('ant-spin') != null;
-  expect(isLoading).toBe(false);
-})
 
+const waitUntilNoSpin = (container: any) => wait(() => {
+  const isLoading = container.querySelector('.ant-spin') !== null;
+  expect(isLoading).toBe(false);
+});
 describe('Graphql Form', async () => {
   it('Basic Form', async () => {
     const { container } = render(
@@ -20,11 +20,11 @@ describe('Graphql Form', async () => {
     );
     expect(container).toMatchSnapshot();
     // @ts-ignore
-    await waait(1);
+    await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
   });
   it('With new model data', async () => {
-    const { queryByText, container } = render(
+    const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
           <GraphqlForm modelName="User" onSubmit={(form) => { }} />
@@ -32,7 +32,7 @@ describe('Graphql Form', async () => {
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    await waitUntilLoadingIsFinished(queryByText);
+    await waitUntilNoSpin(container);
 
     expect(container).toMatchSnapshot();
   });
@@ -56,7 +56,7 @@ describe('Graphql Form', async () => {
       cb("not within 10000 - 50000");
     };
 
-    const { container, queryByText } = render(
+    const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
           <GraphqlForm modelName="User" onSubmit={(form) => { }}
@@ -72,11 +72,11 @@ describe('Graphql Form', async () => {
       </MockedProvider>
     );
     expect(container).toMatchSnapshot();
-    await waitUntilLoadingIsFinished(queryByText);
+    await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
   });
   it('With Enum type', async () => {
-    const { container, queryByText } = render(
+    const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
           <GraphqlForm modelName="User" onSubmit={(form) => { }} />
@@ -85,12 +85,12 @@ describe('Graphql Form', async () => {
     );
     expect(container).toMatchSnapshot();
 
-    await waitUntilLoadingIsFinished(queryByText);
+    await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
   });
 })
 it('SelectWidget of user', async () => {
-  const { container, queryByText } = render(
+  const { container } = render(
     <MockedProvider mocks={mockData}>
       <HasOneInput selectQuery={sampleSelectQuery} nameField="name" valueField="id" filterField="name" value={null} onChange={(e) => { }} />
 
@@ -98,6 +98,6 @@ it('SelectWidget of user', async () => {
   )
   expect(container).toMatchSnapshot();
 
-  await waitUntilLoadingIsFinished(queryByText);
+  await waitUntilNoSpin(container);
   expect(container).toMatchSnapshot();
 })
