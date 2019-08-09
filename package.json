@@ -76,7 +76,7 @@
   "homepage": "https://github.com/hansololai/graphql_form",
   "greenkeeper": {
     "ignore": [
-      "react-apollo",
+      "react-apollo"
     ]
   },
   "devDependencies": {
