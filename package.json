@@ -62,7 +62,8 @@
     "url": "git+https://github.com/hansololai/graphql_form"
   },
   "keywords": [
-    "boilerplate",
+    "postgraphileForm",
+    "graphqlForm",
     "react",
     "shared",
     "components"
@@ -75,12 +76,7 @@
   "homepage": "https://github.com/hansololai/graphql_form",
   "greenkeeper": {
     "ignore": [
-      "babel-jest",
-      "jest-junit",
-      "jest",
       "react-apollo",
-      "@storybook/react",
-      "@storybook/addon-actions"
     ]
   },
   "devDependencies": {
@@ -91,9 +87,9 @@
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
     "@emotion/utils": "^0.11.1",
-    "@storybook/addon-actions": "^4.1.4",
-    "@storybook/addon-info": "^5.0.11",
-    "@storybook/react": "^4.1.4",
+    "@storybook/addon-actions": "^5.1.10",
+    "@storybook/addon-info": "^5.1.10",
+    "@storybook/react": "^5.1.10",
     "@storybook/storybook-deployer": "^2.8.1",
     "@testing-library/react": "8.0.8",
     "@types/jest": "^24.0.17",
