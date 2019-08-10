@@ -91,7 +91,7 @@
     "@storybook/addon-info": "^5.1.10",
     "@storybook/react": "^5.1.10",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@testing-library/react": "8.0.9",
+    "@testing-library/react": "9.0.1",
     "@types/jest": "^24.0.17",
     "@types/storybook__react": "^4.0.1",
     "apollo-cache-inmemory": "^1.6.2",
