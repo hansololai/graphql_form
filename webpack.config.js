@@ -84,7 +84,12 @@ module.exports = {
 			commonjs2: 'react-dom',
 			commonjs: 'react-dom',
 			amd: 'react-dom',
-		}
+		},
+		antd: 'antd',
+		graphql: 'graphql',
+		'graphql-tag': 'graphql-tag',
+		'change-case': 'change-case',
+		'pluralize': 'pluralize'
 	},
 	// Here we define explicitly the file types we intend to deal with
 	resolve: {
