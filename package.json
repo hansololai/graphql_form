@@ -40,7 +40,9 @@
       "@/(.*)": "<rootDir>/src/$1"
     },
     "testPathIgnorePatterns": [
-      "<rootDir>/.storybook/"
+      "<rootDir>/.storybook/",
+      "node_modules",
+      "<rootDir>/dist/"
     ],
     "automock": false,
     "testURL": "http://localhost",

@@ -9,7 +9,7 @@ const waitUntilNoSpin = (container: any) => wait(() => {
   const isLoading = container.querySelector('.ant-spin') !== null;
   expect(isLoading).toBe(false);
 });
-describe('Graphql Form', async () => {
+describe('Graphql Form', () => {
   it('Basic Form', async () => {
     const onSubmit = jest.fn();
     const { container } = render(
