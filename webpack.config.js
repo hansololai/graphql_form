@@ -6,7 +6,7 @@ const path = require('path');
 module.exports = {
 	// This is where our app starts. This is why we have done all this importing
 	// and exporting, to get to here
-	entry: './src/index.js',
+	entry: './src/index.ts',
 	// module (I know it's a bit weird to have module.exports.module) is where we
 	// define all the rules for how webpack will deal with thing.
 	module: {

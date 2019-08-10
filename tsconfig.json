@@ -36,6 +36,9 @@
   "exclude": [
     "node_modules",
     "build",
-    "scripts"
+    "scripts",
+    "**/__tests__/",
+    "**/__mock__/",
+    "**/*.test.*"
   ]
 }
