@@ -85,7 +85,7 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "@emotion/cache": "^10.0.0",
+    "@emotion/cache": "^10.0.15",
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
     "@emotion/utils": "^0.11.1",
