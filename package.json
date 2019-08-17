@@ -139,6 +139,6 @@
     "react": "^16.9.0",
     "react-apollo": "^2.5.5",
     "react-dom": "^16.9.0",
-    "use-debounce": "^2.0.2"
+    "use-debounce": "^3.0.0"
   }
 }
