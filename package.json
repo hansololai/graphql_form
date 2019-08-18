@@ -121,7 +121,7 @@
     "url-loader": "^2.1.0",
     "waait": "^1.0.2",
     "webpack": "^4.31.0",
-    "webpack-cli": "^3.2.0",
+    "webpack-cli": "^3.3.7",
     "antd": "^3.18.1",
     "change-case": "^3.1.0",
     "graphql": "^14.3.0",
