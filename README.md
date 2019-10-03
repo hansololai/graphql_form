@@ -5,7 +5,22 @@
 <a href="https://codeclimate.com/github/hansololai/graphql_form/maintainability"><img src="https://api.codeclimate.com/v1/badges/c0b71129d0511cc58309/maintainability" /></a>
 <a href="https://codeclimate.com/github/hansololai/graphql_form/test_coverage"><img src="https://api.codeclimate.com/v1/badges/c0b71129d0511cc58309/test_coverage" /></a>
 [![CircleCI](https://circleci.com/gh/hansololai/graphql_form.svg?style=svg)](https://circleci.com/gh/hansololai/graphql_form)
+[![Known Vulnerabilities](https://snyk.io//test/github/hansololai/graphql_form/badge.svg?targetFile=package.json)](https://snyk.io//test/github/hansololai/graphql_form?targetFile=package.json)
+Copy
+See our Badges documentation for more details.
 
+Severity
+High
+0
+Medium
+0
+Low
+0
+Status
+Open
+0
+Patched
+0
 ## Demo
 
 For a quick demo, visit: [graphql_form](https://hansololai.github.io/graphql_form/)
