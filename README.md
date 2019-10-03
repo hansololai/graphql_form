@@ -7,19 +7,6 @@
 [![CircleCI](https://circleci.com/gh/hansololai/graphql_form.svg?style=svg)](https://circleci.com/gh/hansololai/graphql_form)
 [![Known Vulnerabilities](https://snyk.io//test/github/hansololai/graphql_form/badge.svg?targetFile=package.json)](https://snyk.io//test/github/hansololai/graphql_form?targetFile=package.json)
 
-
-Severity
-High
-0
-Medium
-0
-Low
-0
-Status
-Open
-0
-Patched
-0
 ## Demo
 
 For a quick demo, visit: [graphql_form](https://hansololai.github.io/graphql_form/)
