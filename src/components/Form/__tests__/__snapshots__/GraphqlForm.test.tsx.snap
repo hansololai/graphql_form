@@ -203,17 +203,17 @@ exports[`Graphql Form Basic Form 2`] = `
                   </span>
                 </div>
                 <div
-                  aria-valuemin="-9007199254740991"
                   class="ant-input-number-input-wrap"
-                  role="spinbutton"
                 >
                   <input
+                    aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="salary"
                     min="-9007199254740991"
+                    role="spinbutton"
                     step="1"
                     value=""
                   />
@@ -536,17 +536,17 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   </span>
                 </div>
                 <div
-                  aria-valuemin="-9007199254740991"
                   class="ant-input-number-input-wrap"
-                  role="spinbutton"
                 >
                   <input
+                    aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="salary"
                     min="-9007199254740991"
+                    role="spinbutton"
                     step="1"
                     value=""
                   />
@@ -904,17 +904,17 @@ exports[`Graphql Form With Enum type 2`] = `
                   </span>
                 </div>
                 <div
-                  aria-valuemin="-9007199254740991"
                   class="ant-input-number-input-wrap"
-                  role="spinbutton"
                 >
                   <input
+                    aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="salary"
                     min="-9007199254740991"
+                    role="spinbutton"
                     step="1"
                     value=""
                   />
@@ -1272,17 +1272,17 @@ exports[`Graphql Form With new model data 2`] = `
                   </span>
                 </div>
                 <div
-                  aria-valuemin="-9007199254740991"
                   class="ant-input-number-input-wrap"
-                  role="spinbutton"
                 >
                   <input
+                    aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
                     data-__field="[object Object]"
                     data-__meta="[object Object]"
                     id="salary"
                     min="-9007199254740991"
+                    role="spinbutton"
                     step="1"
                     value=""
                   />
