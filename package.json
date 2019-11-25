@@ -96,7 +96,7 @@
     "@testing-library/react": "9.3.2",
     "@types/jest": "^24.0.17",
     "@types/storybook__react": "^4.0.1",
-    "antd": "^3.25.1",
+    "antd": "^3.25.3",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.5.1",
     "apollo-link-http": "^1.5.15",
