@@ -93,7 +93,7 @@
     "@storybook/addon-info": "^5.2.8",
     "@storybook/react": "^5.2.8",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@testing-library/react": "9.3.3",
+    "@testing-library/react": "9.4.0",
     "@types/jest": "^24.0.17",
     "@types/storybook__react": "^4.0.1",
     "antd": "^3.26.0",
