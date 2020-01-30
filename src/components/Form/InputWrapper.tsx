@@ -20,7 +20,7 @@ export interface InputWrapperProps {
   customRules?: ValidationRule[];
   validator?: validatorFunc;
 }
-const setupDecorator = (props: InputWrapperProps): any => {
+const setupDecorator = (props: InputWrapperProps): GetFieldDecoratorOptions => {
   const {
     form,
     name,

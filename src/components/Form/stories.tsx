@@ -210,4 +210,24 @@ storiesOf('GraphqlForm', module)
         />
       </div>
     </MockedProvider>
+  }).add('A Select for Value', () => {
+    return <MockedProvider mocks={mockData}>
+      <div style={{ width: 400 }}>
+        <GraphqlForm modelName="User" onSubmit={(form) => {
+          action('Submit Clicked')(form.getFieldsValue());
+        }}
+          customWidgets={{
+            managerId: ({ value, onChange }) => {
+              return <HasOneInput
+                selectQuery={sampleSelectQuery}
+                nameField="name"
+                valueField="id"
+                filterField="name" value={value}
+                onChange={onChange}
+              />;
+            }
+          }}
+        />
+      </div>
+    </MockedProvider>
   })

@@ -97,6 +97,17 @@ export const mockCreateInputData = {
           }
         },
         {
+          "name": "managerId",
+          "__typename": "__InputValue",
+          "defaultValue": null,
+          "type": {
+            "__typename": "__Type",
+            "name": "Int",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        },
+        {
           "name": "firstName",
           "__typename": "__InputValue",
           "defaultValue": null,
