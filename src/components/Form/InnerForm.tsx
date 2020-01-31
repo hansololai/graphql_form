@@ -10,7 +10,7 @@ import 'antd/lib/button/style';
 
 // Generated Types
 import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery'
-import { fieldTypeQuery___type_fields } from './__generated__/fieldTypeQuery'
+// import { fieldTypeQuery___type_fields } from './__generated__/fieldTypeQuery'
 import { GraphqlFormProps } from './GraphqlForm';
 
 export const formItemLayout = {
@@ -26,7 +26,7 @@ export const formItemLayout = {
 
 export interface InnerFormTypeProps {
   inputFields: patchTypeQuery___type_inputFields[];
-  fields: fieldTypeQuery___type_fields[];
+  // fields: fieldTypeQuery___type_fields[];
 }
 export interface InnerFormProps extends GraphqlFormProps, FormComponentProps, InnerFormTypeProps { };
 
