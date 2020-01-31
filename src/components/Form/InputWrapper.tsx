@@ -13,7 +13,7 @@ export interface InputWrapperProps {
   form: WrappedFormUtils;
   name: string;
   type: patchTypeQuery___type_inputFields_type;
-  value: any;
+  value?: any;
   disabled: boolean;
   hidden: boolean;
   options?: GetFieldDecoratorOptions;

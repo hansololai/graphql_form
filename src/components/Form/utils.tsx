@@ -1,7 +1,6 @@
 import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 import { InnerFormProps, InnerFormTypeProps } from './InnerForm';
 import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput } from './widgets/index';
-import * as moment from 'moment';
 import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
 import * as React from 'react';
 import { patchTypeQuery___type_inputFields, patchTypeQuery___type_inputFields_type_ofType } from './__generated__/patchTypeQuery';
@@ -36,22 +35,11 @@ export interface FormFieldOptionProps {
   customWidgets?: { [x: string]: React.FC<{ value: any, onChange: (p: any) => void }> };
 }
 export interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>, FormFieldOptionProps, InnerFormTypeProps {
-  instanceData: object;
 }
 export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {
-  const { fields, inputFields, instanceData = {}, form, customDecorators = {},
+  const { inputFields, form, customDecorators = {},
     customRules = {}, customValidators = {}, customWidgets = {} } = props;
   // fields are going to be used as reference to check if it's a foreign key, let's process it once first
-  // it is a keyName => modelName mapping
-  const foreignKeys: { [x: string]: string } = {};
-  fields.forEach(f => {
-    const { name: fieldName, type: { name: typeName, kind } } = f;
-    if (kind === 'OBJECT' && fieldName.includes('By') && typeName) {
-      // It is a foreign key
-      const keyName = fieldName.substring(fieldName.indexOf('By'));
-      if (keyName) foreignKeys[keyName] = typeName;
-    }
-  });
 
   return inputFields.map(field => {
     const { name: fieldName, type } = field;
@@ -65,7 +53,6 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       form,
       name: fieldName,
       type,
-      value: instanceData[fieldName],
       hidden: false,
       disabled: false,
     };
@@ -81,7 +68,6 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
     }
 
     // Based on Type
-    let value = instanceData[fieldName];
     let toReturn: React.ReactNode = null;
     if (customWidgets[fieldName]) {
       // If user have provided a custom widget for this type, the use that
@@ -89,7 +75,7 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
       //@ts-ignore
       toReturn = <C />;
     } else if (kind === 'SCALAR') {
-      toReturn = scalarFieldToInput(field, foreignKeys, value);
+      toReturn = scalarFieldToInput(field);
 
     } else if (kind === 'ENUM') {
       if (typeName) {
@@ -111,22 +97,18 @@ export const inputFieldKind = (
   const info = type.kind === 'NON_NULL' ? type.ofType : type;
   return info;
 }
-const scalarFieldToInput = (f: patchTypeQuery___type_inputFields, foreignKeys: { [x: string]: string } = {}, value: any): React.ReactNode => {
-  const { name: fieldName } = f;
+const scalarFieldToInput = (f: patchTypeQuery___type_inputFields): React.ReactNode => {
+  // const { name: fieldName } = f;
   const info = inputFieldKind(f);
   if (!info) return null;
   const { name: typeName } = info;
   if (handlableTypeName(typeName)) {
     // It could be a foreign Key, so we do some guess here
-    if (foreignKeys[fieldName]) {
-      // It is a foreign key by the fooByBarId pattern. 
-      return <NumberInput />
-    }
     const C = nameToFormFieldMapping[typeName];
     switch (typeName) {
       case 'Date':
       case 'Datetime': {
-        value = value ? moment(value) : null;
+        // value = value ? moment(value) : null;
       }
     }
     // @ts-ignore

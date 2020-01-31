@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useQuery } from 'react-apollo';
-import { updateInputQuery, modelFieldsQuery } from './queries';
+import { updateInputQuery } from './queries';
 import { Spin, notification } from 'antd';
 import { WrappedInnerForm } from './InnerForm';
 import * as SelectFragmentMapping from './ModelFragments';
