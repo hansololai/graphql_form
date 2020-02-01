@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MockedProvider } from 'react-apollo/test-utils';
+import { MockedProvider } from '@apollo/react-testing';
 import { render, wait, fireEvent } from '@testing-library/react';
 import { GraphqlForm } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
