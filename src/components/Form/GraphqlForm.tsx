@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import { updateInputQuery } from './queries';
 import { Spin, notification } from 'antd';
 import { WrappedInnerForm } from './InnerForm';

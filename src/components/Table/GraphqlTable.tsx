@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { notification, Spin } from 'antd';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import { modelFieldsQuery } from '../Form/queries'
 import { fieldTypeQuery } from '../Form/__generated__/fieldTypeQuery';
 import { InnerTable, InnerTableProps } from './InnerTable';

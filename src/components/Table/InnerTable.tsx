@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as moment from 'moment';
 import * as debounce from 'lodash.debounce';
 import { notification, Icon, Table } from 'antd';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import { ColumnProps, TableProps } from 'antd/lib/table'
 import { fieldTypeQuery___type_fields } from 'components/Form/__generated__/fieldTypeQuery';
 import { isScalar, buildGetCollectionQuery, getFieldType, toGraphQLOrder } from './utils'
