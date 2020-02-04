@@ -31,9 +31,11 @@ export interface InnerFormTypeProps {
 export interface InnerFormProps extends GraphqlFormProps, FormComponentProps, InnerFormTypeProps { };
 
 const InnerForm: React.FC<InnerFormProps> = (props) => {
-  const { onSubmit, form, instanceData = {}, ...options } = props;
+  const { onSubmit, form, instanceData, ...options } = props;
   React.useEffect(() => {
-    form.setFieldsValue(instanceData);
+    if (instanceData) {
+      form.setFieldsValue(instanceData);
+    }
   }, [instanceData]);
 
   const allFields = createFormFields({ ...options, form });
