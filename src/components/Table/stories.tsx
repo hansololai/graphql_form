@@ -3,9 +3,9 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { GraphqlTable } from './GraphqlTable';
 import ApolloClient from 'apollo-client';
-import { HttpLink } from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 // Here we describe the stories we want to see of the Button. The component is
 // pretty simple so we will just make two, one with text and one with emojis
@@ -13,7 +13,7 @@ import { ApolloProvider } from 'react-apollo';
 //
 // .add() takes a name and then a function that should return what you want
 // rendered in the rendering area
-const httpLink = new HttpLink({ uri: 'http://localhost:5000/graphql' });
+const httpLink = createHttpLink({ uri: 'http://localhost:5000/graphql' });
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),

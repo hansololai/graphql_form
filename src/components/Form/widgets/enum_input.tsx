@@ -1,6 +1,6 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import { Select, Spin } from 'antd';
 import { enumTypeQuery } from './__generated__/enumTypeQuery'
 

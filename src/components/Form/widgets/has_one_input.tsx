@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import { useDebounce } from 'use-debounce'
 import { Select, Spin } from 'antd';
 import { SelectFragmentProp } from '../ModelFragments';

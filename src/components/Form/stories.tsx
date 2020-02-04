@@ -6,7 +6,7 @@ import { action } from '@storybook/addon-actions'
 // Import our component from this folder
 import { GraphqlForm } from './GraphqlForm';
 import { TextInput, BooleanInput, TextSelectInput, HasOneInput } from './widgets';
-import { MockedProvider } from 'react-apollo/test-utils';
+import { MockedProvider } from '@apollo/react-testing';
 import { mockData, sampleSelectQuery, } from './__mock__/dataMock';
 
 // Here we describe the stories we want to see of the Button. The component is
