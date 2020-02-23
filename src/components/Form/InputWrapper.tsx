@@ -76,7 +76,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
 
   return (<Item {...formItemLayout} label={fieldName}>
     {getFieldDecorator(name, decorator)(
-      children[0]
+      children ? children[0] : null
     )}
   </Item>);
 };
