@@ -20,8 +20,8 @@ export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.React
     {({ data, loading }) => {
       // Don't know what model it is, but it should have only 1 key
       let optionData: any[] = [];
-      if (Object.values(data).length > 0) {
-        const allModels: any = Object.values(data)[0]
+      if (Object.values(data || {}).length > 0) {
+        const allModels: any = Object.values(data || {})[0]
         // if using simplify-infector, then it's probably don't have the "nodes", but let's assume this now
         if (allModels.nodes) {
           optionData = allModels.nodes;
