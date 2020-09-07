@@ -1,16 +1,17 @@
-import { WrappedFormInternalProps, ValidationRule, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
-import { InnerFormProps, InnerFormTypeProps } from './InnerForm';
+import { FormInstance } from 'antd/lib/form/Form';
+import { InnerFormTypeProps } from './InnerForm';
 import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput } from './widgets/index';
 import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
 import * as React from 'react';
 import { patchTypeQuery___type_inputFields, patchTypeQuery___type_inputFields_type_ofType } from './__generated__/patchTypeQuery';
+import { Rule, FormItemProps } from 'antd/lib/form';
 
 export const isFunction = (funcToCheck) => {
   if (!funcToCheck) return false;
   return {}.toString.call(funcToCheck) === '[object Function]';
 }
 
-const nameToFormFieldMapping = {
+const nameToFormFieldMapping:{[x:string]: React.SFC} = {
   Boolean: BooleanInput,
   String: TextInput,
   Datetime: TimeInput,
@@ -30,13 +31,14 @@ export function handlableTypeName(type: any): type is PossibleTypeNames {
 }
 export interface FormFieldOptionProps {
   customValidators?: { [x: string]: validatorFunc };
-  customRules?: { [x: string]: ValidationRule[] };
-  customDecorators?: { [x: string]: GetFieldDecoratorOptions };
-  customWidgets?: { [x: string]: React.FC<{ value: any, onChange: (p: any) => void }> };
+  customRules?: { [x: string]: Rule[] };
+  customDecorators?: { [x: string]: FormItemProps};
+  customWidgets?: { [x: string]: React.SFC<{ value: any, onChange: (p: any) => void }> };
 }
-export interface createFormFieldsProps extends WrappedFormInternalProps<InnerFormProps>, FormFieldOptionProps, InnerFormTypeProps {
+export interface createFormFieldsProps<T> extends FormFieldOptionProps, InnerFormTypeProps {
+  form: FormInstance<T>;
 }
-export const createFormFields: (props: createFormFieldsProps) => React.ReactNode[] = (props) => {
+export const createFormFields: <TData extends object>(props: createFormFieldsProps<TData>) => React.ReactNode[] = <TData extends object>(props) => {
   const { inputFields, form, customDecorators = {},
     customRules = {}, customValidators = {}, customWidgets = {} } = props;
   // fields are going to be used as reference to check if it's a foreign key, let's process it once first
@@ -49,7 +51,7 @@ export const createFormFields: (props: createFormFieldsProps) => React.ReactNode
 
     const { kind, name: typeName } = info;
     // Here we try to create the Form Item for this field. Have to check the type, and add extra fields etc.
-    const fieldProps: InputWrapperProps = {
+    const fieldProps: InputWrapperProps<TData> = {
       form,
       name: fieldName,
       type,

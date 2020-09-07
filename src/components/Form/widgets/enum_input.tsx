@@ -21,7 +21,7 @@ export const enumQuery = gql`
   }
 `;
 
-export const EnumInput: React.FC<EnumInputProps> = (props) => {
+export const EnumInput: React.SFC<EnumInputProps> = (props) => {
   const { value, onChange, enumType } = props;
   const {data, loading, error} = useQuery<enumTypeQuery, enumTypeQueryVariables>(enumQuery, {variables:{name: enumType}});
   if(error){

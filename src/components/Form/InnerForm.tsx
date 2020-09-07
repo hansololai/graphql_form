@@ -1,12 +1,10 @@
 
 import * as React from 'react';
-import { Form, Button } from 'antd';
-import { FormComponentProps, } from 'antd/lib/form'
+import { Form, Button, notification } from 'antd';
 import { createFormFields } from './utils'
 import 'antd/lib/form/style';
 import 'antd/lib/button/style';
-
-
+const {useForm} = Form;
 
 // Generated Types
 import { patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery'
@@ -23,15 +21,23 @@ export const formItemLayout = {
     sm: { span: 16 },
   },
 }
+const formLayout = {
+  labelCol: {span: 8},
+  wrapperCol: {span: 16},
+}
+const tailLayout = {
+  wrappedCol: {offset: 0, span: 16},
+}
 
 export interface InnerFormTypeProps {
   inputFields: patchTypeQuery___type_inputFields[];
   // fields: fieldTypeQuery___type_fields[];
 }
-export interface InnerFormProps extends GraphqlFormProps, FormComponentProps, InnerFormTypeProps { };
+export interface InnerFormProps<T> extends GraphqlFormProps<T>, InnerFormTypeProps { };
 
-const InnerForm: React.FC<InnerFormProps> = (props) => {
-  const { onSubmit, form, instanceData, ...options } = props;
+const InnerForm: React.SFC<InnerFormProps<FormData>> = (props) => {
+  const { onSubmit, instanceData, ...options } = props;
+  const [form] = useForm<FormData>();
   React.useEffect(() => {
     if (instanceData) {
       form.setFieldsValue(instanceData);
@@ -40,26 +46,25 @@ const InnerForm: React.FC<InnerFormProps> = (props) => {
 
   const allFields = createFormFields({ ...options, form });
 
-  return <Form onSubmit={(e) => {
-    e.preventDefault();
-
-    form.validateFields((err, values) => {
-      if (!err) {
-        // passed validation
-        const { onSubmit } = props;
-        if (onSubmit) {
-          onSubmit(form);
-        }
+  return <Form form={form} {...formLayout} onFinish={(values) => {
+    form.validateFields().then(()=>{
+      if (onSubmit) {
+        onSubmit(form);
       }
-    })
+    }).catch(err=>{
+      notification.error({
+        message:'Validation Failed',
+        description: err.message,
+      });
+    });
   }}>
     {allFields}
     {onSubmit &&
-      <Form.Item {...formItemLayout}>
+      <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">Submit</Button>
       </Form.Item>}
   </Form>;
 }
-export const WrappedInnerForm = Form.create<InnerFormProps & FormComponentProps>()(InnerForm);
+export const WrappedInnerForm = InnerForm;
 
 

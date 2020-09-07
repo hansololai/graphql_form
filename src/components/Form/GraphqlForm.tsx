@@ -10,20 +10,20 @@ import 'antd/lib/notification/style';
 // Generated Types
 import { patchTypeQuery } from './__generated__/patchTypeQuery';
 // import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { FormFieldOptionProps } from './utils';
+import { FormInstance } from 'antd/lib/form';
 
 
-export interface GraphqlFormProps extends FormFieldOptionProps {
+export interface GraphqlFormProps<FormData = any> extends FormFieldOptionProps {
   modelName: string;
-  instanceData?: any;
+  instanceData?: FormData;
   instanceId?: number;
   mapping?: { [x: string]: SelectFragmentMapping.SelectFragmentProp }
-  onSubmit?: (form: WrappedFormUtils) => void;
+  onSubmit?: (form: FormInstance<FormData>) => void;
 }
 
 
-export const GraphqlForm: React.FC<GraphqlFormProps> = (props) => {
+export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
   const { modelName, instanceData } = props;
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;

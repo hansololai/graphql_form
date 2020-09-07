@@ -1,26 +1,24 @@
 import * as React from 'react';
 import { Form, Input } from 'antd';
-import { ValidationRule } from 'antd/lib/form'
-import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
+import {  FormItemProps, Rule, FormInstance } from 'antd/lib/form'
 import * as  changeCase from 'change-case';
 import { patchTypeQuery___type_inputFields_type } from './__generated__/patchTypeQuery';
-import { formItemLayout } from './InnerForm'
 
 
 const { Item } = Form;
-export type validatorFunc = (rule: any, value: any, callback: any, source?: any, options?: any, form?: WrappedFormUtils) => any;
-export interface InputWrapperProps {
-  form: WrappedFormUtils;
+export type validatorFunc = <T extends object>(rule: any, value: any, callback: any,form?: FormInstance<T>) => any;
+export interface InputWrapperProps<FormData> {
+  form: FormInstance<FormData>
   name: string;
   type: patchTypeQuery___type_inputFields_type;
   value?: any;
   disabled: boolean;
   hidden: boolean;
-  options?: GetFieldDecoratorOptions;
-  customRules?: ValidationRule[];
+  options?: FormItemProps;
+  customRules?: Rule[];
   validator?: validatorFunc;
 }
-const setupDecorator = (props: InputWrapperProps): GetFieldDecoratorOptions => {
+const setupDecorator = <T extends object>(props: InputWrapperProps<T>): FormItemProps=> {
   const {
     form,
     name,
@@ -38,22 +36,20 @@ const setupDecorator = (props: InputWrapperProps): GetFieldDecoratorOptions => {
   }
   // If there's a validator for this field, put it in rules, but also modify it to pass in the form object
   if (validator) {
-    const validate = (ruleV, valueV, cbV, sourceV, optionsV) => {
-      validator(ruleV, valueV, cbV, sourceV, optionsV, form);
-    };
-    decorator.rules.push({ validator: validate });
+    decorator.rules.push({ validator:(ruleV, valueV, cbV)=>{
+      validator(ruleV, valueV, cbV, form);
+    }
+    });
   }
   return decorator;
 }
 
-export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
+export const InputWrapper: React.SFC<InputWrapperProps<FormData>> = (props) => {
   const {
-    form,
     name,
     disabled,
     hidden,
   } = props;
-  const { getFieldDecorator } = form;
   const decorator = setupDecorator(props);
 
   const fieldName = changeCase.titleCase(name);
@@ -61,11 +57,9 @@ export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
 
   if (name === 'id' || hidden) {
     // ID field is special, it should be hidden, it is NOT NULL, but it could be NULL (for create)
-    return <div>
-      {getFieldDecorator(name, decorator)(
-        <Input disabled type="hidden" />
-      )}
-    </div>
+    return <Item hidden>
+      <Input disabled type="hidden" />
+    </Item>
 
   }
   // Set disable if necessary
@@ -74,9 +68,7 @@ export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
     return React.cloneElement(child as React.ReactElement<any>, childProp);
   });
 
-  return (<Item {...formItemLayout} label={fieldName}>
-    {getFieldDecorator(name, decorator)(
-      children ? children[0] : null
-    )}
+  return (<Item label={fieldName} {...decorator}>
+    {children}
   </Item>);
 };

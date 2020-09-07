@@ -5,11 +5,11 @@ import { InputProps, TextAreaProps } from 'antd/lib/input'
 import { InputNumberProps } from 'antd/lib/input-number';
 import { SelectProps } from 'antd/lib/select';
 import { TimePickerProps } from 'antd/lib/time-picker';
-import { DatePickerProps } from 'antd/lib/date-picker/interface';
 import 'antd/lib/input/style'
 import 'antd/lib/checkbox/style'
 import 'antd/lib/input-number/style'
 import 'antd/lib/select/style'
+import { DatePickerProps } from 'antd/lib/date-picker';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -20,11 +20,11 @@ export interface BooleanInputProps extends CheckboxProps {
 export interface TextInputProps extends InputProps { }
 export interface NumberInputProps extends InputNumberProps { }
 export interface HiddenInputProps extends InputProps { }
-export interface TextSelectInputProps extends SelectProps {
+export interface TextSelectInputProps extends SelectProps<string> {
   inputOptions: { name: string, value: string }[];
 }
 export interface TimeInputProps extends TimePickerProps { }
-export interface DateInputProps extends DatePickerProps { }
+export type DateInputProps  = DatePickerProps;
 export interface TextAreaInputProps extends TextAreaProps { }
 
 
@@ -33,28 +33,28 @@ export interface TextAreaInputProps extends TextAreaProps { }
  * The export components handles most scalar values such as boolean, string, number, date, time 
  */
 
-export const BooleanInput: React.FC<BooleanInputProps> = (props) => {
+export const BooleanInput: React.SFC<BooleanInputProps> = (props) => {
   const { value } = props;
   return <Checkbox {...props} checked={value} />
 };
 
-export const TextInput: React.FC<TextInputProps> = (props) => <Input {...props} />;
+export const TextInput: React.SFC<TextInputProps> = (props) => <Input {...props} />;
 
-export const NumberInput: React.FC<NumberInputProps> = (props) => < InputNumber {...props} />;
+export const NumberInput: React.SFC<NumberInputProps> = (props) => < InputNumber {...props} />;
 
-export const HiddenInput: React.FC<HiddenInputProps> = (props) => < Input {...props} />;
+export const HiddenInput: React.SFC<HiddenInputProps> = (props) => < Input {...props} />;
 
-export const TextSelectInput: React.FC<TextSelectInputProps> = (props) => {
+export const TextSelectInput: React.SFC<TextSelectInputProps> = (props) => {
   const { value, onChange, inputOptions = [] } = props;
   const selectOptions = inputOptions.map((o) => {
     const { name, value } = o;
     return <Option key={value} value={value}>{name}</Option>;
   });
-  return (<Select value={value} onChange={onChange} >
+  return (<Select<string> value={value} onChange={onChange} >
     {selectOptions}
   </Select>);
 };
 
-export const TimeInput: React.FC<TimeInputProps> = (props) => <TimePicker {...props} />;
-export const DateInput: React.FC<DateInputProps> = (props) => <DatePicker {...props} />;
-export const TextAreaInput: React.FC<TextAreaInputProps> = (props) => <TextArea {...props} />;
+export const TimeInput: React.SFC<TimeInputProps> = (props) => <TimePicker {...props} />;
+export const DateInput: React.SFC<DateInputProps> = (props) => <DatePicker {...props} />;
+export const TextAreaInput: React.SFC<TextAreaInputProps> = (props) => <TextArea {...props} />;
