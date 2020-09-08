@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'airbnb-typescript/base',
+  extends: 'airbnb-typescript',
   env: {
     es6: true,
   },
@@ -7,17 +7,22 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
+    debugLevel: true
   },
   plugins: ['@typescript-eslint', 'import', 'jsdoc'],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
+
     'import/resolver': {
       // use <root>/tsconfig.json
       ts: {
         alwaysTryTypes: true, // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
       },
+      tsx: {
+        alwaysTryTypes: true, // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
+      }
     },
   },
   rules: {
@@ -38,6 +43,14 @@ module.exports = {
         code: 100,
       },
     ],
+    'import/extensions':["error",
+    {
+      "ts":"never",
+      "tsx":"never",
+      "js":"never",
+      "js":"never"
+    }],
+    "react/prop-types":"off",
     'no-multi-str': 'off',
     'import/no-cycle': 'off',
     '@typescript-eslint/indent': 'off',
