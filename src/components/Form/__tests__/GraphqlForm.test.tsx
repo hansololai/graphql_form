@@ -24,12 +24,10 @@ describe('Graphql Form', () => {
     await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
     // Try submit
-    const form = container.querySelector('form');
-    expect(form).not.toBeNull();
-    if (form) {
-      fireEvent.submit(form);
-      expect(onSubmit).toHaveBeenCalledTimes(1);
-    }
+    const formbutton = container.querySelector('button');
+    expect(formbutton).not.toBeNull();
+    fireEvent.click(formbutton);
+    expect(onSubmit).toHaveBeenCalledTimes(1);
   });
   it('With new model data', async () => {
     const { container } = render(
