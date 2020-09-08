@@ -11,17 +11,23 @@ const {useForm} = Form;
 // Generated Types
 import { patchTypeQuery } from './__generated__/patchTypeQuery';
 // import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
-import { FormFieldOptionProps, useQueryWithError, createFormFields } from './utils';
-import { FormInstance } from 'antd/lib/form';
+import { useQueryWithError, createFormFields } from './utils';
+import { FormInstance, Rule, FormItemProps, FormProps } from 'antd/lib/form';
+import { validatorFunc } from './InputWrapper';
 
+export interface FormFieldOptionProps {
+  customValidators?: { [x: string]: validatorFunc };
+  customRules?: { [x: string]: Rule[] };
+  customDecorators?: { [x: string]: FormItemProps};
+  customWidgets?: { [x: string]: React.SFC<{ value: any, onChange: (p: any) => void }> };
+}
 
-export interface GraphqlFormProps<FormData = any> extends FormFieldOptionProps {
+export interface GraphqlFormProps<FormData = any> extends FormFieldOptionProps, FormProps {
   modelName: string;
   instanceData?: FormData;
   instanceId?: number;
   onSubmit?: (form: FormInstance<FormData>) => void;
 }
-
 export const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -41,7 +47,8 @@ const tailLayout = {
 }
 
 export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
-  const { modelName, instanceData, onSubmit, ...options } = props;
+  const { modelName, instanceData, instanceId, onSubmit, ...options } = props;
+  const {customValidators, customRules, customDecorators, customWidgets, ...formProps} = options;
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;
   const { 
@@ -58,7 +65,8 @@ export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
     }
   }, [instanceData]);
 
-  const allFields = createFormFields({ ...options, form, inputFields });
+  const allFields = createFormFields({form, inputFields, customValidators, 
+    customRules, customDecorators, customWidgets });
 
   if(inputLoading){
     return <Spin/>;
@@ -75,7 +83,7 @@ export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
         description: err.message,
       });
     });
-  }} initialValues={instanceData}>
+  }} initialValues={instanceData} {...formProps}>
     {allFields}
     {onSubmit &&
       <Form.Item {...tailLayout}>

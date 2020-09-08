@@ -1,14 +1,13 @@
 import { FormInstance } from 'antd/lib/form/Form';
-import { InnerFormTypeProps } from './InnerForm';
 import { BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput } from './widgets/index';
-import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
+import { InputWrapper, InputWrapperProps } from './InputWrapper';
 import * as React from 'react';
 import { patchTypeQuery___type_inputFields, patchTypeQuery___type_inputFields_type_ofType } from './__generated__/patchTypeQuery';
-import { Rule, FormItemProps } from 'antd/lib/form';
 import { useQuery, QueryHookOptions } from '@apollo/react-hooks';
 import { notification } from 'antd';
 import { DocumentNode } from 'graphql';
 import { OperationVariables } from 'apollo-client';
+import { FormFieldOptionProps } from './GraphqlForm';
 
 export const isFunction = (funcToCheck) => {
   if (!funcToCheck) return false;
@@ -33,14 +32,10 @@ export function handlableTypeName(type: any): type is PossibleTypeNames {
   }
   return false;
 }
-export interface FormFieldOptionProps {
-  customValidators?: { [x: string]: validatorFunc };
-  customRules?: { [x: string]: Rule[] };
-  customDecorators?: { [x: string]: FormItemProps};
-  customWidgets?: { [x: string]: React.SFC<{ value: any, onChange: (p: any) => void }> };
-}
-export interface createFormFieldsProps<T> extends FormFieldOptionProps, InnerFormTypeProps {
+
+export interface createFormFieldsProps<T> extends FormFieldOptionProps {
   form: FormInstance<T>;
+  inputFields: patchTypeQuery___type_inputFields[];
 }
 export const createFormFields: <TData extends object>(props: createFormFieldsProps<TData>) => React.ReactNode[] = <TData extends object>(props) => {
   const { inputFields, form, customDecorators = {},
