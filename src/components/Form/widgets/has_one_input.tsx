@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Query } from '@apollo/react-components';
 import { useDebounce } from 'use-debounce'
 import { Select, Spin } from 'antd';
 import { SelectFragmentProp } from '../ModelFragments';
+import { useQueryWithError } from '../utils';
 
 export type NameFunction = (p: any) => string;
 export interface HasOneInputProps<TData> extends SelectFragmentProp {
@@ -10,37 +10,36 @@ export interface HasOneInputProps<TData> extends SelectFragmentProp {
   onChange: (value: any) => void;
 }
 
-export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.ReactElement<HasOneInputProps<TData>> = (props) => {
+export const HasOneInput: <TData>(props: HasOneInputProps<TData>) => React.ReactElement<HasOneInputProps<TData>> = <TData extends object>(props) => {
   const [searchInput, setSearchInput] = React.useState('');
   const [filterText] = useDebounce(searchInput, 500);
   const { selectQuery, value, onChange, nameField, valueField = "id", filterField } = props;
   const filter = typeof filterField === "string" ? { [filterField]: { includesInsensitive: filterText } } : filterField(filterText);
+  const {data, loading } = useQueryWithError<any>(selectQuery, {variables:{first: 50, filter}});
 
-  return <Query query={selectQuery} variables={{ first: 50, filter }}>
-    {({ data, loading }) => {
-      // Don't know what model it is, but it should have only 1 key
-      let optionData: any[] = [];
-      if (Object.values(data || {}).length > 0) {
-        const allModels: any = Object.values(data || {})[0]
-        // if using simplify-infector, then it's probably don't have the "nodes", but let's assume this now
-        if (allModels.nodes) {
-          optionData = allModels.nodes;
-        }
+  const optionData = React.useMemo(()=>{
+    if (Object.values(data || {}).length > 0) {
+      const allModels: any = Object.values(data || {})[0]
+      // if using simplify-infector, then it's probably don't have the "nodes", but let's assume this now
+      if (allModels.nodes) {
+        return allModels.nodes;
       }
-      return <Select
-        showSearch={!!filterField}
-        value={value}
-        notFoundContent={loading ? <Spin size="small" /> : null}
-        onSearch={setSearchInput}
-        onChange={onChange}
-        style={{ width: '100%' }}
-      >
-        {optionData.map((opt) => {
-          const name = (typeof nameField === 'string') ? opt[nameField] : nameField(opt);
-          const optionValue = (typeof valueField === 'string') ? opt[valueField] : valueField(opt);
-          return <Select.Option key={optionValue} value={optionValue}>{name}</Select.Option>
-        })}
-      </Select>;
-    }}
-  </Query>;
+    }   
+    return [];
+  },[])
+  return <Select
+    showSearch={!!filterField}
+    loading={loading}
+    value={value}
+    notFoundContent={loading ? <Spin size="small" /> : null}
+    onSearch={setSearchInput}
+    onChange={onChange}
+    style={{ width: '100%' }}
+  >
+    {optionData.map((opt) => {
+      const name = (typeof nameField === 'string') ? opt[nameField] : nameField(opt);
+      const optionValue = (typeof valueField === 'string') ? opt[valueField] : valueField(opt);
+      return <Select.Option key={optionValue} value={optionValue}>{name}</Select.Option>
+    })}
+  </Select>;
 }
