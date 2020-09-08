@@ -73,7 +73,7 @@ export const createFormFields: <TData extends object>(props: createFormFieldsPro
     if (customWidgets[fieldName]) {
       // If user have provided a custom widget for this type, the use that
       const C = customWidgets[fieldName];
-      //@ts-ignore
+      // @ts-ignore
       toReturn = <C />;
     } else if (kind === 'SCALAR') {
       toReturn = scalarFieldToInput(field);

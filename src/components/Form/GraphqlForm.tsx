@@ -1,19 +1,23 @@
 import * as React from 'react';
+import {
+ Spin, notification, Form, Button,
+} from 'antd';
+import {
+ FormInstance, Rule, FormItemProps, FormProps,
+} from 'antd/lib/form';
 import { updateInputQuery } from './queries';
-import { Spin, notification, Form, Button } from 'antd';
-import 'antd/lib/form/style';
-import 'antd/lib/button/style';
-import 'antd/lib/notification/style';
-
-const {useForm} = Form;
-
 
 // Generated Types
 import { patchTypeQuery } from './__generated__/patchTypeQuery';
 // import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
 import { useQueryWithError, createFormFields } from './utils';
-import { FormInstance, Rule, FormItemProps, FormProps } from 'antd/lib/form';
+
 import { validatorFunc } from './InputWrapper';
+import 'antd/lib/form/style';
+import 'antd/lib/button/style';
+import 'antd/lib/notification/style';
+
+const { useForm } = Form;
 
 export interface FormFieldOptionProps {
   customValidators?: { [x: string]: validatorFunc };
@@ -37,28 +41,33 @@ export const formItemLayout = {
     xs: { span: 24 },
     sm: { span: 16 },
   },
-}
+};
 const formLayout = {
-  labelCol: {span: 8},
-  wrapperCol: {span: 16},
-}
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
 const tailLayout = {
-  wrappedCol: {offset: 0, span: 16},
-}
+  wrappedCol: { offset: 0, span: 16 },
+};
 
+/**
+ *
+ */
 export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
-  const { modelName, instanceData, instanceId, onSubmit, ...options } = props;
-  const {customValidators, customRules, customDecorators, customWidgets, ...formProps} = options;
+  const {
+ modelName, instanceData, instanceId, onSubmit, ...options
+} = props;
+  const {
+customValidators, customRules, customDecorators, customWidgets, ...formProps
+} = options;
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;
   const [submitting, setSubmitting] = React.useState(false);
-  const { 
+  const {
     data: inputData, loading: inputLoading,
   } = useQueryWithError<patchTypeQuery>(updateInputQuery, { variables: { name: typeName } });
 
-  const inputFields = React.useMemo(()=>{
-    return inputData?.__type?.inputFields|| [];
-  },[inputData]);
+  const inputFields = React.useMemo(() => inputData?.__type?.inputFields || [], [inputData]);
   const [form] = useForm<FormData>();
   React.useEffect(() => {
     if (instanceData) {
@@ -66,33 +75,48 @@ export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
     }
   }, [instanceData]);
 
-  const allFields = createFormFields({form, inputFields, customValidators, 
-    customRules, customDecorators, customWidgets });
+  const allFields = createFormFields({
+form,
+inputFields,
+customValidators,
+    customRules,
+customDecorators,
+customWidgets,
+});
 
-  if(inputLoading){
-    return <Spin/>;
+  if (inputLoading) {
+    return <Spin />;
   }
 
-  return <Form form={form} {...formLayout} onFinish={(values) => {
+  return (
+    <Form
+      form={form}
+      {...formLayout}
+      onFinish={(values) => {
     setSubmitting(true);
-    form.validateFields().then(()=>{
+    form.validateFields().then(() => {
       setSubmitting(false);
       if (onSubmit) {
         onSubmit(form);
       }
-    }).catch(err=>{
+    }).catch((err) => {
       setSubmitting(false);
       notification.error({
-        message:'Validation Failed',
+        message: 'Validation Failed',
         description: err.message,
       });
     });
-  }} initialValues={instanceData} {...formProps}>
-    {allFields}
-    {onSubmit &&
+  }}
+      initialValues={instanceData}
+      {...formProps}
+    >
+      {allFields}
+      {onSubmit
+      && (
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit" loading={submitting} >Submit</Button>
-      </Form.Item>}
-  </Form>;
-}
-
+        <Button type="primary" htmlType="submit" loading={submitting}>Submit</Button>
+      </Form.Item>
+)}
+    </Form>
+);
+};
