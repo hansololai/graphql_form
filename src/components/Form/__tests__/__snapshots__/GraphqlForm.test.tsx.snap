@@ -37,22 +37,33 @@ exports[`Graphql Form Basic Form 2`] = `
     <form
       class="ant-form ant-form-horizontal"
     >
-      <div>
-        <input
-          class="ant-input ant-input-disabled"
-          data-__field="[object Object]"
-          data-__meta="[object Object]"
-          disabled=""
-          id="id"
-          type="hidden"
-          value="1"
-        />
+      <div
+        class="ant-row ant-form-item ant-form-item-hidden"
+      >
+        <div
+          class="ant-col ant-col-16 ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input ant-input-disabled"
+                disabled=""
+                type="hidden"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -63,23 +74,21 @@ exports[`Graphql Form Basic Form 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control has-success"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="firstName"
                 type="text"
                 value="test"
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +96,7 @@ exports[`Graphql Form Basic Form 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -98,23 +107,21 @@ exports[`Graphql Form Basic Form 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control has-success"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="email"
                 type="text"
                 value="test@test.com"
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -122,7 +129,7 @@ exports[`Graphql Form Basic Form 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -133,13 +140,13 @@ exports[`Graphql Form Basic Form 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -148,15 +155,15 @@ exports[`Graphql Form Basic Form 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -169,21 +176,21 @@ exports[`Graphql Form Basic Form 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -199,19 +206,19 @@ exports[`Graphql Form Basic Form 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="salary"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -219,7 +226,7 @@ exports[`Graphql Form Basic Form 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -227,7 +234,7 @@ exports[`Graphql Form Basic Form 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -238,13 +245,13 @@ exports[`Graphql Form Basic Form 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <label
                 class="ant-checkbox-wrapper"
@@ -254,8 +261,6 @@ exports[`Graphql Form Basic Form 2`] = `
                 >
                   <input
                     class="ant-checkbox-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="isAdmin"
                     type="checkbox"
                     value=""
@@ -265,21 +270,22 @@ exports[`Graphql Form Basic Form 2`] = `
                   />
                 </span>
               </label>
-            </span>
+            </div>
           </div>
         </div>
       </div>
       <div
         class="ant-row ant-form-item"
+        wrappedcol="[object Object]"
       >
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <button
                 class="ant-btn ant-btn-primary"
@@ -289,7 +295,7 @@ exports[`Graphql Form Basic Form 2`] = `
                   Submit
                 </span>
               </button>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -335,22 +341,33 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
     <form
       class="ant-form ant-form-horizontal"
     >
-      <div>
-        <input
-          class="ant-input ant-input-disabled"
-          data-__field="[object Object]"
-          data-__meta="[object Object]"
-          disabled=""
-          id="id"
-          type="hidden"
-          value=""
-        />
+      <div
+        class="ant-row ant-form-item ant-form-item-hidden"
+      >
+        <div
+          class="ant-col ant-col-16 ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input ant-input-disabled"
+                disabled=""
+                type="hidden"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -361,13 +378,13 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -376,15 +393,15 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -397,21 +414,21 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -427,19 +444,19 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="managerId"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -447,7 +464,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -455,7 +472,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class="ant-form-item-required"
@@ -466,58 +483,73 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
-                class="ant-select ant-select-enabled"
+                class="ant-select ant-select-single ant-select-show-arrow"
               >
                 <div
-                  aria-autocomplete="list"
-                  aria-controls="test-uuid"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  class="ant-select-selection
-            ant-select-selection--single"
-                  role="combobox"
-                  tabindex="0"
+                  class="ant-select-selector"
                 >
-                  <div
-                    class="ant-select-selection__rendered"
-                  />
                   <span
-                    class="ant-select-arrow"
-                    style="user-select: none;"
-                    unselectable="on"
+                    class="ant-select-selection-search"
                   >
-                    <i
-                      aria-label="icon: down"
-                      class="anticon anticon-down ant-select-arrow-icon"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class=""
-                        data-icon="down"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                        />
-                      </svg>
-                    </i>
+                    <input
+                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                      aria-autocomplete="list"
+                      aria-controls="rc_select_TEST_OR_SSR_list"
+                      aria-haspopup="listbox"
+                      aria-owns="rc_select_TEST_OR_SSR_list"
+                      autocomplete="off"
+                      class="ant-select-selection-search-input"
+                      id="rc_select_TEST_OR_SSR"
+                      readonly=""
+                      role="combobox"
+                      style="opacity: 0;"
+                      type="search"
+                      unselectable="on"
+                      value=""
+                    />
                   </span>
+                  <span
+                    class="ant-select-selection-placeholder"
+                  />
                 </div>
+                <span
+                  aria-hidden="true"
+                  class="ant-select-arrow"
+                  style="user-select: none;"
+                  unselectable="on"
+                >
+                  <span
+                    aria-label="down"
+                    class="anticon anticon-down ant-select-suffix"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -525,7 +557,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class="ant-form-item-required"
@@ -536,23 +568,21 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="email"
                 type="text"
                 value=""
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -560,7 +590,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -571,13 +601,13 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -586,15 +616,15 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -607,21 +637,21 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -637,19 +667,19 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="salary"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -657,7 +687,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -665,7 +695,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -676,13 +706,13 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <label
                 class="ant-checkbox-wrapper"
@@ -692,8 +722,6 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                 >
                   <input
                     class="ant-checkbox-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="isAdmin"
                     type="checkbox"
                     value=""
@@ -703,7 +731,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   />
                 </span>
               </label>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -711,7 +739,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -722,72 +750,88 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
-                class="ant-select ant-select-enabled"
+                class="ant-select ant-select-single ant-select-show-arrow"
               >
                 <div
-                  aria-autocomplete="list"
-                  aria-controls="test-uuid"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  class="ant-select-selection
-            ant-select-selection--single"
-                  role="combobox"
-                  tabindex="0"
+                  class="ant-select-selector"
                 >
-                  <div
-                    class="ant-select-selection__rendered"
-                  />
                   <span
-                    class="ant-select-arrow"
-                    style="user-select: none;"
-                    unselectable="on"
+                    class="ant-select-selection-search"
                   >
-                    <i
-                      aria-label="icon: down"
-                      class="anticon anticon-down ant-select-arrow-icon"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class=""
-                        data-icon="down"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                        />
-                      </svg>
-                    </i>
+                    <input
+                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                      aria-autocomplete="list"
+                      aria-controls="rc_select_TEST_OR_SSR_list"
+                      aria-haspopup="listbox"
+                      aria-owns="rc_select_TEST_OR_SSR_list"
+                      autocomplete="off"
+                      class="ant-select-selection-search-input"
+                      id="rc_select_TEST_OR_SSR"
+                      readonly=""
+                      role="combobox"
+                      style="opacity: 0;"
+                      type="search"
+                      unselectable="on"
+                      value=""
+                    />
                   </span>
+                  <span
+                    class="ant-select-selection-placeholder"
+                  />
                 </div>
+                <span
+                  aria-hidden="true"
+                  class="ant-select-arrow"
+                  style="user-select: none;"
+                  unselectable="on"
+                >
+                  <span
+                    aria-label="down"
+                    class="anticon anticon-down ant-select-suffix"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
       <div
         class="ant-row ant-form-item"
+        wrappedcol="[object Object]"
       >
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <button
                 class="ant-btn ant-btn-primary"
@@ -797,7 +841,7 @@ exports[`Graphql Form With Custom Widget and Rule 2`] = `
                   Submit
                 </span>
               </button>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -843,22 +887,33 @@ exports[`Graphql Form With Enum type 2`] = `
     <form
       class="ant-form ant-form-horizontal"
     >
-      <div>
-        <input
-          class="ant-input ant-input-disabled"
-          data-__field="[object Object]"
-          data-__meta="[object Object]"
-          disabled=""
-          id="id"
-          type="hidden"
-          value=""
-        />
+      <div
+        class="ant-row ant-form-item ant-form-item-hidden"
+      >
+        <div
+          class="ant-col ant-col-16 ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input ant-input-disabled"
+                disabled=""
+                type="hidden"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -869,13 +924,13 @@ exports[`Graphql Form With Enum type 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -884,15 +939,15 @@ exports[`Graphql Form With Enum type 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -905,21 +960,21 @@ exports[`Graphql Form With Enum type 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -935,19 +990,19 @@ exports[`Graphql Form With Enum type 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="managerId"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -955,7 +1010,7 @@ exports[`Graphql Form With Enum type 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -963,7 +1018,7 @@ exports[`Graphql Form With Enum type 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class="ant-form-item-required"
@@ -974,23 +1029,21 @@ exports[`Graphql Form With Enum type 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="firstName"
                 type="text"
                 value=""
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -998,7 +1051,7 @@ exports[`Graphql Form With Enum type 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class="ant-form-item-required"
@@ -1009,23 +1062,21 @@ exports[`Graphql Form With Enum type 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="email"
                 type="text"
                 value=""
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1033,7 +1084,7 @@ exports[`Graphql Form With Enum type 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1044,13 +1095,13 @@ exports[`Graphql Form With Enum type 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -1059,15 +1110,15 @@ exports[`Graphql Form With Enum type 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -1080,21 +1131,21 @@ exports[`Graphql Form With Enum type 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -1110,19 +1161,19 @@ exports[`Graphql Form With Enum type 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="salary"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -1130,7 +1181,7 @@ exports[`Graphql Form With Enum type 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1138,7 +1189,7 @@ exports[`Graphql Form With Enum type 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1149,13 +1200,13 @@ exports[`Graphql Form With Enum type 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <label
                 class="ant-checkbox-wrapper"
@@ -1165,8 +1216,6 @@ exports[`Graphql Form With Enum type 2`] = `
                 >
                   <input
                     class="ant-checkbox-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="isAdmin"
                     type="checkbox"
                     value=""
@@ -1176,7 +1225,7 @@ exports[`Graphql Form With Enum type 2`] = `
                   />
                 </span>
               </label>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1184,7 +1233,7 @@ exports[`Graphql Form With Enum type 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1195,72 +1244,88 @@ exports[`Graphql Form With Enum type 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
-                class="ant-select ant-select-enabled"
+                class="ant-select ant-select-single ant-select-show-arrow"
               >
                 <div
-                  aria-autocomplete="list"
-                  aria-controls="test-uuid"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  class="ant-select-selection
-            ant-select-selection--single"
-                  role="combobox"
-                  tabindex="0"
+                  class="ant-select-selector"
                 >
-                  <div
-                    class="ant-select-selection__rendered"
-                  />
                   <span
-                    class="ant-select-arrow"
-                    style="user-select: none;"
-                    unselectable="on"
+                    class="ant-select-selection-search"
                   >
-                    <i
-                      aria-label="icon: down"
-                      class="anticon anticon-down ant-select-arrow-icon"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class=""
-                        data-icon="down"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                        />
-                      </svg>
-                    </i>
+                    <input
+                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                      aria-autocomplete="list"
+                      aria-controls="rc_select_TEST_OR_SSR_list"
+                      aria-haspopup="listbox"
+                      aria-owns="rc_select_TEST_OR_SSR_list"
+                      autocomplete="off"
+                      class="ant-select-selection-search-input"
+                      id="rc_select_TEST_OR_SSR"
+                      readonly=""
+                      role="combobox"
+                      style="opacity: 0;"
+                      type="search"
+                      unselectable="on"
+                      value=""
+                    />
                   </span>
+                  <span
+                    class="ant-select-selection-placeholder"
+                  />
                 </div>
+                <span
+                  aria-hidden="true"
+                  class="ant-select-arrow"
+                  style="user-select: none;"
+                  unselectable="on"
+                >
+                  <span
+                    aria-label="down"
+                    class="anticon anticon-down ant-select-suffix"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
       <div
         class="ant-row ant-form-item"
+        wrappedcol="[object Object]"
       >
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <button
                 class="ant-btn ant-btn-primary"
@@ -1270,7 +1335,7 @@ exports[`Graphql Form With Enum type 2`] = `
                   Submit
                 </span>
               </button>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1316,22 +1381,33 @@ exports[`Graphql Form With new model data 2`] = `
     <form
       class="ant-form ant-form-horizontal"
     >
-      <div>
-        <input
-          class="ant-input ant-input-disabled"
-          data-__field="[object Object]"
-          data-__meta="[object Object]"
-          disabled=""
-          id="id"
-          type="hidden"
-          value=""
-        />
+      <div
+        class="ant-row ant-form-item ant-form-item-hidden"
+      >
+        <div
+          class="ant-col ant-col-16 ant-form-item-control"
+        >
+          <div
+            class="ant-form-item-control-input"
+          >
+            <div
+              class="ant-form-item-control-input-content"
+            >
+              <input
+                class="ant-input ant-input-disabled"
+                disabled=""
+                type="hidden"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1342,13 +1418,13 @@ exports[`Graphql Form With new model data 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -1357,15 +1433,15 @@ exports[`Graphql Form With new model data 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -1378,21 +1454,21 @@ exports[`Graphql Form With new model data 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -1408,19 +1484,19 @@ exports[`Graphql Form With new model data 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="managerId"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -1428,7 +1504,7 @@ exports[`Graphql Form With new model data 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1436,7 +1512,7 @@ exports[`Graphql Form With new model data 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class="ant-form-item-required"
@@ -1447,23 +1523,21 @@ exports[`Graphql Form With new model data 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="firstName"
                 type="text"
                 value=""
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1471,7 +1545,7 @@ exports[`Graphql Form With new model data 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class="ant-form-item-required"
@@ -1482,23 +1556,21 @@ exports[`Graphql Form With new model data 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <input
                 class="ant-input"
-                data-__field="[object Object]"
-                data-__meta="[object Object]"
                 id="email"
                 type="text"
                 value=""
               />
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1506,7 +1578,7 @@ exports[`Graphql Form With new model data 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1517,13 +1589,13 @@ exports[`Graphql Form With new model data 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
                 class="ant-input-number"
@@ -1532,15 +1604,15 @@ exports[`Graphql Form With new model data 2`] = `
                   class="ant-input-number-handler-wrap"
                 >
                   <span
-                    aria-disabled="false"
                     aria-label="Increase Value"
-                    class="ant-input-number-handler ant-input-number-handler-up "
+                    class="ant-input-number-handler ant-input-number-handler-up"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: up"
+                    <span
+                      aria-label="up"
                       class="anticon anticon-up ant-input-number-handler-up-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -1553,21 +1625,21 @@ exports[`Graphql Form With new model data 2`] = `
                         width="1em"
                       >
                         <path
-                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 0 0 140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                   <span
-                    aria-disabled="false"
                     aria-label="Decrease Value"
-                    class="ant-input-number-handler ant-input-number-handler-down "
+                    class="ant-input-number-handler ant-input-number-handler-down"
                     role="button"
-                    unselectable="unselectable"
+                    unselectable="on"
                   >
-                    <i
-                      aria-label="icon: down"
+                    <span
+                      aria-label="down"
                       class="anticon anticon-down ant-input-number-handler-down-inner"
+                      role="img"
                     >
                       <svg
                         aria-hidden="true"
@@ -1583,19 +1655,19 @@ exports[`Graphql Form With new model data 2`] = `
                           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
                         />
                       </svg>
-                    </i>
+                    </span>
                   </span>
                 </div>
                 <div
                   class="ant-input-number-input-wrap"
                 >
                   <input
+                    aria-valuemax="9007199254740991"
                     aria-valuemin="-9007199254740991"
                     autocomplete="off"
                     class="ant-input-number-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="salary"
+                    max="9007199254740991"
                     min="-9007199254740991"
                     role="spinbutton"
                     step="1"
@@ -1603,7 +1675,7 @@ exports[`Graphql Form With new model data 2`] = `
                   />
                 </div>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1611,7 +1683,7 @@ exports[`Graphql Form With new model data 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1622,13 +1694,13 @@ exports[`Graphql Form With new model data 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <label
                 class="ant-checkbox-wrapper"
@@ -1638,8 +1710,6 @@ exports[`Graphql Form With new model data 2`] = `
                 >
                   <input
                     class="ant-checkbox-input"
-                    data-__field="[object Object]"
-                    data-__meta="[object Object]"
                     id="isAdmin"
                     type="checkbox"
                     value=""
@@ -1649,7 +1719,7 @@ exports[`Graphql Form With new model data 2`] = `
                   />
                 </span>
               </label>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1657,7 +1727,7 @@ exports[`Graphql Form With new model data 2`] = `
         class="ant-row ant-form-item"
       >
         <div
-          class="ant-col ant-form-item-label ant-col-xs-24 ant-col-sm-8"
+          class="ant-col ant-col-8 ant-form-item-label"
         >
           <label
             class=""
@@ -1668,72 +1738,88 @@ exports[`Graphql Form With new model data 2`] = `
           </label>
         </div>
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <div
-                class="ant-select ant-select-enabled"
+                class="ant-select ant-select-single ant-select-show-arrow"
               >
                 <div
-                  aria-autocomplete="list"
-                  aria-controls="test-uuid"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  class="ant-select-selection
-            ant-select-selection--single"
-                  role="combobox"
-                  tabindex="0"
+                  class="ant-select-selector"
                 >
-                  <div
-                    class="ant-select-selection__rendered"
-                  />
                   <span
-                    class="ant-select-arrow"
-                    style="user-select: none;"
-                    unselectable="on"
+                    class="ant-select-selection-search"
                   >
-                    <i
-                      aria-label="icon: down"
-                      class="anticon anticon-down ant-select-arrow-icon"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class=""
-                        data-icon="down"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                        />
-                      </svg>
-                    </i>
+                    <input
+                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                      aria-autocomplete="list"
+                      aria-controls="rc_select_TEST_OR_SSR_list"
+                      aria-haspopup="listbox"
+                      aria-owns="rc_select_TEST_OR_SSR_list"
+                      autocomplete="off"
+                      class="ant-select-selection-search-input"
+                      id="rc_select_TEST_OR_SSR"
+                      readonly=""
+                      role="combobox"
+                      style="opacity: 0;"
+                      type="search"
+                      unselectable="on"
+                      value=""
+                    />
                   </span>
+                  <span
+                    class="ant-select-selection-placeholder"
+                  />
                 </div>
+                <span
+                  aria-hidden="true"
+                  class="ant-select-arrow"
+                  style="user-select: none;"
+                  unselectable="on"
+                >
+                  <span
+                    aria-label="down"
+                    class="anticon anticon-down ant-select-suffix"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                      />
+                    </svg>
+                  </span>
+                </span>
               </div>
-            </span>
+            </div>
           </div>
         </div>
       </div>
       <div
         class="ant-row ant-form-item"
+        wrappedcol="[object Object]"
       >
         <div
-          class="ant-col ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-16"
+          class="ant-col ant-col-16 ant-form-item-control"
         >
           <div
-            class="ant-form-item-control"
+            class="ant-form-item-control-input"
           >
-            <span
-              class="ant-form-item-children"
+            <div
+              class="ant-form-item-control-input-content"
             >
               <button
                 class="ant-btn ant-btn-primary"
@@ -1743,7 +1829,7 @@ exports[`Graphql Form With new model data 2`] = `
                   Submit
                 </span>
               </button>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1755,74 +1841,63 @@ exports[`Graphql Form With new model data 2`] = `
 exports[`SelectWidget of user 1`] = `
 <div>
   <div
-    class="ant-select ant-select-enabled"
+    class="ant-select ant-select-single ant-select-show-arrow ant-select-loading ant-select-show-search"
     style="width: 100%;"
   >
     <div
-      aria-autocomplete="list"
-      aria-controls="test-uuid"
-      aria-expanded="false"
-      aria-haspopup="true"
-      class="ant-select-selection
-            ant-select-selection--single"
-      role="combobox"
-      tabindex="0"
+      class="ant-select-selector"
     >
-      <div
-        class="ant-select-selection__rendered"
-      >
-        <div
-          class="ant-select-selection-selected-value"
-          style="display: block; opacity: 1;"
-          title=""
-        />
-        <div
-          class="ant-select-search ant-select-search--inline"
-          style="display: none;"
-        >
-          <div
-            class="ant-select-search__field__wrap"
-          >
-            <input
-              autocomplete="off"
-              class="ant-select-search__field"
-              value=""
-            />
-            <span
-              class="ant-select-search__field__mirror"
-            >
-              
-               
-            </span>
-          </div>
-        </div>
-      </div>
       <span
-        class="ant-select-arrow"
-        style="user-select: none;"
-        unselectable="on"
+        class="ant-select-selection-search"
       >
-        <i
-          aria-label="icon: down"
-          class="anticon anticon-down ant-select-arrow-icon"
-        >
-          <svg
-            aria-hidden="true"
-            class=""
-            data-icon="down"
-            fill="currentColor"
-            focusable="false"
-            height="1em"
-            viewBox="64 64 896 896"
-            width="1em"
-          >
-            <path
-              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-            />
-          </svg>
-        </i>
+        <input
+          aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+          aria-autocomplete="list"
+          aria-controls="rc_select_TEST_OR_SSR_list"
+          aria-haspopup="listbox"
+          aria-owns="rc_select_TEST_OR_SSR_list"
+          autocomplete="off"
+          class="ant-select-selection-search-input"
+          id="rc_select_TEST_OR_SSR"
+          readonly=""
+          role="combobox"
+          style="opacity: 0;"
+          type="search"
+          unselectable="on"
+          value=""
+        />
       </span>
+      <span
+        class="ant-select-selection-placeholder"
+      />
     </div>
+    <span
+      aria-hidden="true"
+      class="ant-select-arrow ant-select-arrow-loading"
+      style="user-select: none;"
+      unselectable="on"
+    >
+      <span
+        aria-label="loading"
+        class="anticon anticon-loading"
+        role="img"
+      >
+        <svg
+          aria-hidden="true"
+          class="anticon-spin"
+          data-icon="loading"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="0 0 1024 1024"
+          width="1em"
+        >
+          <path
+            d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+          />
+        </svg>
+      </span>
+    </span>
   </div>
 </div>
 `;
@@ -1830,74 +1905,63 @@ exports[`SelectWidget of user 1`] = `
 exports[`SelectWidget of user 2`] = `
 <div>
   <div
-    class="ant-select ant-select-enabled"
+    class="ant-select ant-select-single ant-select-show-arrow ant-select-show-search"
     style="width: 100%;"
   >
     <div
-      aria-autocomplete="list"
-      aria-controls="test-uuid"
-      aria-expanded="false"
-      aria-haspopup="true"
-      class="ant-select-selection
-            ant-select-selection--single"
-      role="combobox"
-      tabindex="0"
+      class="ant-select-selector"
     >
-      <div
-        class="ant-select-selection__rendered"
-      >
-        <div
-          class="ant-select-selection-selected-value"
-          style="display: block; opacity: 1;"
-          title=""
-        />
-        <div
-          class="ant-select-search ant-select-search--inline"
-          style="display: none;"
-        >
-          <div
-            class="ant-select-search__field__wrap"
-          >
-            <input
-              autocomplete="off"
-              class="ant-select-search__field"
-              value=""
-            />
-            <span
-              class="ant-select-search__field__mirror"
-            >
-              
-               
-            </span>
-          </div>
-        </div>
-      </div>
       <span
-        class="ant-select-arrow"
-        style="user-select: none;"
-        unselectable="on"
+        class="ant-select-selection-search"
       >
-        <i
-          aria-label="icon: down"
-          class="anticon anticon-down ant-select-arrow-icon"
-        >
-          <svg
-            aria-hidden="true"
-            class=""
-            data-icon="down"
-            fill="currentColor"
-            focusable="false"
-            height="1em"
-            viewBox="64 64 896 896"
-            width="1em"
-          >
-            <path
-              d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-            />
-          </svg>
-        </i>
+        <input
+          aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+          aria-autocomplete="list"
+          aria-controls="rc_select_TEST_OR_SSR_list"
+          aria-haspopup="listbox"
+          aria-owns="rc_select_TEST_OR_SSR_list"
+          autocomplete="off"
+          class="ant-select-selection-search-input"
+          id="rc_select_TEST_OR_SSR"
+          readonly=""
+          role="combobox"
+          style="opacity: 0;"
+          type="search"
+          unselectable="on"
+          value=""
+        />
       </span>
+      <span
+        class="ant-select-selection-placeholder"
+      />
     </div>
+    <span
+      aria-hidden="true"
+      class="ant-select-arrow"
+      style="user-select: none;"
+      unselectable="on"
+    >
+      <span
+        aria-label="down"
+        class="anticon anticon-down ant-select-suffix"
+        role="img"
+      >
+        <svg
+          aria-hidden="true"
+          class=""
+          data-icon="down"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+          />
+        </svg>
+      </span>
+    </span>
   </div>
 </div>
 `;

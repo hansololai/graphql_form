@@ -6,7 +6,7 @@ import { HasOneInput, TextSelectInput } from '../widgets';
 import { mockData, sampleSelectQuery } from '../__mock__/dataMock'
 
 const waitUntilNoSpin = (container: any) => wait(() => {
-  const isLoading = container.querySelector('.ant-spin') !== null;
+  const isLoading = container.querySelector('.anticon-spin') !== null;
   expect(isLoading).toBe(false);
 });
 describe('Graphql Form', () => {
@@ -19,6 +19,7 @@ describe('Graphql Form', () => {
         </div>
       </MockedProvider>
     );
+
     expect(container).toMatchSnapshot();
     await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
