@@ -51,6 +51,7 @@ export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
   const {customValidators, customRules, customDecorators, customWidgets, ...formProps} = options;
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;
+  const [submitting, setSubmitting] = React.useState(false);
   const { 
     data: inputData, loading: inputLoading,
   } = useQueryWithError<patchTypeQuery>(updateInputQuery, { variables: { name: typeName } });
@@ -73,11 +74,14 @@ export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
   }
 
   return <Form form={form} {...formLayout} onFinish={(values) => {
+    setSubmitting(true);
     form.validateFields().then(()=>{
+      setSubmitting(false);
       if (onSubmit) {
         onSubmit(form);
       }
     }).catch(err=>{
+      setSubmitting(false);
       notification.error({
         message:'Validation Failed',
         description: err.message,
@@ -87,7 +91,7 @@ export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
     {allFields}
     {onSubmit &&
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">Submit</Button>
+        <Button type="primary" htmlType="submit" loading={submitting} >Submit</Button>
       </Form.Item>}
   </Form>;
 }

@@ -7,7 +7,8 @@ import { mockData, sampleSelectQuery } from '../__mock__/dataMock'
 
 const waitUntilNoSpin = (container: any) => wait(() => {
   const isLoading = container.querySelector('.anticon-spin') !== null;
-  expect(isLoading).toBe(false);
+  const isLoading2 = container.querySelector('.ant-spin') !== null;
+  expect(isLoading||isLoading2).toBe(false);
 });
 describe('Graphql Form', () => {
   it('Basic Form', async () => {
@@ -26,8 +27,20 @@ describe('Graphql Form', () => {
     // Try submit
     const formbutton = container.querySelector('button');
     expect(formbutton).not.toBeNull();
-    fireEvent.click(formbutton);
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+    if(formbutton){
+      fireEvent.click(formbutton);
+      // wait until there is loading spinner on submit button
+      await wait(()=>{
+        const isLoading = container.querySelector('.ant-btn-loading') !== null;
+        expect(isLoading).toBe(true);
+      });
+      // wait until the spinner is gone
+      await wait(()=>{
+        const isLoading = container.querySelector('.ant-btn-loading') !== null;
+        expect(isLoading).toBe(false);
+      });
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    }
   });
   it('With new model data', async () => {
     const { container } = render(
