@@ -54,7 +54,7 @@ describe('Graphql Form', () => {
     const customRule = {
       pattern: /@/
     };
-    const customValidator = (rule, value, cb, source, options, form) => {
+    const customValidator = (rule, value, cb, form) => {
       // call cb() means no error
       // call cb("error message") means there is error
       if (Number(value) >= 10000 && Number(value) <= 50000) {
