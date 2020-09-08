@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Checkbox, Input, Select, TimePicker, DatePicker, InputNumber } from 'antd';
-import { CheckboxProps } from 'antd/lib/checkbox';
+import { CheckboxProps, CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { InputProps, TextAreaProps } from 'antd/lib/input'
 import { InputNumberProps } from 'antd/lib/input-number';
 import { SelectProps } from 'antd/lib/select';
@@ -14,8 +14,9 @@ import { DatePickerProps } from 'antd/lib/date-picker';
 const { Option } = Select;
 const { TextArea } = Input;
 
-export interface BooleanInputProps extends CheckboxProps {
-  value: boolean;
+export interface BooleanInputProps extends Omit<CheckboxProps,'onChange'> {
+  value?: boolean;
+  onChange?: (v:boolean)=>void;
 }
 export interface TextInputProps extends InputProps { }
 export interface NumberInputProps extends InputNumberProps { }
@@ -34,8 +35,13 @@ export interface TextAreaInputProps extends TextAreaProps { }
  */
 
 export const BooleanInput: React.SFC<BooleanInputProps> = (props) => {
-  const { value } = props;
-  return <Checkbox {...props} checked={value} />
+  const { value, onChange: change } = props;
+  const onChange = (e: CheckboxChangeEvent)=>{
+    if(change){
+      change(e.target.checked); 
+    }
+  }
+  return <Checkbox {...props} checked={value} onChange={onChange}/>
 };
 
 export const TextInput: React.SFC<TextInputProps> = (props) => <Input {...props} />;

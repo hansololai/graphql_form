@@ -34,7 +34,6 @@ const setupDecorator = <T extends object>(props: InputWrapperProps<T>): FormItem
       decorator.rules.push({ required: true });
     }
   }
-  // If there's a validator for this field, put it in rules, but also modify it to pass in the form object
   if (validator) {
     decorator.rules.push({ validator:(ruleV, valueV, cbV)=>{
       validator(ruleV, valueV, cbV, form);
@@ -68,7 +67,9 @@ export const InputWrapper: React.SFC<InputWrapperProps<FormData>> = (props) => {
     return React.cloneElement(child as React.ReactElement<any>, childProp);
   });
 
-  return (<Item label={fieldName} {...decorator}>
-    {children}
+  // The children must be a single element, the FormItem will modify the props by
+  // passing in a value, and a "onChange". 
+  return (<Item name={name} label={fieldName} {...decorator}>
+    {children ? children[0]:null}
   </Item>);
 };

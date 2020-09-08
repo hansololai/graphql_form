@@ -181,7 +181,7 @@ storiesOf('GraphqlForm', module)
       </div>
     </MockedProvider>
   }).add('Use Custom validator for salary (in range 10000-50000)', () => {
-    const customValidator = (rule, value, cb, source, options, form) => {
+    const customValidator = (rule, value, cb, form) => {
       // call cb() means no error
       // call cb("error message") means there is error
       if (Number(value) >= 10000 && Number(value) <= 50000) {

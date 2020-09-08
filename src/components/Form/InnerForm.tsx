@@ -35,7 +35,7 @@ export interface InnerFormTypeProps {
 }
 export interface InnerFormProps<T> extends GraphqlFormProps<T>, InnerFormTypeProps { };
 
-const InnerForm: React.SFC<InnerFormProps<FormData>> = (props) => {
+export const InnerForm: React.SFC<InnerFormProps<FormData>> = (props) => {
   const { onSubmit, instanceData, ...options } = props;
   const [form] = useForm<FormData>();
   React.useEffect(() => {
@@ -57,7 +57,7 @@ const InnerForm: React.SFC<InnerFormProps<FormData>> = (props) => {
         description: err.message,
       });
     });
-  }}>
+  }} initialValues={instanceData}>
     {allFields}
     {onSubmit &&
       <Form.Item {...tailLayout}>
@@ -65,6 +65,5 @@ const InnerForm: React.SFC<InnerFormProps<FormData>> = (props) => {
       </Form.Item>}
   </Form>;
 }
-export const WrappedInnerForm = InnerForm;
 
 

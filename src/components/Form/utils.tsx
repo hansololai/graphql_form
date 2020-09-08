@@ -5,6 +5,10 @@ import { InputWrapper, InputWrapperProps, validatorFunc } from './InputWrapper';
 import * as React from 'react';
 import { patchTypeQuery___type_inputFields, patchTypeQuery___type_inputFields_type_ofType } from './__generated__/patchTypeQuery';
 import { Rule, FormItemProps } from 'antd/lib/form';
+import { useQuery, QueryHookOptions } from '@apollo/react-hooks';
+import { notification } from 'antd';
+import { DocumentNode } from 'graphql';
+import { OperationVariables } from 'apollo-client';
 
 export const isFunction = (funcToCheck) => {
   if (!funcToCheck) return false;
@@ -121,4 +125,15 @@ const scalarFieldToInput = (f: patchTypeQuery___type_inputFields): React.ReactNo
   }
   // If it's not known, but still a scalar, then use a text input
   return <TextInput />;
+}
+
+export const useQueryWithError = <TD, TV=OperationVariables>(query: DocumentNode, options?: QueryHookOptions<TD, TV>)=>{
+  const result = useQuery<TD,TV>(query, options);
+  if(result.error){
+    notification.error({
+      message:'Error fetching data',
+      description:result.error.message,
+    });
+  }
+  return result;
 }

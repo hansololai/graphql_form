@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 import { updateInputQuery } from './queries';
-import { Spin, notification } from 'antd';
-import { WrappedInnerForm } from './InnerForm';
-import * as SelectFragmentMapping from './ModelFragments';
+import { Spin, notification, Form, Button } from 'antd';
+import 'antd/lib/form/style';
+import 'antd/lib/button/style';
 import 'antd/lib/notification/style';
+
+const {useForm} = Form;
 
 
 // Generated Types
 import { patchTypeQuery } from './__generated__/patchTypeQuery';
 // import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
-import { FormFieldOptionProps } from './utils';
+import { FormFieldOptionProps, useQueryWithError, createFormFields } from './utils';
 import { FormInstance } from 'antd/lib/form';
 
 
@@ -18,34 +19,68 @@ export interface GraphqlFormProps<FormData = any> extends FormFieldOptionProps {
   modelName: string;
   instanceData?: FormData;
   instanceId?: number;
-  mapping?: { [x: string]: SelectFragmentMapping.SelectFragmentProp }
   onSubmit?: (form: FormInstance<FormData>) => void;
 }
 
+export const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+}
+const formLayout = {
+  labelCol: {span: 8},
+  wrapperCol: {span: 16},
+}
+const tailLayout = {
+  wrappedCol: {offset: 0, span: 16},
+}
 
 export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
-  const { modelName, instanceData } = props;
+  const { modelName, instanceData, onSubmit, ...options } = props;
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;
-  const { data: inputData,
-    loading: inputLoading,
-    error: inputError } = useQuery<patchTypeQuery>(updateInputQuery,
-      { variables: { name: typeName } })
-  // const { data, loading, error } = useQuery<fieldTypeQuery>(modelFieldsQuery,
-  //   { variables: { name: modelName } });
+  const { 
+    data: inputData, loading: inputLoading,
+  } = useQueryWithError<patchTypeQuery>(updateInputQuery, { variables: { name: typeName } });
 
-  if (inputLoading) return <Spin />;
-  const hasError = inputError;
-  if (hasError) {
-    notification.error({
-      message: "Error When getting the Field Info",
-      description: hasError.message,
-    })
+  const inputFields = React.useMemo(()=>{
+    return inputData?.__type?.inputFields|| [];
+  },[inputData]);
+  const [form] = useForm<FormData>();
+  React.useEffect(() => {
+    if (instanceData) {
+      form.setFieldsValue(instanceData);
+    }
+  }, [instanceData]);
+
+  const allFields = createFormFields({ ...options, form, inputFields });
+
+  if(inputLoading){
+    return <Spin/>;
   }
-  if (!inputData) return null;
-  const { __type: inputType } = inputData;
-  if (!inputType) return null;
-  const { inputFields } = inputType;
-  return <WrappedInnerForm {...props} inputFields={inputFields || []} />;
+
+  return <Form form={form} {...formLayout} onFinish={(values) => {
+    form.validateFields().then(()=>{
+      if (onSubmit) {
+        onSubmit(form);
+      }
+    }).catch(err=>{
+      notification.error({
+        message:'Validation Failed',
+        description: err.message,
+      });
+    });
+  }} initialValues={instanceData}>
+    {allFields}
+    {onSubmit &&
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">Submit</Button>
+      </Form.Item>}
+  </Form>;
 }
 
