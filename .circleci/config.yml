@@ -4,7 +4,7 @@ defaults: &defaults
     CIRCLE_TEST_REPORTS: /tmp/circleci-test-results/
   working_directory: ~/graphql-form # directory where steps will run
   docker: # run the steps with Docker
-    - image: circleci/node:11-stretch # ...with this image as the primary container; this is where all `steps` will run
+    - image: cimg/node:10.22 # ...with this image as the primary container; this is where all `steps` will run
 
 version: 2.1 # use CircleCI 2.0
 jobs: # a collection of steps
