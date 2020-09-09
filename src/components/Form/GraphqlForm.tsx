@@ -69,10 +69,7 @@ customValidators, customRules, customDecorators, customWidgets, ...formProps
   } = useQueryWithError<patchTypeQuery>(updateInputQuery, { variables: { name: typeName } });
 
   const inputFields = React.useMemo(() => {
-    if (!inputData) {
-      return [];
-    }
-    const { __type: theType } = inputData;
+    const { __type: theType } = inputData || {};
     return theType?.inputFields || [];
   }, [inputData]);
   const [form] = useForm<FormData>();

@@ -36,10 +36,7 @@ export const EnumInput: React.SFC<EnumInputProps> = (props) => {
     });
   }
   const enumValues = React.useMemo(() => {
-    if (!data) {
-      return [];
-    }
-    const { __type: theType } = data;
+    const { __type: theType } = data || {};
     return theType?.enumValues || [];
   }, [data]);
   const options = enumValues.map((v) => (

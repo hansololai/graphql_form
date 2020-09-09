@@ -28,20 +28,29 @@ const setupDecorator = <T extends unknown>(props: InputWrapperProps<T>): FormIte
     customRules = [],
     validator,
 } = props;
-  const decorator = { ...options, rules: [...customRules], initialValue: value };
+  const fieldName = changeCase.titleCase(name);
+  const rules = [...customRules];
   if (kind === 'NON_NULL') {
     // Unless this field can be auto generated, like "id"
     if (!['id', 'createdAt', 'updatedAt'].includes(name)) {
-      decorator.rules.push({ required: true });
+      rules.push({ required: true });
     }
   }
   if (validator) {
-    decorator.rules.push({
- validator: (ruleV, valueV, cbV) => {
+    rules.push({
+    validator: (ruleV, valueV, cbV) => {
       validator(ruleV, valueV, cbV, form);
     },
     });
   }
+  const decorator = {
+    ...options,
+    rules,
+    name,
+    initialValue: value,
+    label: fieldName,
+   };
+
   return decorator;
 };
 
@@ -58,16 +67,13 @@ export const InputWrapper = <T extends unknown>(
   } = noChildrenProp;
   const decorator = setupDecorator(noChildrenProp as InputWrapperProps<T>);
 
-  const fieldName = changeCase.titleCase(name);
-  // If it should not show
-
   if (name === 'id' || hidden) {
     // ID field is special, it should be hidden, it is NOT NULL, but it could be NULL (for create)
     return (
       <Item hidden>
         <Input disabled type="hidden" />
       </Item>
-);
+    );
   }
   // Set disable if necessary
   const children = React.Children.map(oldChildren, (child) => {
@@ -80,7 +86,6 @@ export const InputWrapper = <T extends unknown>(
   return (
     <Item
       name={name}
-      label={fieldName}
       /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...decorator}
     >
