@@ -120,10 +120,11 @@
     "graphql-tag": "^2.10.1",
     "jest": "^26.4.2",
     "jest-fetch-mock": "^3.0.0",
-    "jest-junit": "^10.0.0",
+    "jest-junit": "^11.1.0",
     "jest-transform-graphql": "^2.1.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "moment": "^2.27.0",
     "node-sass": "^4.11.0",
     "pluralize": "^8.0.0",
     "react-docgen-typescript-loader": "^3.1.0",
@@ -135,8 +136,7 @@
     "url-loader": "^3.0.0",
     "waait": "^1.0.2",
     "webpack": "^4.31.0",
-    "webpack-cli": "^3.2.0",
-    "moment": "^2.27.0"
+    "webpack-cli": "^3.2.0"
   },
   "peerDependencies": {
     "@apollo/react-hooks": "^3.1.3",
