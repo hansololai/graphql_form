@@ -4,6 +4,7 @@ import { render, wait, fireEvent } from '@testing-library/react';
 import { GraphqlForm } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
 import { mockData, sampleSelectQuery } from '../__mock__/dataMock';
+import { ValidatorFunc } from '../InputWrapper';
 
 const waitUntilNoSpin = (container: any) => wait(() => {
   const isLoading = container.querySelector('.anticon-spin') !== null;
@@ -46,7 +47,7 @@ describe('Graphql Form', () => {
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" onSubmit={(form) => { }} />
+          <GraphqlForm modelName="User" onSubmit={() => { }} />
         </div>
       </MockedProvider>,
     );
@@ -57,16 +58,22 @@ describe('Graphql Form', () => {
   });
   it('With Custom Widget and Rule', async () => {
     const customWidgets = {
-      firstName: ({ value, onChange }) => <TextSelectInput value={value} onChange={onChange} inputOptions={[
+      firstName: ({ value, onChange }: {value: string, onChange: (v:string)=>void}) => (
+        <TextSelectInput
+          value={value}
+          onChange={onChange}
+          inputOptions={[
         { name: 'John(Manager)', value: 'John' },
         { name: 'Robin(CEO)', value: 'Robin' },
         { name: 'Evan(Intern)', value: 'Evan' },
-      ]} />,
+      ]}
+        />
+),
     };
     const customRule = {
       pattern: /@/,
     };
-    const customValidator = (rule, value, cb, form) => {
+    const customValidator: ValidatorFunc = (rule, value, cb) => {
       // call cb() means no error
       // call cb("error message") means there is error
       if (Number(value) >= 10000 && Number(value) <= 50000) {
@@ -78,7 +85,9 @@ describe('Graphql Form', () => {
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" onSubmit={(form) => { }}
+          <GraphqlForm
+            modelName="User"
+            onSubmit={() => { }}
             customWidgets={customWidgets}
             customRules={{
               email: [customRule],
@@ -98,7 +107,7 @@ describe('Graphql Form', () => {
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" onSubmit={(form) => { }} />
+          <GraphqlForm modelName="User" onSubmit={() => { }} />
         </div>
       </MockedProvider>,
     );
@@ -111,7 +120,7 @@ describe('Graphql Form', () => {
 it('SelectWidget of user', async () => {
   const { container } = render(
     <MockedProvider mocks={mockData}>
-      <HasOneInput selectQuery={sampleSelectQuery} nameField="name" valueField="id" filterField="name" value={null} onChange={(e) => { }} />
+      <HasOneInput selectQuery={sampleSelectQuery} nameField="name" valueField="id" filterField="name" value={null} onChange={() => { }} />
 
     </MockedProvider>,
   );

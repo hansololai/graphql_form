@@ -3,4 +3,4 @@
 /docs/
 **/__test__/*
 **/__generated__/*
-.eslintrc.js
+*.js

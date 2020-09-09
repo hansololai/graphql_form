@@ -15,15 +15,15 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
 
-    'import/resolver': {
-      // use <root>/tsconfig.json
-      ts: {
-        alwaysTryTypes: true, // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
-      },
-      tsx: {
-        alwaysTryTypes: true, // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
-      }
-    },
+    // 'import/resolver': {
+    //   // use <root>/tsconfig.json
+    //   ts: {
+    //     alwaysTryTypes: true, // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
+    //   },
+    //   tsx: {
+    //     alwaysTryTypes: true, // always try to resolve types under `<roo/>@types` directory even it doesn't contain any source code, like `@types/unist`
+    //   }
+    // },
   },
   rules: {
     'jsdoc/require-jsdoc': [
@@ -55,4 +55,14 @@ module.exports = {
     'import/no-cycle': 'off',
     '@typescript-eslint/indent': 'off',
   },
+  "overrides":[
+    {
+      "files":[
+        "**/*.test.*"
+      ],
+      "env":{
+        "jest":true
+      }
+    }
+  ]
 };

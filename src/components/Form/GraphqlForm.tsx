@@ -12,7 +12,7 @@ import { patchTypeQuery } from './__generated__/patchTypeQuery';
 // import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
 import { useQueryWithError, createFormFields } from './utils';
 
-import { validatorFunc } from './InputWrapper';
+import { ValidatorFunc } from './InputWrapper';
 import 'antd/lib/form/style';
 import 'antd/lib/button/style';
 import 'antd/lib/notification/style';
@@ -20,7 +20,7 @@ import 'antd/lib/notification/style';
 const { useForm } = Form;
 
 export interface FormFieldOptionProps {
-  customValidators?: { [x: string]: validatorFunc };
+  customValidators?: { [x: string]: ValidatorFunc };
   customRules?: { [x: string]: Rule[] };
   customDecorators?: { [x: string]: FormItemProps};
   customWidgets?: { [x: string]: React.SFC<{ value: any, onChange: (p: any) => void }> };
@@ -51,7 +51,8 @@ const tailLayout = {
 };
 
 /**
- *
+ * @description Main Component of graphql form.
+ * @param props extends the Antd Form props, with some extra parameters
  */
 export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
   const {
@@ -67,7 +68,13 @@ customValidators, customRules, customDecorators, customWidgets, ...formProps
     data: inputData, loading: inputLoading,
   } = useQueryWithError<patchTypeQuery>(updateInputQuery, { variables: { name: typeName } });
 
-  const inputFields = React.useMemo(() => inputData?.__type?.inputFields || [], [inputData]);
+  const inputFields = React.useMemo(() => {
+    if (!inputData) {
+      return [];
+    }
+    const { __type: theType } = inputData;
+    return theType?.inputFields || [];
+  }, [inputData]);
   const [form] = useForm<FormData>();
   React.useEffect(() => {
     if (instanceData) {
@@ -91,29 +98,31 @@ customWidgets,
   return (
     <Form
       form={form}
-      {...formLayout}
-      onFinish={(values) => {
-    setSubmitting(true);
-    form.validateFields().then(() => {
-      setSubmitting(false);
-      if (onSubmit) {
-        onSubmit(form);
-      }
-    }).catch((err) => {
-      setSubmitting(false);
-      notification.error({
-        message: 'Validation Failed',
-        description: err.message,
-      });
-    });
-  }}
+      labelCol={formLayout.labelCol}
+      wrapperCol={formLayout.wrapperCol}
+      onFinish={() => {
+        setSubmitting(true);
+        form.validateFields().then(() => {
+          setSubmitting(false);
+          if (onSubmit) {
+            onSubmit(form);
+          }
+        }).catch((err) => {
+          setSubmitting(false);
+          notification.error({
+            message: 'Validation Failed',
+            description: err.message,
+          });
+        });
+      }}
       initialValues={instanceData}
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...formProps}
     >
       {allFields}
       {onSubmit
       && (
-      <Form.Item {...tailLayout}>
+      <Form.Item wrapperCol={tailLayout.wrappedCol}>
         <Button type="primary" htmlType="submit" loading={submitting}>Submit</Button>
       </Form.Item>
 )}

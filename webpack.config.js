@@ -87,6 +87,7 @@ module.exports = {
 		},
 		antd: 'antd',
 		graphql: 'graphql',
+		moment: 'moment',
 		'graphql-tag': 'graphql-tag',
 		'change-case': 'change-case',
 		'pluralize': 'pluralize',

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
 import { Select, notification } from 'antd';
-import { enumTypeQuery, enumTypeQueryVariables } from './__generated__/enumTypeQuery'
 import { useQuery } from '@apollo/react-hooks';
+import { enumTypeQuery, enumTypeQueryVariables } from './__generated__/enumTypeQuery';
 
 export interface EnumInputProps {
   value: any;
@@ -21,26 +21,42 @@ export const enumQuery = gql`
   }
 `;
 
+/**
+ * @description Input for Enum type, it is a select dropdown
+ */
 export const EnumInput: React.SFC<EnumInputProps> = (props) => {
   const { value, onChange, enumType } = props;
-  const {data, loading, error} = useQuery<enumTypeQuery, enumTypeQueryVariables>(enumQuery, {variables:{name: enumType}});
-  if(error){
+  const {
+    data, loading, error,
+  } = useQuery<enumTypeQuery, enumTypeQueryVariables>(enumQuery, { variables: { name: enumType } });
+  if (error) {
     notification.error({
-      message:`Error Fetching options for ${enumType}`,
+      message: `Error Fetching options for ${enumType}`,
       description: error.message,
     });
   }
-  const enumValues = React.useMemo(()=>{
-    return data?.__type?.enumValues || [];
-  },[data]);
-  const options = enumValues.map(v => {
-    return <Select.Option key={v.name} value={v.name}>{v.name}</Select.Option>
-  });
-  return <Select
-  value={value}
-  onChange={onChange}
-  loading={loading}
-  >
-    {options}
-  </Select>
-}
+  const enumValues = React.useMemo(() => {
+    if (!data) {
+      return [];
+    }
+    const { __type: theType } = data;
+    return theType?.enumValues || [];
+  }, [data]);
+  const options = enumValues.map((v) => (
+    <Select.Option
+      key={v.name}
+      value={v.name}
+    >
+      {v.name}
+    </Select.Option>
+));
+  return (
+    <Select
+      value={value}
+      onChange={onChange}
+      loading={loading}
+    >
+      {options}
+    </Select>
+);
+};
