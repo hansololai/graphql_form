@@ -33,7 +33,7 @@ jobs: # a collection of steps
           name: test
           command: |
             ./cc-test-reporter before-build
-            JEST_JUNIT_OUTPUT=$CIRCLE_TEST_REPORTS/jest/results.xml yarn coverage --reporters=jest-junit 
+            JEST_JUNIT_OUTPUT=$CIRCLE_TEST_REPORTS/jest/results.xml yarn coverage --reporters=jest-junit --reporters=default
             ./cc-test-reporter after-build --exit-code $?
       - store_test_results:
           # Circle2.0 does not support use env variable here yet, so we type it in manually, instead of $CIRLCE_TEST_REPORTS
