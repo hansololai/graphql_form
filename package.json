@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest src",
+    "lint": "eslint . --ext .ts,.tsx,.js.jsx",
     "coverage": "jest src --coverage",
     "build": "webpack --mode development",
     "build-storybook": "build-storybook -c .storybook -o .out",

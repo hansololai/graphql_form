@@ -1,6 +1,7 @@
 defaults: &defaults
   environment:
     CC_TEST_REPORTER_ID: 7ead496ff5eed9e9ff5aa88225cffbf27da06df5113941419cbeee68d37f155b
+    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results/
   working_directory: ~/graphql-form # directory where steps will run
   docker: # run the steps with Docker
     - image: circleci/node:11-stretch # ...with this image as the primary container; this is where all `steps` will run
@@ -21,6 +22,9 @@ jobs: # a collection of steps
           paths:
             - ./node_modules
       - run:
+          name: Eslint
+          command: yarn lint --format junit -o $CIRCLE_TEST_REPORTS/lint/eslint-results.xml
+      - run:
           name: Setup Code Climate test-reporter
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -29,8 +33,11 @@ jobs: # a collection of steps
           name: test
           command: |
             ./cc-test-reporter before-build
-            yarn coverage
+            JEST_JUNIT_OUTPUT=$CIRCLE_TEST_REPORTS/jest/results.xml yarn coverage --reporters=jest-junit 
             ./cc-test-reporter after-build --exit-code $?
+      - store_test_results:
+          # Circle2.0 does not support use env variable here yet, so we type it in manually, instead of $CIRLCE_TEST_REPORTS
+          path: /tmp/circleci-test-results/
       - persist_to_workspace:
           root: ~/graphql-form
           paths: .
