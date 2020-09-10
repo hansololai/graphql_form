@@ -11,7 +11,7 @@
       "dom"
     ],
     "sourceMap": true,
-    "allowJs": false,
+    "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDirs": [
@@ -21,24 +21,26 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "strict": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "declaration": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
   ],
   "exclude": [
     "node_modules",
-    "build",
-    "scripts",
-    "**/__tests__/",
-    "**/__mock__/",
-    "**/*.test.*"
+    "dist",
+    // "build",
+    // "scripts",
+    // "**/__tests__/",
+    // "**/__mock__/",
+    // "**/*.test.*"
   ]
 }

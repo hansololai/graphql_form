@@ -3,11 +3,13 @@ import { MockedProvider } from '@apollo/react-testing';
 import { render, wait, fireEvent } from '@testing-library/react';
 import { GraphqlForm } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
-import { mockData, sampleSelectQuery } from '../__mock__/dataMock'
+import { mockData, sampleSelectQuery } from '../__mock__/dataMock';
+import { ValidatorFunc } from '../InputWrapper';
 
 const waitUntilNoSpin = (container: any) => wait(() => {
-  const isLoading = container.querySelector('.ant-spin') !== null;
-  expect(isLoading).toBe(false);
+  const isLoading = container.querySelector('.anticon-spin') !== null;
+  const isLoading2 = container.querySelector('.ant-spin') !== null;
+  expect(isLoading || isLoading2).toBe(false);
 });
 describe('Graphql Form', () => {
   it('Basic Form', async () => {
@@ -15,18 +17,29 @@ describe('Graphql Form', () => {
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: "test", email: "test@test.com" }} onSubmit={onSubmit} />
+          <GraphqlForm modelName="User" instanceData={{ id: 1, firstName: 'test', email: 'test@test.com' }} onSubmit={onSubmit} />
         </div>
-      </MockedProvider>
+      </MockedProvider>,
     );
+
     expect(container).toMatchSnapshot();
     await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
     // Try submit
-    const form = container.querySelector('form');
-    expect(form).not.toBeNull();
-    if (form) {
-      fireEvent.submit(form);
+    const formbutton = container.querySelector('button');
+    expect(formbutton).not.toBeNull();
+    if (formbutton) {
+      fireEvent.click(formbutton);
+      // wait until there is loading spinner on submit button
+      await wait(() => {
+        const isLoading = container.querySelector('.ant-btn-loading') !== null;
+        expect(isLoading).toBe(true);
+      });
+      // wait until the spinner is gone
+      await wait(() => {
+        const isLoading = container.querySelector('.ant-btn-loading') !== null;
+        expect(isLoading).toBe(false);
+      });
       expect(onSubmit).toHaveBeenCalledTimes(1);
     }
   });
@@ -34,9 +47,9 @@ describe('Graphql Form', () => {
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" onSubmit={(form) => { }} />
+          <GraphqlForm modelName="User" onSubmit={() => { }} />
         </div>
-      </MockedProvider>
+      </MockedProvider>,
     );
     expect(container).toMatchSnapshot();
     await waitUntilNoSpin(container);
@@ -45,38 +58,46 @@ describe('Graphql Form', () => {
   });
   it('With Custom Widget and Rule', async () => {
     const customWidgets = {
-      firstName: ({ value, onChange }) => <TextSelectInput value={value} onChange={onChange} inputOptions={[
+      firstName: ({ value, onChange }: {value: string, onChange: (v:string)=>void}) => (
+        <TextSelectInput
+          value={value}
+          onChange={onChange}
+          inputOptions={[
         { name: 'John(Manager)', value: 'John' },
         { name: 'Robin(CEO)', value: 'Robin' },
         { name: 'Evan(Intern)', value: 'Evan' },
-      ]} />
+      ]}
+        />
+),
     };
     const customRule = {
-      pattern: /@/
+      pattern: /@/,
     };
-    const customValidator = (rule, value, cb, source, options, form) => {
+    const customValidator: ValidatorFunc = (rule, value, cb) => {
       // call cb() means no error
       // call cb("error message") means there is error
       if (Number(value) >= 10000 && Number(value) <= 50000) {
         cb();
       }
-      cb("not within 10000 - 50000");
+      cb('not within 10000 - 50000');
     };
 
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" onSubmit={(form) => { }}
+          <GraphqlForm
+            modelName="User"
+            onSubmit={() => { }}
             customWidgets={customWidgets}
             customRules={{
-              email: [customRule]
+              email: [customRule],
             }}
             customValidators={{
-              salary: customValidator
+              salary: customValidator,
             }}
           />
         </div>
-      </MockedProvider>
+      </MockedProvider>,
     );
     expect(container).toMatchSnapshot();
     await waitUntilNoSpin(container);
@@ -86,25 +107,25 @@ describe('Graphql Form', () => {
     const { container } = render(
       <MockedProvider mocks={mockData}>
         <div style={{ width: 400 }}>
-          <GraphqlForm modelName="User" onSubmit={(form) => { }} />
+          <GraphqlForm modelName="User" onSubmit={() => { }} />
         </div>
-      </MockedProvider>
+      </MockedProvider>,
     );
     expect(container).toMatchSnapshot();
 
     await waitUntilNoSpin(container);
     expect(container).toMatchSnapshot();
   });
-})
+});
 it('SelectWidget of user', async () => {
   const { container } = render(
     <MockedProvider mocks={mockData}>
-      <HasOneInput selectQuery={sampleSelectQuery} nameField="name" valueField="id" filterField="name" value={null} onChange={(e) => { }} />
+      <HasOneInput selectQuery={sampleSelectQuery} nameField="name" valueField="id" filterField="name" value={null} onChange={() => { }} />
 
-    </MockedProvider>
-  )
+    </MockedProvider>,
+  );
   expect(container).toMatchSnapshot();
 
   await waitUntilNoSpin(container);
   expect(container).toMatchSnapshot();
-})
+});

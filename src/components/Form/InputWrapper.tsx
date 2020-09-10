@@ -1,26 +1,24 @@
 import * as React from 'react';
 import { Form, Input } from 'antd';
-import { ValidationRule } from 'antd/lib/form'
-import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form'
-import * as  changeCase from 'change-case';
+import { FormItemProps, Rule, FormInstance } from 'antd/lib/form';
+import * as changeCase from 'change-case';
 import { patchTypeQuery___type_inputFields_type } from './__generated__/patchTypeQuery';
-import { formItemLayout } from './InnerForm'
-
 
 const { Item } = Form;
-export type validatorFunc = (rule: any, value: any, callback: any, source?: any, options?: any, form?: WrappedFormUtils) => any;
-export interface InputWrapperProps {
-  form: WrappedFormUtils;
+export type ValidatorFunc = <T extends unknown>(rule: any, value: any,
+  callback: any, form?: FormInstance<T>) => any;
+export interface InputWrapperProps<T> {
+  form: FormInstance<T>
   name: string;
   type: patchTypeQuery___type_inputFields_type;
   value?: any;
   disabled: boolean;
   hidden: boolean;
-  options?: GetFieldDecoratorOptions;
-  customRules?: ValidationRule[];
-  validator?: validatorFunc;
+  options?: FormItemProps;
+  customRules?: Rule[];
+  validator?: ValidatorFunc;
 }
-const setupDecorator = (props: InputWrapperProps): GetFieldDecoratorOptions => {
+const setupDecorator = <T extends unknown>(props: InputWrapperProps<T>): FormItemProps => {
   const {
     form,
     name,
@@ -28,55 +26,70 @@ const setupDecorator = (props: InputWrapperProps): GetFieldDecoratorOptions => {
     value,
     options = {},
     customRules = [],
-    validator } = props;
-  const decorator = { ...options, rules: [...customRules], initialValue: value };
+    validator,
+} = props;
+  const fieldName = changeCase.titleCase(name);
+  const rules = [...customRules];
   if (kind === 'NON_NULL') {
     // Unless this field can be auto generated, like "id"
     if (!['id', 'createdAt', 'updatedAt'].includes(name)) {
-      decorator.rules.push({ required: true });
+      rules.push({ required: true });
     }
   }
-  // If there's a validator for this field, put it in rules, but also modify it to pass in the form object
   if (validator) {
-    const validate = (ruleV, valueV, cbV, sourceV, optionsV) => {
-      validator(ruleV, valueV, cbV, sourceV, optionsV, form);
-    };
-    decorator.rules.push({ validator: validate });
+    rules.push({
+    validator: (ruleV, valueV, cbV) => {
+      validator(ruleV, valueV, cbV, form);
+    },
+    });
   }
-  return decorator;
-}
+  const decorator = {
+    ...options,
+    rules,
+    name,
+    initialValue: value,
+    label: fieldName,
+   };
 
-export const InputWrapper: React.FC<InputWrapperProps> = (props) => {
-  const {
-    form,
+  return decorator;
+};
+
+/**
+ * @description Wrapper for the form fields, basically wrap around the component with Form.Item
+ */
+export const InputWrapper = <T extends unknown>(
+  props: React.PropsWithChildren<InputWrapperProps<T>>) => {
+  const { children: oldChildren, ...noChildrenProp } = props;
+   const {
     name,
     disabled,
     hidden,
-  } = props;
-  const { getFieldDecorator } = form;
-  const decorator = setupDecorator(props);
-
-  const fieldName = changeCase.titleCase(name);
-  // If it should not show
+  } = noChildrenProp;
+  const decorator = setupDecorator(noChildrenProp as InputWrapperProps<T>);
 
   if (name === 'id' || hidden) {
     // ID field is special, it should be hidden, it is NOT NULL, but it could be NULL (for create)
-    return <div>
-      {getFieldDecorator(name, decorator)(
+    return (
+      <Item hidden>
         <Input disabled type="hidden" />
-      )}
-    </div>
-
+      </Item>
+    );
   }
   // Set disable if necessary
-  const children = React.Children.map(props.children, (child) => {
+  const children = React.Children.map(oldChildren, (child) => {
     const childProp = { disabled };
     return React.cloneElement(child as React.ReactElement<any>, childProp);
   });
 
-  return (<Item {...formItemLayout} label={fieldName}>
-    {getFieldDecorator(name, decorator)(
-      children ? children[0] : null
-    )}
-  </Item>);
+  // The children must be a single element, the FormItem will modify the props by
+  // passing in a value, and a "onChange".
+  return (
+    <Item
+      name={name}
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      {...decorator}
+    >
+      {children ? children[0] : null}
+    </Item>
+);
 };

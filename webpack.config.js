@@ -87,11 +87,11 @@ module.exports = {
 		},
 		antd: 'antd',
 		graphql: 'graphql',
+		moment: 'moment',
 		'graphql-tag': 'graphql-tag',
 		'change-case': 'change-case',
 		'pluralize': 'pluralize',
 		'@apollo/react-hook': '@apollo/react-hook',
-		'@apollo/react-components': '@apollo/react-components'
 	},
 	// Here we define explicitly the file types we intend to deal with
 	resolve: {
