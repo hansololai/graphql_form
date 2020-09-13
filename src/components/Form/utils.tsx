@@ -2,7 +2,7 @@
 import { FormInstance } from 'antd/lib/form/Form';
 import * as React from 'react';
 import { useQuery, QueryHookOptions } from '@apollo/react-hooks';
-import { notification, Form } from 'antd';
+import { notification, Form, Input } from 'antd';
 import changeCase from 'change-case';
 import { DocumentNode } from 'graphql';
 import { OperationVariables } from 'apollo-client';
@@ -142,6 +142,14 @@ export const createFormFields = <TData extends object>(props: CreateFormFieldsPr
     const isHidden = itemProps.hidden;
     if (isHidden === undefined && fieldName === 'id') {
       itemProps.hidden = true;
+    }
+    // Early return if it's hidden, then it is very simple.
+    if (itemProps.hidden) {
+      return (
+        <Form.Item hidden>
+          <Input disabled type="hidden" />
+        </Form.Item>
+      );
     }
 
     // Based on Type
