@@ -92,9 +92,10 @@ export interface CreateFormFieldsProps<T> extends FormFieldOptionProps<T> {
  */
 export const createFormFields = <TData extends object>(props: CreateFormFieldsProps<TData>) => {
   const {
- inputFields, form, customDecorators = {},
+    inputFields, form, customDecorators = {},
     customRules = {}, customValidators = {}, customWidgets = {}, extraProps = {},
-} = props;
+    customWidgetFunc,
+  } = props;
 
   return inputFields.map((field) => {
     const { name: fieldName, type: { kind: firstKind } } = field;
@@ -144,19 +145,25 @@ export const createFormFields = <TData extends object>(props: CreateFormFieldsPr
     }
 
     // Based on Type
-    let toReturn: React.ReactNode = null;
+    let toReturn: React.ReactNode = customWidgetFunc ? customWidgetFunc(field) : null;
     const inputProp = { ...(extraProps[fieldName] || {}) };
-    if (customWidgets[fieldName]) {
-      // If user have provided a custom widget for this type, the use that
-      const C = customWidgets[fieldName];
-      toReturn = <C form={form} {...inputProp} />;
-    } else if (kind === 'SCALAR') {
-      toReturn = scalarFieldToInput(field, inputProp);
-    } else if (kind === 'ENUM') {
-      if (typeName) {
-        toReturn = <EnumInput enumType={typeName} form={form} {...inputProp} />;
+    if (!toReturn) {
+       if (customWidgets[fieldName]) {
+        // If user have provided a custom widget for this type, the use that
+        const C = customWidgets[fieldName];
+        toReturn = <C form={form} {...inputProp} />;
+      } else if (kind === 'SCALAR') {
+        toReturn = scalarFieldToInput(field, inputProp);
+      } else if (kind === 'ENUM') {
+        if (typeName) {
+          toReturn = <EnumInput enumType={typeName} form={form} {...inputProp} />;
+        }
       }
     }
+
+    // If non match, it means the Input Component is just null, it also works
+    // with hidden Form.Item. The data is saved in form, but there is no input dom
+    // for it
     return (
       <Form.Item
         /* eslint-disable-next-line react/jsx-props-no-spreading */

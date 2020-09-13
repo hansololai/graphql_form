@@ -34,6 +34,7 @@ export interface FormFieldOptionProps<FData> {
   customDecorators?: { [x: string]: FormItemProps};
   customWidgets?: { [x: string]: React.SFC<WidgetProp<FData>> };
   extraProps?:{[x:string]:any};
+  customWidgetFunc?:(field: patchTypeQuery___type_inputFields) => React.ReactNode;
 }
 // Ths type is used by Antd Form, but it is not exported, so we redeclare here.
 declare type RecursivePartial<T> = T extends object ? {
