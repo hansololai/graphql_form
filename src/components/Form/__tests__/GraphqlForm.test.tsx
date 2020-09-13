@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 import { render, wait, fireEvent } from '@testing-library/react';
-import { GraphqlForm } from '../GraphqlForm';
+import { GraphqlForm, ValidatorFunc, GraphqlFormProps } from '../GraphqlForm';
 import { HasOneInput, TextSelectInput } from '../widgets';
 import { mockData, sampleSelectQuery } from '../__mock__/dataMock';
-import { ValidatorFunc } from '../InputWrapper';
 
 const waitUntilNoSpin = (container: any) => wait(() => {
   const isLoading = container.querySelector('.anticon-spin') !== null;
@@ -57,8 +56,8 @@ describe('Graphql Form', () => {
     expect(container).toMatchSnapshot();
   });
   it('With Custom Widget and Rule', async () => {
-    const customWidgets = {
-      firstName: ({ value, onChange }: {value: string, onChange: (v:string)=>void}) => (
+    const customWidgets: GraphqlFormProps['customWidgets'] = {
+      firstName: ({ value, onChange }) => (
         <TextSelectInput
           value={value}
           onChange={onChange}

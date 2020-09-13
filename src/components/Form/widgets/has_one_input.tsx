@@ -6,8 +6,8 @@ import { useQueryWithError } from '../utils';
 
 export type NameFunction = (p: any) => string;
 export interface HasOneInputProps extends SelectFragmentProp {
-  value: any;
-  onChange: (value: any) => void;
+  value?: any;
+  onChange?: (value: any) => void;
 }
 
 /**

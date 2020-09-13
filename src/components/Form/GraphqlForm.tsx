@@ -8,29 +8,47 @@ import {
 import { updateInputQuery } from './queries';
 
 // Generated Types
-import { patchTypeQuery } from './__generated__/patchTypeQuery';
+import { patchTypeQuery, patchTypeQuery___type_inputFields } from './__generated__/patchTypeQuery';
 // import { fieldTypeQuery } from './__generated__/fieldTypeQuery';
 import { useQueryWithError, createFormFields } from './utils';
 
-import { ValidatorFunc } from './InputWrapper';
 import 'antd/lib/form/style';
 import 'antd/lib/button/style';
 import 'antd/lib/notification/style';
 
 const { useForm } = Form;
 
-export interface FormFieldOptionProps {
+export interface WidgetProp<FData, WData = any> {
+  value?: WData;
+  onChange?: (p: WData)=>void;
+  form?: FormInstance<FData>;
+  disable?: boolean;
+  hidden?:boolean;
+}
+export type ValidatorFunc = <T extends unknown>(rule: any, value: any,
+  callback: any, form?: FormInstance<T>) => any;
+
+export interface FormFieldOptionProps<FData> {
   customValidators?: { [x: string]: ValidatorFunc };
   customRules?: { [x: string]: Rule[] };
   customDecorators?: { [x: string]: FormItemProps};
-  customWidgets?: { [x: string]: React.SFC<{ value: any, onChange: (p: any) => void }> };
+  customWidgets?: { [x: string]: React.SFC<WidgetProp<FData>> };
+  extraProps?:{[x:string]:any};
+  customWidgetFunc?:(field: patchTypeQuery___type_inputFields) => React.ReactNode;
 }
-
-export interface GraphqlFormProps<FormData = any> extends FormFieldOptionProps, FormProps {
+// Ths type is used by Antd Form, but it is not exported, so we redeclare here.
+declare type RecursivePartial<T> = T extends object ? {
+    [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+    T[P] extends object ? RecursivePartial<T[P]> : T[P];
+} : any;
+export interface GraphqlFormProps<FData = any> extends FormFieldOptionProps<FData>, FormProps {
   modelName: string;
-  instanceData?: FormData;
+  instanceData?: RecursivePartial<FData>;
   instanceId?: number;
-  onSubmit?: (form: FormInstance<FormData>) => void;
+  onSubmit?: (form: FormInstance<FData>) => void;
+  fields?: patchTypeQuery___type_inputFields[];
+  idIsBigInt?:boolean;
+  submitButtonText?:string;
 }
 export const formItemLayout = {
   labelCol: {
@@ -54,7 +72,7 @@ const tailLayout = {
  * @description Main Component of graphql form.
  * @param props extends the Antd Form props, with some extra parameters
  */
-export const GraphqlForm: React.SFC<GraphqlFormProps> = (props) => {
+export const GraphqlForm = <FData extends object>(props:GraphqlFormProps<FData>) => {
   const {
  modelName, instanceData, instanceId, onSubmit, ...options
 } = props;
@@ -72,14 +90,14 @@ customValidators, customRules, customDecorators, customWidgets, ...formProps
     const { __type: theType } = inputData || {};
     return theType?.inputFields || [];
   }, [inputData]);
-  const [form] = useForm<FormData>();
+  const [form] = useForm<FData>();
   React.useEffect(() => {
     if (instanceData) {
       form.setFieldsValue(instanceData);
     }
   }, [instanceData]);
 
-  const allFields = createFormFields({
+  const allFields = createFormFields<FData>({
 form,
 inputFields,
 customValidators,

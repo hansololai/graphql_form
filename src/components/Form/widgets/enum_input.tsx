@@ -3,10 +3,9 @@ import gql from 'graphql-tag';
 import { Select, notification } from 'antd';
 import { useQuery } from '@apollo/react-hooks';
 import { enumTypeQuery, enumTypeQueryVariables } from './__generated__/enumTypeQuery';
+import { WidgetProp } from '../GraphqlForm';
 
-export interface EnumInputProps {
-  value: any;
-  onChange: (value: any) => void;
+export interface EnumInputProps extends WidgetProp<any, string> {
   enumType: string;
 }
 export const enumQuery = gql`
