@@ -6,12 +6,11 @@ import { action } from '@storybook/addon-actions';
 // import { action } from '@storybook/addon-actions';
 // Import our component from this folder
 import { MockedProvider } from '@apollo/react-testing';
-import { GraphqlForm } from './GraphqlForm';
+import { GraphqlForm, GraphqlFormProps, ValidatorFunc } from './GraphqlForm';
 import {
  TextInput, BooleanInput, TextSelectInput, HasOneInput,
 } from './widgets';
 import { mockData, sampleSelectQuery } from './__mock__/dataMock';
-import { ValidatorFunc } from './InputWrapper';
 
 // Here we describe the stories we want to see of the Button. The component is
 // pretty simple so we will just make two, one with text and one with emojis
@@ -161,8 +160,8 @@ storiesOf('GraphqlForm', module)
       </MockedProvider>
 );
   }).add('Use Custom widget (select text) for a field', () => {
-    const customWidgets = {
-      firstName: ({ value, onChange }:{value: string, onChange: (v:string)=>void}) => (
+    const customWidgets: GraphqlFormProps['customWidgets'] = {
+      firstName: ({ value, onChange }) => (
         <TextSelectInput
           value={value}
           onChange={onChange}
