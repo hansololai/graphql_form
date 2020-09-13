@@ -97,7 +97,7 @@ export const createFormFields = <TData extends object>(props: CreateFormFieldsPr
 } = props;
 
   return inputFields.map((field) => {
-    const { name: fieldName } = field;
+    const { name: fieldName, type: { kind: firstKind } } = field;
     // Sometimes it's not null,  then have to go one level deeper
     const info = inputFieldKind(field);
     if (!info) return null;
@@ -130,11 +130,17 @@ export const createFormFields = <TData extends object>(props: CreateFormFieldsPr
     // so we only do the "guessing" when the "required" is undefined
     // or it is set to true
     const isRequired = itemProps.required;
-    if ((isRequired === undefined && kind === 'NON_NULL') || isRequired) {
+    if ((isRequired === undefined && firstKind === 'NON_NULL') || isRequired) {
       // Unless this field can be auto generated, like "id"
       if (!['id', 'createdAt', 'updatedAt'].includes(fieldName)) {
         rules.push({ required: true });
       }
+      itemProps.required = true;
+    }
+    // Same idea for hidden. By default hide the id
+    const isHidden = itemProps.hidden;
+    if (isHidden === undefined && fieldName === 'id') {
+      itemProps.hidden = true;
     }
 
     // Based on Type
