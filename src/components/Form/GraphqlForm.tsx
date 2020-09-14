@@ -47,7 +47,6 @@ export interface GraphqlFormProps<FData = any> extends FormFieldOptionProps<FDat
   instanceId?: number;
   onSubmit?: (form: FormInstance<FData>) => void;
   fields?: patchTypeQuery___type_inputFields[];
-  idIsBigInt?:boolean;
   submitButtonText?:string;
 }
 export const formItemLayout = {
@@ -74,7 +73,7 @@ const tailLayout = {
  */
 export const GraphqlForm = <FData extends object>(props:GraphqlFormProps<FData>) => {
   const {
- modelName, instanceData, instanceId, onSubmit, ...options
+ modelName, instanceData, instanceId, onSubmit, fields, submitButtonText, ...options
 } = props;
   const {
 customValidators, customRules, customDecorators, customWidgets, ...formProps
@@ -84,9 +83,15 @@ customValidators, customRules, customDecorators, customWidgets, ...formProps
   const [submitting, setSubmitting] = React.useState(false);
   const {
     data: inputData, loading: inputLoading,
-  } = useQueryWithError<patchTypeQuery>(updateInputQuery, { variables: { name: typeName } });
+  } = useQueryWithError<patchTypeQuery>(updateInputQuery, {
+    variables: { name: typeName },
+    skip: !!fields,
+  });
 
   const inputFields = React.useMemo(() => {
+    if (Array.isArray(fields)) {
+      return fields;
+    }
     const { __type: theType } = inputData || {};
     return theType?.inputFields || [];
   }, [inputData]);
@@ -98,13 +103,8 @@ customValidators, customRules, customDecorators, customWidgets, ...formProps
   }, [instanceData]);
 
   const allFields = createFormFields<FData>({
-form,
-inputFields,
-customValidators,
-    customRules,
-customDecorators,
-customWidgets,
-});
+    form, inputFields, customValidators, customRules, customDecorators, customWidgets,
+  });
 
   if (inputLoading) {
     return <Spin />;
@@ -138,7 +138,7 @@ customWidgets,
       {onSubmit
       && (
       <Form.Item wrapperCol={tailLayout.wrappedCol}>
-        <Button type="primary" htmlType="submit" loading={submitting}>Submit</Button>
+        <Button type="primary" htmlType="submit" loading={submitting}>{submitButtonText || 'Submit'}</Button>
       </Form.Item>
 )}
     </Form>
