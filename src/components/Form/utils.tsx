@@ -40,7 +40,7 @@ export type PossibleTypeNames = keyof typeof nameToFormFieldMapping;
  * so it is handleable.
  */
 export function handlableTypeName(type: string): type is PossibleTypeNames {
-  if (['Boolean', 'String', 'Datetime', 'Date', 'Int', 'BigInt', 'Float', 'BigFloat'].includes(type)) {
+  if (Object.keys(nameToFormFieldMapping).includes(type)) {
     return true;
   }
   return false;
@@ -66,12 +66,7 @@ const scalarFieldToInput = <T extends object>(f: patchTypeQuery___type_inputFiel
   if (typeName && handlableTypeName(typeName)) {
     // It could be a foreign Key, so we do some guess here
     const C = nameToFormFieldMapping[typeName];
-    // switch (typeName) {
-    //   case 'Date':
-    //   case 'Datetime': {
-    //     // value = value ? moment(value) : null;
-    //   }
-    // }
+
     // The component here should not pass in value, onChange parameters
     // Even though they require a non null value, onChange
     // Because the getFieldDecorator() in form will provide it
