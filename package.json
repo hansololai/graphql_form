@@ -14,7 +14,7 @@
     "storybook": "start-storybook -p 9001",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "apollo:codegen": "apollo client:codegen --target=typescript --passthroughCustomScalars --customScalarsPrefix GraphQL",
+    "apollo:codegen": "apollo client:codegen --target=typescript --passthroughCustomScalars --customScalarsPrefix GraphQL --globalTypesFile src/__generated__/globalTypes.ts",
     "release-it": "yarn version --patch && git push --follow-tags"
   },
   "jest": {
