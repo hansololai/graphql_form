@@ -17,6 +17,7 @@
     "rootDirs": [
       "./src",
     ],
+    "rootDir": "./src",
     "baseUrl": "./src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
