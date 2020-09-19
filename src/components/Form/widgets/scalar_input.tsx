@@ -40,7 +40,7 @@ export interface TextAreaInputProps extends TextAreaProps { }
  * @description This is a Boolean input, as a checkbox. The prop is "checked", not the default "value".
  * So this does a conversion.
  */
-export const BooleanInput: React.SFC<BooleanInputProps> = (props) => {
+export const BooleanInput: React.FC<BooleanInputProps> = (props) => {
   const { value, onChange: change } = props;
   const onChange = (e: CheckboxChangeEvent) => {
     if (change) {
@@ -53,22 +53,22 @@ export const BooleanInput: React.SFC<BooleanInputProps> = (props) => {
 /**
  * @description This function is a regular text input field
  */
-export const TextInput: React.SFC<TextInputProps> = (props) => <Input {...props} />;
+export const TextInput: React.FC<TextInputProps> = (props) => <Input {...props} />;
 
 /**
  * @description This sfc is a regular Number input field
  */
-export const NumberInput: React.SFC<NumberInputProps> = (props) => <InputNumber {...props} />;
+export const NumberInput: React.FC<NumberInputProps> = (props) => <InputNumber {...props} />;
 
 /**
  * @description This SFC is a hidden input.
  */
-export const HiddenInput: React.SFC<HiddenInputProps> = (props) => <Input {...props} hidden />;
+export const HiddenInput: React.FC<HiddenInputProps> = (props) => <Input {...props} hidden />;
 
 /**
  * @description THis SFC is a Text Select Dropdown input. The value used is a string
  */
-export const TextSelectInput: React.SFC<TextSelectInputProps> = (props) => {
+export const TextSelectInput: React.FC<TextSelectInputProps> = (props) => {
   const { value, onChange, inputOptions = [] } = props;
   const selectOptions = inputOptions.map((o) => {
     const { name, value: optionValue } = o;
@@ -84,13 +84,23 @@ export const TextSelectInput: React.SFC<TextSelectInputProps> = (props) => {
 /**
  * @description Ths SFC is a Time Input, using Antd's Timepicker
  */
-export const TimeInput: React.SFC<TimeInputProps> = (props) => <TimePicker {...props} />;
+export const TimeInput: React.FC<TimeInputProps> = (props) => <TimePicker {...props} />;
+
+/**
+ * @description Ths SFC is a Time Input, using Antd's Timepicker
+ */
+export const DateTimeInput: React.FC<TimeInputProps> = (props) => (
+  <DatePicker
+    {...props}
+    showTime
+  />
+);
 
 /**
  * @description This  SFC is a DateInput, using Antd's DateInput
  */
-export const DateInput: React.SFC<DateInputProps> = (props) => <DatePicker {...props} />;
+export const DateInput: React.FC<DateInputProps> = (props) => <DatePicker {...props} />;
 /**
  * @description This SFC is a Text Area Input.
  */
-export const TextAreaInput: React.SFC<TextAreaInputProps> = (props) => <TextArea {...props} />;
+export const TextAreaInput: React.FC<TextAreaInputProps> = (props) => <TextArea {...props} />;

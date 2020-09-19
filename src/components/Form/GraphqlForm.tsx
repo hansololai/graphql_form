@@ -32,7 +32,7 @@ export interface FormFieldOptionProps<FData> {
   customValidators?: { [x: string]: ValidatorFunc };
   customRules?: { [x: string]: Rule[] };
   customDecorators?: { [x: string]: FormItemProps};
-  customWidgets?: { [x: string]: React.SFC<WidgetProp<FData>> };
+  customWidgets?: { [x: string]: React.FC<WidgetProp<FData>> };
   extraProps?:{[x:string]:any};
   customWidgetFunc?:(field: patchTypeQuery___type_inputFields) => React.ReactNode;
 }
@@ -76,7 +76,7 @@ export const GraphqlForm = <FData extends object>(props:GraphqlFormProps<FData>)
  modelName, instanceData, instanceId, onSubmit, fields, submitButtonText, ...options
 } = props;
   const {
-customValidators, customRules, customDecorators, customWidgets, ...formProps
+customValidators, customRules, customDecorators, customWidgets, customWidgetFunc, ...formProps
 } = options;
   // If has data, then it's update, otherwise it's a create form
   const typeName = instanceData ? `${modelName}Patch` : `${modelName}Input`;
@@ -103,7 +103,13 @@ customValidators, customRules, customDecorators, customWidgets, ...formProps
   }, [instanceData]);
 
   const allFields = createFormFields<FData>({
-    form, inputFields, customValidators, customRules, customDecorators, customWidgets,
+    form,
+    inputFields,
+    customValidators,
+    customRules,
+    customDecorators,
+    customWidgets,
+    customWidgetFunc,
   });
 
   if (inputLoading) {

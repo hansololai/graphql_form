@@ -9,7 +9,7 @@ import { OperationVariables } from 'apollo-client';
 import { Rule } from 'antd/lib/form';
 import { patchTypeQuery___type_inputFields, patchTypeQuery___type_inputFields_type_ofType } from './__generated__/patchTypeQuery';
 import {
- BooleanInput, TextInput, NumberInput, DateInput, TimeInput, EnumInput,
+ BooleanInput, TextInput, NumberInput, DateInput, DateTimeInput, EnumInput,
 } from './widgets/index';
 import { FormFieldOptionProps, WidgetProp } from './GraphqlForm';
 
@@ -24,7 +24,7 @@ export function isFunction(funcToCheck: any): funcToCheck is Function {
 const nameToFormFieldMapping = {
   Boolean: BooleanInput,
   String: TextInput,
-  Datetime: TimeInput,
+  Datetime: DateTimeInput,
   Date: DateInput,
   Int: NumberInput,
   BigInput: NumberInput,
@@ -162,6 +162,9 @@ export const createFormFields = <TData extends object>(props: CreateFormFieldsPr
           toReturn = <EnumInput enumType={typeName} form={form} {...inputProp} />;
         }
       }
+    }
+    if (!toReturn) {
+      return null;
     }
 
     // If non match, it means the Input Component is just null, it also works

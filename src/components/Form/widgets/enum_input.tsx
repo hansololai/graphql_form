@@ -23,7 +23,7 @@ export const enumQuery = gql`
 /**
  * @description Input for Enum type, it is a select dropdown
  */
-export const EnumInput: React.SFC<EnumInputProps> = (props) => {
+export const EnumInput: React.FC<EnumInputProps> = (props) => {
   const { value, onChange, enumType } = props;
   const {
     data, loading, error,
